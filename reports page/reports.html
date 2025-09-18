@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Analytics - Student ERP Management System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 80px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .stat-icon.students { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .stat-icon.fees { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .stat-icon.hostel { background: linear-gradient(135deg, #fa709a, #fee140); }
+        .stat-icon.library { background: linear-gradient(135deg, #a8edea, #fed6e3); color: #333; }
+        .stat-icon.faculty { background: linear-gradient(135deg, #ffecd2, #fcb69f); color: #333; }
+        .stat-icon.exams { background: linear-gradient(135deg, #ff9a9e, #fecfef); color: #333; }
+
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .report-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .report-list {
+            list-style: none;
+        }
+
+        .report-list li {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .report-list li:last-child {
+            border-bottom: none;
+        }
+
+        .report-name {
+            flex: 1;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .report-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: 300px !important;
+        }
+
+        .ai-insights {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .ai-insights h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .insight-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .insight-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .export-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .export-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .export-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">
+        <span>←</span> Back to Main
+    </a>
+
+    <div class="container">
+        <div class="header">
+            <h1>📊 Reports & Analytics</h1>
+            <p>Generate comprehensive reports, data visualization with AI-powered insights</p>
+        </div>
+
+        <!-- Key Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon students">👥</div>
+                <div class="stat-value">1,247</div>
+                <div class="stat-label">Total Students</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon fees">💰</div>
+                <div class="stat-value">₹45.2L</div>
+                <div class="stat-label">Fee Collection</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon hostel">🏠</div>
+                <div class="stat-value">78%</div>
+                <div class="stat-label">Hostel Occupancy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon library">📚</div>
+                <div class="stat-value">12,450</div>
+                <div class="stat-label">Library Books</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon faculty">👨‍🏫</div>
+                <div class="stat-value">156</div>
+                <div class="stat-label">Active Faculty</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon exams">📝</div>
+                <div class="stat-value">85.2%</div>
+                <div class="stat-label">Average Performance</div>
+            </div>
+        </div>
+
+        <!-- AI-Powered Insights -->
+        <div class="ai-insights">
+            <h3>🤖 AI-Powered Insights</h3>
+            <div class="insight-item">
+                <strong>Fee Collection Prediction:</strong> Based on historical trends, we predict 92% collection rate by month-end. Consider targeted reminders for 47 pending payments.
+            </div>
+            <div class="insight-item">
+                <strong>Performance Analytics:</strong> Computer Science department shows 12% improvement in average scores. Engineering Graphics requires additional support resources.
+            </div>
+            <div class="insight-item">
+                <strong>Hostel Optimization:</strong> Current occupancy allows for 15% increase in admissions. Rooms 201-205 have highest maintenance requests - schedule preventive maintenance.
+            </div>
+            <div class="insight-item">
+                <strong>Library Usage Pattern:</strong> Peak usage detected during 2-4 PM and 7-9 PM. Consider extending staff hours and digital resource access during these periods.
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="chart-container">
+            <div class="chart-title">Monthly Fee Collection Trend</div>
+            <canvas id="feeChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">Department-wise Student Distribution</div>
+            <canvas id="departmentChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title">Hostel Occupancy vs Capacity</div>
+            <canvas id="hostelChart"></canvas>
+        </div>
+
+        <!-- Reports Grid -->
+        <div class="reports-grid">
+            <!-- Academic Reports -->
+            <div class="report-section">
+                <div class="section-title">📚 Academic Reports</div>
+                <ul class="report-list">
+                    <li>
+                        <span class="report-name">Student Performance Analysis</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('performance')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="report-name">Department Wise Results</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('department')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="report-name">Grade Distribution Report</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('grades')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="report-name">Attendance Analytics</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('attendance')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Financial Reports -->
+            <div class="report-section">
+                <div class="section-title">💰 Financial Reports</div>
+                <ul class="report-list">
+                    <li>
+                        <span class="report-name">Fee Collection Summary</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('fee-collection')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="report-name">Outstanding Dues Report</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('dues')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="report-name">Scholarship Disbursement</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('scholarship')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="report-name">Revenue Forecast</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('revenue')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Hostel Reports -->
+            <div class="report-section">
+                <div class="section-title">🏠 Hostel Management</div>
+                <ul class="report-list">
+                    <li>
+                        <span class="report-name">Occupancy Analytics</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('occupancy')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="report-name">Maintenance Requests</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('maintenance')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="report-name">Room Allocation History</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('allocation')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="report-name">Visitor Log Summary</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('visitors')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Library Reports -->
+            <div class="report-section">
+                <div class="section-title">📖 Library Analytics</div>
+                <ul class="report-list">
+                    <li>
+                        <span class="report-name">Book Circulation Report</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('circulation')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="report-name">Popular Books Analysis</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('popular-books')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="report-name">Fine Collection Summary</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('fines')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="report-name">Digital Resource Usage</span>
+                        <div class="report-actions">
+                            <button class="btn btn-primary" onclick="generateReport('digital-usage')">Generate</button>
+                            <a href="#" class="btn btn-secondary">View Sample</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Export Section -->
+        <div class="export-section">
+            <h3>📥 Export Options</h3>
+            <p>Download reports in multiple formats for external analysis and presentations</p>
+            <div class="export-buttons">
+                <button class="btn btn-primary" onclick="exportData('pdf')">📄 Export as PDF</button>
+                <button class="btn btn-primary" onclick="exportData('excel')">📊 Export as Excel</button>
+                <button class="btn btn-secondary" onclick="exportData('csv')">📋 Export as CSV</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            initFeeChart();
+            initDepartmentChart();
+            initHostelChart();
+        });
+
+        function initFeeChart() {
+            const ctx = document.getElementById('feeChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                    datasets: [{
+                        label: 'Fee Collection (₹ Lakhs)',
+                        data: [35.2, 42.8, 38.5, 45.2, 41.7, 48.3, 44.9, 47.1, 45.2],
+                        borderColor: 'rgb(102, 126, 234)',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+        }
+
+        function initDepartmentChart() {
+            const ctx = document.getElementById('departmentChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Computer Science', 'Mechanical', 'Electrical', 'Civil', 'Electronics', 'Others'],
+                    datasets: [{
+                        data: [324, 256, 189, 203, 175, 100],
+                        backgroundColor: [
+                            '#667eea',
+                            '#764ba2',
+                            '#4facfe',
+                            '#43e97b',
+                            '#fa709a',
+                            '#ffecd2'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initHostelChart() {
+            const ctx = document.getElementById('hostelChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Block A', 'Block B', 'Block C', 'Block D', 'Block E'],
+                    datasets: [{
+                        label: 'Occupied',
+                        data: [89, 76, 82, 94, 71],
+                        backgroundColor: '#4facfe'
+                    }, {
+                        label: 'Available',
+                        data: [11, 24, 18, 6, 29],
+                        backgroundColor: '#e0e7ff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            stacked: true,
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+        }
+
+        function generateReport(reportType) {
+            const button = event.target;
+            const originalText = button.innerHTML;
+            
+            // Show loading state
+            button.innerHTML = '<span class="loading"></span> Generating...';
+            button.disabled = true;
+            
+            // Simulate report generation
+            setTimeout(() => {
+                // Reset button state
+                button.innerHTML = originalText;
+                button.disabled = false;
+                
+                // Show success message
+                alert(`${reportType.charAt(0).toUpperCase() + reportType.slice(1)} report generated successfully!`);
+                
+                // In a real implementation, this would trigger actual report generation
+                // and possibly open the report in a new tab or download it
+            }, 2000);
+        }
+
+        function exportData(format) {
+            const button = event.target;
+            const originalText = button.innerHTML;
+            
+            // Show loading state
+            button.innerHTML = '<span class="loading"></span> Exporting...';
+            button.disabled = true;
+            
+            // Simulate export
+            setTimeout(() => {
+                // Reset button state
+                button.innerHTML = originalText;
+                button.disabled = false;
+                
+                // Show success message
+                alert(`Data exported successfully as ${format.toUpperCase()}!`);
+                
+                // In a real implementation, this would trigger actual data export
+            }, 1500);
+        }
+
+        // Add some interactivity to stat cards
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const label = this.querySelector('.stat-label').textContent;
+                alert(`Detailed ${label} report will be available soon!`);
+            });
+        });
+    </script>
+</body>
+</html>

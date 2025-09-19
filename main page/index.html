@@ -516,7 +516,7 @@
                 </div>
 
                 <div class="module-actions">
-                    <a href="dashboard.html" class="action-btn">
+                    <a href="../pages/dashboard/dashboard.html" class="action-btn">
                         <i class="fas fa-chart-bar"></i> View Dashboard
                     </a>
                     <button class="action-btn secondary" onclick="event.stopPropagation(); showQuickStats()">
@@ -550,7 +550,7 @@
                 </div>
 
                 <div class="module-actions">
-                    <a href="admission.html" class="action-btn">
+                    <a href="../pages/admission/admission.html" class="action-btn">
                         <i class="fas fa-file-alt"></i> Manage Admissions
                     </a>
                     <button class="action-btn secondary" onclick="event.stopPropagation(); showAdmissionStats()">
@@ -584,7 +584,7 @@
                 </div>
 
                 <div class="module-actions">
-                    <a href="fees.html" class="action-btn">
+                    <a href="../pages/fees/fees.html" class="action-btn">
                         <i class="fas fa-credit-card"></i> Manage Fees
                     </a>
                     <button class="action-btn secondary" onclick="event.stopPropagation(); showFeeAnalytics()">
@@ -618,7 +618,7 @@
                 </div>
 
                 <div class="module-actions">
-                    <a href="hostel.html" class="action-btn">
+                    <a href="../pages/hostel/hostel.html" class="action-btn">
                         <i class="fas fa-bed"></i> Manage Hostel
                     </a>
                     <button class="action-btn secondary" onclick="event.stopPropagation(); showHostelMap()">
@@ -652,7 +652,7 @@
                 </div>
 
                 <div class="module-actions">
-                    <a href="examination.html" class="action-btn">
+                    <a href="../pages/examination/examination.html" class="action-btn">
                         <i class="fas fa-pencil-alt"></i> Manage Exams
                     </a>
                     <button class="action-btn secondary" onclick="event.stopPropagation(); showGradeAnalytics()">
@@ -686,7 +686,7 @@
                 </div>
 
                 <div class="module-actions">
-                    <a href="library.html" class="action-btn">
+                    <a href="../pages/library/library.html" class="action-btn">
                         <i class="fas fa-book-open"></i> Manage Library
                     </a>
                     <button class="action-btn secondary" onclick="event.stopPropagation(); showLibraryCatalog()">
@@ -720,7 +720,7 @@
                 </div>
 
                 <div class="module-actions">
-                    <a href="reports.html" class="action-btn">
+                    <a href="../pages/report/reports.html" class="action-btn">
                         <i class="fas fa-file-pdf"></i> Generate Reports
                     </a>
                     <button class="action-btn secondary" onclick="event.stopPropagation(); showReportTemplates()">
@@ -754,7 +754,7 @@
                 </div>
 
                 <div class="module-actions">
-                    <a href="settings.html" class="action-btn">
+                    <a href="../pages/settings/settings.html" class="action-btn">
                         <i class="fas fa-wrench"></i> System Config
                     </a>
                     <button class="action-btn secondary" onclick="event.stopPropagation(); showSystemHealth()">
@@ -767,11 +767,11 @@
         <!-- Footer -->
         <div class="footer">
             <div class="footer-links">
-                <a href="about.html" class="footer-link"><i class="fas fa-info-circle"></i> About</a>
-                <a href="help.html" class="footer-link"><i class="fas fa-question-circle"></i> Help & Support</a>
-                <a href="contact.html" class="footer-link"><i class="fas fa-envelope"></i> Contact</a>
-                <a href="privacy.html" class="footer-link"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
-                <a href="api-docs.html" class="footer-link"><i class="fas fa-code"></i> API Documentation</a>
+                <a href="#" class="footer-link"><i class="fas fa-info-circle"></i> About</a>
+                <a href="#" class="footer-link"><i class="fas fa-question-circle"></i> Help & Support</a>
+                <a href="#" class="footer-link"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="#" class="footer-link"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+                <a href="#" class="footer-link"><i class="fas fa-code"></i> API Documentation</a>
             </div>
             <p>&copy; 2024 Student ERP Management System. All rights reserved.</p>
             <p style="margin-top: 10px; opacity: 0.8;">
@@ -798,3 +798,188 @@
                     <strong>🤖 AI Assistant:</strong> Welcome! I can help you with:
                     <ul style="margin: 10px 0; padding-left: 20px;">
                         <li>Navigate to any module</li>
+                        <li>System status and health checks</li>
+                        <li>Quick statistics and reports</li>
+                        <li>Answer questions about features</li>
+                        <li>Provide usage guidance</li>
+                    </ul>
+                    How can I assist you today?
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="chatInput" placeholder="Type your message..." style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <button onclick="sendMessage()" style="padding: 10px 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        // Update time immediately and then every minute
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Loading overlay functions
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // Module navigation functions
+        function openModule(moduleName) {
+            showLoading();
+            
+            // Define the correct paths based on your folder structure
+            const moduleUrls = {
+                'dashboard': '../pages/dashboard/dashboard.html',
+                'admission': '../pages/admission/admission.html',
+                'fees': '../pages/fees/fees.html',
+                'hostel': '../pages/hostel/hostel.html',
+                'examination': '../pages/examination/examination.html',
+                'library': '../pages/library/library.html',
+                'reports': '../pages/report/reports.html',
+                'settings': '../pages/settings/settings.html'
+            };
+
+            // Simulate loading delay and redirect
+            setTimeout(() => {
+                if (moduleUrls[moduleName]) {
+                    window.location.href = moduleUrls[moduleName];
+                } else {
+                    console.error('Module not found:', moduleName);
+                    hideLoading();
+                    alert('Module not found. Please check the file structure.');
+                }
+            }, 1500);
+        }
+
+        // AI Assistant functions
+        function openAIAssistant() {
+            document.getElementById('aiModal').style.display = 'block';
+        }
+
+        function closeAIModal() {
+            document.getElementById('aiModal').style.display = 'none';
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const chatMessages = document.getElementById('chatMessages');
+            
+            if (input.value.trim() === '') return;
+
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.style.cssText = 'margin-bottom: 10px; text-align: right;';
+            userMessage.innerHTML = `<span style="background: #667eea; color: white; padding: 8px 12px; border-radius: 18px; display: inline-block; max-width: 80%;">${input.value}</span>`;
+            chatMessages.appendChild(userMessage);
+
+            // Simulate AI response
+            setTimeout(() => {
+                const aiResponse = document.createElement('div');
+                aiResponse.style.cssText = 'margin-bottom: 10px;';
+                aiResponse.innerHTML = `<span style="background: #f0f0f0; padding: 8px 12px; border-radius: 18px; display: inline-block; max-width: 80%;">I understand you're asking about "${input.value}". I'm here to help you navigate the ERP system efficiently!</span>`;
+                chatMessages.appendChild(aiResponse);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Quick action functions
+        function showQuickStats() {
+            alert('Dashboard Quick Stats:\n\n• Active Users: 45\n• System Load: 23%\n• Memory Usage: 67%\n• Response Time: 145ms\n• Last Backup: 2 hours ago');
+        }
+
+        function showAdmissionStats() {
+            alert('Admission Statistics:\n\n• Total Applications: 342\n• Pending Review: 38\n• Approved: 156\n• Rejected: 23\n• Completion Rate: 89%');
+        }
+
+        function showFeeAnalytics() {
+            alert('Fee Collection Analytics:\n\n• Total Collected: ₹45.2L\n• Collection Rate: 89%\n• Pending Amount: ₹5.8L\n• Average Payment Time: 3.2 days\n• Top Payment Method: Online (78%)');
+        }
+
+        function showHostelMap() {
+            alert('Hostel Occupancy Map:\n\n• Block A: 89% occupied\n• Block B: 67% occupied\n• Block C: 78% occupied\n• Total Rooms: 584\n• Available Rooms: 128\n• Maintenance Required: 12');
+        }
+
+        function showGradeAnalytics() {
+            alert('Grade Analytics:\n\n• Average GPA: 3.4\n• Pass Rate: 94%\n• Honor Students: 23%\n• Improvement Rate: +12%\n• Top Subject: Mathematics\n• Challenge Area: Physics');
+        }
+
+        function showLibraryCatalog() {
+            alert('Library Catalog Search:\n\n• Total Books: 12,450\n• Digital Resources: 3,240\n• Issued Books: 2,340\n• Overdue: 156\n• New Arrivals: 45\n• Most Popular: Computer Science');
+        }
+
+        function showReportTemplates() {
+            alert('Available Report Templates:\n\n• Student Performance Report\n• Fee Collection Summary\n• Attendance Analysis\n• Hostel Occupancy Report\n• Library Usage Statistics\n• Financial Dashboard\n• Custom Report Builder');
+        }
+
+        function showSystemHealth() {
+            alert('System Health Status:\n\n• Server Uptime: 99.8%\n• Database Status: Online\n• Backup Status: Current\n• Security Status: Active\n• Performance: Optimal\n• Last Maintenance: 3 days ago');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('aiModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Enter key support for chat
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Add some dynamic effects
+        setTimeout(() => {
+            const cards = document.querySelectorAll('.module-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        }, 100);
+
+        // Simulate real-time updates
+        setInterval(() => {
+            const totalStudents = document.getElementById('totalStudents');
+            const currentValue = parseInt(totalStudents.textContent.replace(',', ''));
+            const variation = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
+            const newValue = Math.max(1200, currentValue + variation);
+            totalStudents.textContent = newValue.toLocaleString();
+        }, 30000);
+
+        console.log('🎓 Student ERP Management System Loaded Successfully!');
+        console.log('📁 File Structure:');
+        console.log('├── main page/');
+        console.log('│   └── index.html (current)');
+        console.log('└── pages/');
+        console.log('    ├── admission/admission.html');
+        console.log('    ├── dashboard/dashboard.html');
+        console.log('    ├── examination/examination.html');
+        console.log('    ├── fees/fees.html');
+        console.log('    ├── hostel/hostel.html');
+        console.log('    ├── library/library.html');
+        console.log('    ├── report/reports.html');
+        console.log('    └── settings/settings.html');
+    </script>
+</body>
+</html>

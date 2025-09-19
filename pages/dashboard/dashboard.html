@@ -73,6 +73,8 @@
         .nav-link:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
         }
 
         .stats-overview {
@@ -586,7 +588,7 @@
 </head>
 <body>
     <!-- Back to Main Button -->
-    <a href="javascript:history.back()" class="back-to-main">
+    <a href="/main%20page/index.html" class="back-to-main">
         <i class="fas fa-arrow-left"></i> Back to ERP System
     </a>
 
@@ -602,12 +604,12 @@
             </div>
             
             <div class="nav-links">
-                <a href="javascript:history.back()" class="nav-link"><i class="fas fa-arrow-left"></i> Back to Main</a>
-                <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
-                <a href="#" class="nav-link" onclick="showSection('admission')"><i class="fas fa-user-plus"></i> Admission</a>
-                <a href="#" class="nav-link" onclick="showSection('fees')"><i class="fas fa-money-bill"></i> Fees</a>
-                <a href="#" class="nav-link" onclick="showSection('hostel')"><i class="fas fa-building"></i> Hostel</a>
-                <a href="#" class="nav-link" onclick="showSection('library')"><i class="fas fa-book"></i> Library</a>
+                <a href="/main%20page/index.html" class="nav-link"><i class="fas fa-arrow-left"></i> Back to Main</a>
+                <a href="/main%20page/index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="../admission/admission.html" class="nav-link"><i class="fas fa-user-plus"></i> Admission</a>
+                <a href="../fees/fees.html" class="nav-link"><i class="fas fa-money-bill"></i> Fees</a>
+                <a href="../hostel/hostel.html" class="nav-link"><i class="fas fa-building"></i> Hostel</a>
+                <a href="../library/library.html" class="nav-link"><i class="fas fa-book"></i> Library</a>
             </div>
         </div>
 
@@ -813,17 +815,17 @@
             libraryBooks: 12450,
             recentActivities: [
                 { icon: 'fas fa-user-plus', title: 'New student admission - John Doe', time: '5 minutes ago', color: '#667eea' },
-                { icon: 'fas fa-rupee-sign', title: 'Fee payment received - ₹50,000', time: '12 minutes ago', color: '#00b894' },
-                { icon: 'fas fa-bed', title: 'Room allocated to STU456', time: '1 hour ago', color: '#fdcb6e' },
-                { icon: 'fas fa-book', title: 'Book returned - Physics Fundamentals', time: '2 hours ago', color: '#e17055' },
-                { icon: 'fas fa-chart-bar', title: 'Monthly report generated', time: '3 hours ago', color: '#764ba2' },
-                { icon: 'fas fa-graduation-cap', title: 'Grade entered for Mathematics', time: '4 hours ago', color: '#667eea' }
+                { icon: 'fas fa-money-bill', title: 'Fee payment received - ₹25,000', time: '12 minutes ago', color: '#00b894' },
+                { icon: 'fas fa-bed', title: 'Room assigned to Sarah Wilson', time: '25 minutes ago', color: '#fdcb6e' },
+                { icon: 'fas fa-book', title: 'New books added to library', time: '1 hour ago', color: '#fd79a8' },
+                { icon: 'fas fa-graduation-cap', title: 'Semester results published', time: '2 hours ago', color: '#667eea' },
+                { icon: 'fas fa-bell', title: 'Fee reminder sent to 45 students', time: '3 hours ago', color: '#e17055' }
             ],
             notifications: [
-                { title: 'Fee Reminder', message: '50 students have pending fees', urgent: true, icon: 'fas fa-exclamation-triangle' },
-                { title: 'Hostel Maintenance', message: 'Room 203 requires repair', urgent: false, icon: 'fas fa-tools' },
-                { title: 'Library Alert', message: '15 books are overdue', urgent: true, icon: 'fas fa-book' },
-                { title: 'System Update', message: 'Scheduled maintenance tonight', urgent: false, icon: 'fas fa-cog' }
+                { title: 'Fee Payment Due', message: '23 students have pending fees', urgent: true, time: '10 min ago' },
+                { title: 'Room Maintenance', message: 'Hostel room 204 needs repair', urgent: false, time: '1 hour ago' },
+                { title: 'Library Update', message: 'New digital books available', urgent: false, time: '2 hours ago' },
+                { title: 'Academic Alert', message: '5 students below average performance', urgent: true, time: '3 hours ago' }
             ]
         };
 
@@ -831,103 +833,83 @@
 
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
-            initializeDashboard();
-            updateClock();
-            setInterval(updateClock, 1000);
-            setInterval(refreshData, 30000); // Refresh every 30 seconds
-        });
-
-        function initializeDashboard() {
-            animateCounters();
-            loadCharts();
-            loadRecentActivities();
+            updateTime();
+            setInterval(updateTime, 1000);
+            loadDashboardData();
+            initCharts();
+            loadActivities();
             loadNotifications();
             showWelcomeMessage();
-        }
+        });
 
-        // Show welcome message
-        function showWelcomeMessage() {
-            showAlert('Welcome to the ERP Dashboard! All systems are operational.', 'success');
-        }
-
-        // Animate counters
-        function animateCounters() {
-            animateNumber('totalStudents', dashboardData.students, '');
-            animateNumber('totalFees', dashboardData.totalFees, '₹', true);
-            animateNumber('hostelOccupancy', dashboardData.hostelOccupancy, '%');
-            animateNumber('libraryBooks', dashboardData.libraryBooks, '');
-        }
-
-        function animateNumber(elementId, targetValue, prefix = '', isRupees = false) {
-            const element = document.getElementById(elementId);
-            const startValue = 0;
-            const duration = 2000;
-            const startTime = Date.now();
-            
-            const animate = () => {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const currentValue = Math.floor(startValue + (targetValue - startValue) * progress);
-                
-                if (isRupees) {
-                    element.textContent = prefix + (currentValue / 100000).toFixed(1) + 'L';
-                } else {
-                    element.textContent = prefix + currentValue.toLocaleString();
-                }
-                
-                if (progress < 1) {
-                    requestAnimationFrame(animate);
-                }
-            };
-            
-            animate();
-        }
-
-        // Update clock
-        function updateClock() {
+        // Update current time
+        function updateTime() {
             const now = new Date();
             const timeString = now.toLocaleTimeString('en-IN', {
-                timeZone: 'Asia/Kolkata',
-                hour12: true,
                 hour: '2-digit',
                 minute: '2-digit',
-                second: '2-digit'
+                second: '2-digit',
+                timeZone: 'Asia/Kolkata'
             });
             document.getElementById('currentTime').textContent = timeString;
         }
 
-        // Load charts
-        function loadCharts() {
-            loadEnrollmentChart();
-            loadDepartmentChart();
+        // Load dashboard data with animation
+        function loadDashboardData() {
+            animateCounter('totalStudents', 0, dashboardData.students, 2000);
+            animateCounter('totalFees', 0, dashboardData.totalFees, 2500, '₹');
+            animateCounter('hostelOccupancy', 0, dashboardData.hostelOccupancy, 1500, '', '%');
+            animateCounter('libraryBooks', 0, dashboardData.libraryBooks, 2200);
         }
 
-        function loadEnrollmentChart() {
-            const ctx = document.getElementById('enrollmentChart').getContext('2d');
-            enrollmentChart = new Chart(ctx, {
+        // Animate counters
+        function animateCounter(elementId, start, end, duration, prefix = '', suffix = '') {
+            const element = document.getElementById(elementId);
+            const increment = (end - start) / (duration / 50);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= end) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                
+                if (elementId === 'totalFees') {
+                    element.textContent = prefix + Math.floor(current).toLocaleString('en-IN') + suffix;
+                } else {
+                    element.textContent = prefix + Math.floor(current).toLocaleString() + suffix;
+                }
+            }, 50);
+        }
+
+        // Initialize charts
+        function initCharts() {
+            // Enrollment Chart
+            const enrollmentCtx = document.getElementById('enrollmentChart').getContext('2d');
+            enrollmentChart = new Chart(enrollmentCtx, {
                 type: 'line',
                 data: {
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
                     datasets: [{
                         label: 'New Enrollments',
-                        data: [65, 78, 90, 110, 125, 140, 155, 142, 160],
+                        data: [120, 135, 150, 145, 160, 175, 190, 185, 200],
                         borderColor: '#667eea',
                         backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                        tension: 0.4,
+                        borderWidth: 3,
                         fill: true,
-                        pointRadius: 6,
-                        pointHoverRadius: 8,
+                        tension: 0.4,
                         pointBackgroundColor: '#667eea',
-                        pointBorderColor: 'white',
-                        pointBorderWidth: 2
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6
                     }]
                 },
                 options: {
                     responsive: true,
                     plugins: {
                         legend: {
-                            display: true,
-                            position: 'top'
+                            display: false
                         }
                     },
                     scales: {
@@ -939,20 +921,19 @@
                         },
                         x: {
                             grid: {
-                                color: 'rgba(0,0,0,0.1)'
+                                display: false
                             }
                         }
                     }
                 }
             });
-        }
 
-        function loadDepartmentChart() {
-            const ctx = document.getElementById('departmentChart').getContext('2d');
-            departmentChart = new Chart(ctx, {
+            // Department Chart
+            const departmentCtx = document.getElementById('departmentChart').getContext('2d');
+            departmentChart = new Chart(departmentCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Computer Science', 'Electronics', 'Mechanical', 'Civil', 'Electrical'],
+                    labels: ['Computer Science', 'Mechanical', 'Electrical', 'Civil', 'Electronics'],
                     datasets: [{
                         data: [35, 25, 20, 12, 8],
                         backgroundColor: [
@@ -960,7 +941,7 @@
                             '#764ba2',
                             '#00b894',
                             '#fdcb6e',
-                            '#e17055'
+                            '#fd79a8'
                         ],
                         borderWidth: 0,
                         hoverOffset: 4
@@ -973,7 +954,9 @@
                             position: 'bottom',
                             labels: {
                                 padding: 20,
-                                usePointStyle: true
+                                font: {
+                                    size: 12
+                                }
                             }
                         }
                     }
@@ -981,18 +964,17 @@
             });
         }
 
-        // Load recent activities
-        function loadRecentActivities() {
+        // Load activities
+        function loadActivities() {
             const activityList = document.getElementById('activityList');
             activityList.innerHTML = '';
-
+            
             dashboardData.recentActivities.forEach((activity, index) => {
-                const activityItem = document.createElement('div');
-                activityItem.className = 'activity-item';
-                activityItem.style.animationDelay = `${index * 0.1}s`;
-                
-                activityItem.innerHTML = `
-                    <div class="activity-icon" style="background-color: ${activity.color}">
+                const activityElement = document.createElement('div');
+                activityElement.className = 'activity-item';
+                activityElement.style.animationDelay = `${index * 0.1}s`;
+                activityElement.innerHTML = `
+                    <div class="activity-icon" style="background: ${activity.color};">
                         <i class="${activity.icon}"></i>
                     </div>
                     <div class="activity-content">
@@ -1000,8 +982,7 @@
                         <div class="activity-time">${activity.time}</div>
                     </div>
                 `;
-                
-                activityList.appendChild(activityItem);
+                activityList.appendChild(activityElement);
             });
         }
 
@@ -1009,117 +990,89 @@
         function loadNotifications() {
             const notificationsList = document.getElementById('notificationsList');
             notificationsList.innerHTML = '';
-
+            
             dashboardData.notifications.forEach(notification => {
-                const notificationItem = document.createElement('div');
-                notificationItem.className = `notification-item ${notification.urgent ? 'notification-urgent' : ''}`;
-                
-                notificationItem.innerHTML = `
-                    <div style="display: flex; align-items: center; margin-bottom: 5px;">
-                        <i class="${notification.icon}" style="margin-right: 10px; color: ${notification.urgent ? '#e17055' : '#667eea'}"></i>
-                        <strong>${notification.title}</strong>
-                    </div>
-                    <div style="font-size: 14px; color: #666;">${notification.message}</div>
+                const notificationElement = document.createElement('div');
+                notificationElement.className = `notification-item ${notification.urgent ? 'notification-urgent' : ''}`;
+                notificationElement.innerHTML = `
+                    <div style="font-weight: 600; margin-bottom: 5px;">${notification.title}</div>
+                    <div style="font-size: 14px; color: #666; margin-bottom: 5px;">${notification.message}</div>
+                    <div style="font-size: 12px; color: #999;">${notification.time}</div>
                 `;
-                
-                notificationsList.appendChild(notificationItem);
+                notificationsList.appendChild(notificationElement);
             });
         }
 
-        // Chart filter functionality
-        function changeChartPeriod(period, button) {
-            // Remove active class from all filter buttons
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+        // Show details function
+        function showDetails(type) {
+            const alerts = {
+                students: { type: 'success', message: `Total Students: ${dashboardData.students} | Active: ${dashboardData.students - 23} | On Leave: 23` },
+                fees: { type: 'success', message: `Total Collection: ₹${dashboardData.totalFees.toLocaleString()} | Pending: ₹${(dashboardData.totalFees * 0.11).toFixed(0)} | Collection Rate: 89%` },
+                hostel: { type: 'warning', message: `Occupancy: ${dashboardData.hostelOccupancy}% | Available Rooms: 128 | Under Maintenance: 15` },
+                library: { type: 'success', message: `Total Books: ${dashboardData.libraryBooks} | Issued: 234 | Available: ${dashboardData.libraryBooks - 234} | Overdue: 12` }
+            };
             
-            // Add active class to clicked button
+            showAlert(alerts[type].message, alerts[type].type);
+        }
+
+        // Show alert
+        function showAlert(message, type = 'success') {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertElement = document.createElement('div');
+            alertElement.className = `alert alert-${type}`;
+            alertElement.innerHTML = `
+                <i class="fas fa-info-circle" style="margin-right: 10px;"></i>
+                ${message}
+                <button onclick="this.parentElement.remove()" style="float: right; background: none; border: none; font-size: 18px; cursor: pointer;">&times;</button>
+            `;
+            alertContainer.appendChild(alertElement);
+            
+            setTimeout(() => {
+                if (alertElement.parentElement) {
+                    alertElement.remove();
+                }
+            }, 5000);
+        }
+
+        // Chart period change
+        function changeChartPeriod(period, button) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             
-            // Update chart data based on period
-            let newData, newLabels;
+            const datasets = {
+                '6m': [120, 135, 150, 145, 160, 175],
+                '1y': [100, 120, 135, 150, 145, 160, 175, 190, 185, 200, 210, 225],
+                'all': [80, 95, 110, 100, 120, 135, 150, 145, 160, 175, 190, 185, 200, 210, 225, 240]
+            };
             
-            switch(period) {
-                case '6m':
-                    newLabels = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
-                    newData = [110, 125, 140, 155, 142, 160];
-                    break;
-                case '1y':
-                    newLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                    newData = [65, 78, 90, 110, 125, 140, 155, 142, 160, 175, 190, 200];
-                    break;
-                case 'all':
-                    newLabels = ['2022', '2023', '2024'];
-                    newData = [800, 1050, 1247];
-                    break;
-                default:
-                    newLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
-                    newData = [65, 78, 90, 110, 125, 140, 155, 142, 160];
-            }
+            const labels = {
+                '6m': ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                '1y': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                'all': ['2022 Q1', '2022 Q2', '2022 Q3', '2022 Q4', '2023 Q1', '2023 Q2', '2023 Q3', '2023 Q4', '2024 Q1', '2024 Q2', '2024 Q3', '2024 Q4', '2025 Q1', '2025 Q2', '2025 Q3', '2025 Q4']
+            };
             
-            enrollmentChart.data.labels = newLabels;
-            enrollmentChart.data.datasets[0].data = newData;
+            enrollmentChart.data.labels = labels[period];
+            enrollmentChart.data.datasets[0].data = datasets[period];
             enrollmentChart.update('active');
-            
-            showAlert(`Chart updated to show ${period} data`, 'success');
-        }
-
-        // Show section functionality
-        function showSection(section) {
-            showAlert(`Navigating to ${section} section...`, 'success');
-            // In a real application, this would navigate to the specific section
-            setTimeout(() => {
-                window.location.href = `index.html#${section}`;
-            }, 1000);
         }
 
         // Quick actions
         function quickAction(action) {
-            showAlert(`Opening ${action.replace(/([A-Z])/g, ' $1').toLowerCase()}...`, 'success');
+            const actions = {
+                addStudent: 'Redirecting to Student Admission Form...',
+                feePayment: 'Opening Fee Payment Portal...',
+                roomAllocation: 'Loading Hostel Room Management...',
+                generateReport: 'Preparing Analytics Report...',
+                gradeEntry: 'Opening Grade Management System...',
+                libraryMgmt: 'Loading Library Management Dashboard...'
+            };
             
-            // Simulate action delay
+            showAlert(actions[action] || 'Feature coming soon!', 'success');
+            
+            // Simulate loading
             setTimeout(() => {
-                switch(action) {
-                    case 'addStudent':
-                        window.location.href = 'index.html#admission';
-                        break;
-                    case 'feePayment':
-                        window.location.href = 'index.html#fees';
-                        break;
-                    case 'roomAllocation':
-                        window.location.href = 'index.html#hostel';
-                        break;
-                    case 'generateReport':
-                        window.location.href = 'index.html#reports';
-                        break;
-                    case 'gradeEntry':
-                        window.location.href = 'index.html#examination';
-                        break;
-                    case 'libraryMgmt':
-                        window.location.href = 'index.html#library';
-                        break;
-                }
-            }, 1000);
-        }
-
-        // Show details
-        function showDetails(type) {
-            let message = '';
-            switch(type) {
-                case 'students':
-                    message = 'Total Students: 1,247\nActive: 1,210\nInactive: 37\nNew this month: 12';
-                    break;
-                case 'fees':
-                    message = 'Total Collection: ₹45.2L\nPending: ₹5.6L\nOverdue: ₹2.1L\nCollection Rate: 89%';
-                    break;
-                case 'hostel':
-                    message = 'Total Rooms: 584\nOccupied: 456\nVacant: 128\nOccupancy Rate: 78%';
-                    break;
-                case 'library':
-                    message = 'Total Books: 12,450\nIssued: 2,340\nAvailable: 10,110\nOverdue: 156';
-                    break;
-            }
-            showAlert(message, 'success');
+                showAlert('Feature will be available in the next update!', 'warning');
+            }, 2000);
         }
 
         // Notification functions
@@ -1135,124 +1088,74 @@
         }
 
         function refreshDashboard() {
-            showAlert('Refreshing dashboard data...', 'success');
-            
-            // Add loading spinner
-            const spinner = document.createElement('div');
-            spinner.className = 'loading-spinner';
-            spinner.style.position = 'fixed';
-            spinner.style.top = '50%';
-            spinner.style.left = '50%';
-            spinner.style.transform = 'translate(-50%, -50%)';
-            spinner.style.zIndex = '2000';
-            document.body.appendChild(spinner);
-            
-            // Simulate data refresh
-            setTimeout(() => {
-                document.body.removeChild(spinner);
-                animateCounters();
-                loadRecentActivities();
-                loadNotifications();
-                showAlert('Dashboard refreshed successfully!', 'success');
-            }, 2000);
+            showAlert('Dashboard refreshed successfully!', 'success');
+            loadDashboardData();
+            enrollmentChart.update();
+            departmentChart.update();
+            toggleFloatingMenu();
         }
 
         function exportData() {
-            showAlert('Preparing data export...', 'success');
-            
-            setTimeout(() => {
-                const data = {
-                    timestamp: new Date().toISOString(),
-                    stats: dashboardData,
-                    exportedBy: 'ERP Dashboard System'
-                };
-                
-                const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `dashboard-export-${new Date().toISOString().split('T')[0]}.json`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                
-                showAlert('Data exported successfully!', 'success');
-            }, 1500);
+            showAlert('Exporting dashboard data... Download will start shortly.', 'success');
+            toggleFloatingMenu();
         }
 
         function showHelp() {
-            const helpText = `
-ERP Dashboard Help:
-
-📊 Statistics Cards: Click on any stat card to view detailed information
-📈 Charts: Use filter buttons to change time periods
-🔔 Notifications: Click the bell icon to view system notifications
-⚡ Quick Actions: Use action buttons to navigate to specific modules
-🔄 Refresh: Keep data updated with the refresh button
-📤 Export: Download dashboard data as JSON file
-
-Navigation:
-- Back to ERP System: Returns to the main application
-- Home: Go to homepage
-- Module links: Direct access to specific features
-
-Need more help? Contact system administrator.
-            `;
-            showAlert(helpText, 'success');
+            showAlert('Help: Click on stat cards for details, use quick actions for navigation, and check notifications regularly.', 'success');
+            toggleFloatingMenu();
         }
 
-        // Alert system
-        function showAlert(message, type = 'success') {
-            const alertContainer = document.getElementById('alertContainer');
-            
-            const alert = document.createElement('div');
-            alert.className = `alert alert-${type}`;
-            alert.innerHTML = `
-                <div style="display: flex; align-items: center; justify-content: space-between;">
-                    <div style="white-space: pre-line;">${message}</div>
-                    <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 18px; cursor: pointer; margin-left: 15px;">&times;</button>
-                </div>
-            `;
-            
-            alertContainer.appendChild(alert);
-            
-            // Auto-remove alert after 5 seconds
+        // Welcome message
+        function showWelcomeMessage() {
             setTimeout(() => {
-                if (alert.parentElement) {
-                    alert.remove();
-                }
-            }, 5000);
+                showAlert('Welcome to ERP Dashboard! All systems are operational and data is up to date.', 'success');
+            }, 1000);
         }
 
-        // Refresh data function
-        function refreshData() {
-            // Simulate real-time data updates
-            dashboardData.students += Math.floor(Math.random() * 3);
-            dashboardData.totalFees += Math.floor(Math.random() * 50000);
+        // Close notifications when clicking outside
+        document.addEventListener('click', function(event) {
+            const panel = document.getElementById('notificationsPanel');
+            const floatingAction = document.querySelector('.floating-action');
             
-            // Update counters
-            document.getElementById('totalStudents').textContent = dashboardData.students.toLocaleString();
-            document.getElementById('totalFees').textContent = '₹' + (dashboardData.totalFees / 100000).toFixed(1) + 'L';
-        }
+            if (!panel.contains(event.target) && !floatingAction.contains(event.target)) {
+                panel.classList.remove('show');
+                document.getElementById('floatingMenu').classList.remove('show');
+            }
+        });
 
         // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey) {
-                switch(e.key) {
-                    case 'r':
-                        e.preventDefault();
-                        refreshDashboard();
-                        break;
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey) {
+                switch(event.key) {
                     case 'n':
-                        e.preventDefault();
+                        event.preventDefault();
                         toggleNotifications();
                         break;
+                    case 'r':
+                        event.preventDefault();
+                        refreshDashboard();
+                        break;
                     case 'h':
-                        e.preventDefault();
+                        event.preventDefault();
                         showHelp();
                         break;
                 }
+            }
+        });
+
+        // Auto-refresh data every 5 minutes
+        setInterval(() => {
+            loadDashboardData();
+            showAlert('Data updated automatically.', 'success');
+        }, 300000);
+
+        // Performance monitoring
+        window.addEventListener('load', function() {
+            const loadTime = performance.now();
+            console.log(`Dashboard loaded in ${loadTime.toFixed(2)}ms`);
+            
+            if (loadTime > 3000) {
+                showAlert('Dashboard took longer than expected to load. Please check your connection.', 'warning');
             }
         });
     </script>

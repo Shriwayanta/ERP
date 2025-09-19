@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hostel Management System</title>
+    <title>Examination Management System</title>
     <style>
         * {
             margin: 0;
@@ -28,9 +28,9 @@
         }
 
         .back-to-main-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
+            position: fixed;
+            top: 40px;
+            left: 40px;
             background: rgba(255, 255, 255, 0.9);
             color: #667eea;
             text-decoration: none;
@@ -42,7 +42,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            z-index: 10;
+            z-index: 1000;
         }
 
         .back-to-main-btn:hover {
@@ -56,7 +56,7 @@
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 60px 30px 30px;
+            padding: 30px;
             text-align: center;
             position: relative;
         }
@@ -128,7 +128,7 @@
         }
 
         .card {
-            background: linear-gradient(135deg, #fd79a8, #e84393);
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
             color: white;
             padding: 25px;
             border-radius: 15px;
@@ -210,13 +210,13 @@
 
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
-            border-color: #fd79a8;
+            border-color: #74b9ff;
             background: white;
-            box-shadow: 0 0 0 3px rgba(253, 121, 168, 0.1);
+            box-shadow: 0 0 0 3px rgba(116, 185, 255, 0.1);
         }
 
         .btn {
-            background: linear-gradient(135deg, #fd79a8, #e84393);
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
             color: white;
             border: none;
             padding: 12px 25px;
@@ -233,7 +233,7 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(253, 121, 168, 0.4);
+            box-shadow: 0 5px 15px rgba(116, 185, 255, 0.4);
         }
 
         .btn:active {
@@ -277,7 +277,7 @@
         }
 
         .table th {
-            background: linear-gradient(135deg, #fd79a8, #e84393);
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
             color: white;
             font-weight: 600;
             text-transform: uppercase;
@@ -300,24 +300,24 @@
             letter-spacing: 0.5px;
         }
 
-        .status.occupied {
-            background: #f8d7da;
-            color: #721c24;
+        .status.scheduled {
+            background: #d1ecf1;
+            color: #0c5460;
         }
 
-        .status.available {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status.maintenance {
+        .status.ongoing {
             background: #fff3cd;
             color: #856404;
         }
 
-        .status.reserved {
-            background: #d1ecf1;
-            color: #0c5460;
+        .status.completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.cancelled {
+            background: #f8d7da;
+            color: #721c24;
         }
 
         .search-filter {
@@ -334,7 +334,7 @@
         }
 
         .ai-insights {
-            background: linear-gradient(135deg, #fd79a8, #e84393);
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
             color: white;
             padding: 25px;
             border-radius: 15px;
@@ -344,7 +344,7 @@
         }
 
         .ai-insights::before {
-            content: '🏨';
+            content: '📊';
             font-size: 3em;
             position: absolute;
             top: 20px;
@@ -370,64 +370,67 @@
             backdrop-filter: blur(10px);
         }
 
-        .room-grid {
+        .grade-distribution {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 15px;
             margin: 20px 0;
         }
 
-        .room-card {
+        .grade-card {
             background: white;
             border: 2px solid #e9ecef;
             border-radius: 10px;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
-            cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
         }
 
-        .room-card:hover {
+        .grade-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .room-card.occupied {
-            border-color: #dc3545;
-            background: #f8d7da;
-        }
-
-        .room-card.available {
+        .grade-card.grade-a {
             border-color: #28a745;
             background: #d4edda;
         }
 
-        .room-card.maintenance {
-            border-color: #ffc107;
-            background: #fff3cd;
-        }
-
-        .room-card.reserved {
+        .grade-card.grade-b {
             border-color: #17a2b8;
             background: #d1ecf1;
         }
 
-        .room-number {
-            font-size: 1.2em;
+        .grade-card.grade-c {
+            border-color: #ffc107;
+            background: #fff3cd;
+        }
+
+        .grade-card.grade-d {
+            border-color: #fd7e14;
+            background: #fde2e4;
+        }
+
+        .grade-card.grade-f {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .grade-letter {
+            font-size: 2em;
             font-weight: bold;
             margin-bottom: 5px;
         }
 
-        .room-status {
-            font-size: 0.9em;
-            text-transform: capitalize;
+        .grade-count {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 3px;
         }
 
-        .room-capacity {
-            font-size: 0.8em;
+        .grade-percentage {
+            font-size: 0.9em;
             color: #666;
-            margin-top: 5px;
         }
 
         .modal {
@@ -448,9 +451,11 @@
             padding: 30px;
             border-radius: 15px;
             width: 90%;
-            max-width: 600px;
+            max-width: 700px;
             position: relative;
             animation: modalSlideIn 0.3s ease;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         @keyframes modalSlideIn {
@@ -502,58 +507,60 @@
             background: linear-gradient(135deg, #ffc107, #fd7e14);
         }
 
-        .hostel-floor-map {
+        .exam-schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .exam-card {
             background: white;
+            border: 1px solid #e9ecef;
             border-radius: 15px;
             padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .floor-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            justify-content: center;
-        }
-
-        .floor-btn {
-            padding: 10px 20px;
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
 
-        .floor-btn.active {
-            background: linear-gradient(135deg, #fd79a8, #e84393);
-            color: white;
-            border-color: #fd79a8;
+        .exam-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
-        .maintenance-request {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
+        .exam-card h4 {
+            color: #74b9ff;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .exam-details {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .exam-details div {
+            margin-bottom: 5px;
+        }
+
+        .performance-chart {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-
-        .maintenance-request h4 {
-            color: #856404;
-            margin-bottom: 8px;
-        }
-
-        .priority-high {
-            border-left: 5px solid #dc3545;
-        }
-
-        .priority-medium {
-            border-left: 5px solid #ffc107;
-        }
-
-        .priority-low {
-            border-left: 5px solid #28a745;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1.1em;
+            margin: 15px 0;
         }
 
         @media (max-width: 768px) {
@@ -578,19 +585,22 @@
             }
 
             .back-to-main-btn {
-                position: static;
-                margin: 0 auto 20px;
-                display: block;
-                width: fit-content;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1001;
             }
 
             .header {
                 padding: 30px 20px;
             }
 
-            .room-grid {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-                gap: 10px;
+            .exam-schedule-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grade-distribution {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             }
         }
     </style>
@@ -598,124 +608,155 @@
 <body>
     <div class="container">
         <div class="header">
-            <a href="index.html" class="back-to-main-btn">
+            <a href="../../main%20page/index.html" class="back-to-main-btn">
                 ← Back to Main
             </a>
             <div style="text-align: center; margin-top: 10px;">
-                <h1>🏨 Hostel Management System</h1>
-                <p>Room allocation, occupancy tracking, maintenance with AI optimization</p>
+                <h1>📝 Examination Management System</h1>
+                <p>Exam scheduling, result processing, grade analytics with performance prediction</p>
             </div>
         </div>
 
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="showTab('dashboard')">Dashboard</button>
-            <button class="nav-tab" onclick="showTab('room-allocation')">Room Allocation</button>
-            <button class="nav-tab" onclick="showTab('room-map')">Room Map</button>
-            <button class="nav-tab" onclick="showTab('maintenance')">Maintenance</button>
-            <button class="nav-tab" onclick="showTab('visitor-management')">Visitor Management</button>
-            <button class="nav-tab" onclick="showTab('mess-management')">Mess Management</button>
+            <button class="nav-tab" onclick="showTab('exam-scheduling')">Exam Scheduling</button>
+            <button class="nav-tab" onclick="showTab('result-processing')">Result Processing</button>
+            <button class="nav-tab" onclick="showTab('grade-analytics')">Grade Analytics</button>
+            <button class="nav-tab" onclick="showTab('performance-tracking')">Performance Tracking</button>
             <button class="nav-tab" onclick="showTab('reports')">Reports</button>
+            <button class="nav-tab" onclick="showTab('ai-insights')">AI Insights</button>
         </div>
 
         <!-- Dashboard Tab -->
         <div id="dashboard" class="tab-content active">
             <div class="ai-insights">
-                <h3>🤖 AI Hostel Insights</h3>
+                <h3>🤖 AI Performance Insights</h3>
                 <div class="insights-grid">
                     <div class="insight-item">
-                        <strong>Optimal Occupancy</strong><br>
-                        <span id="optimalOccupancy">85% recommended</span>
+                        <strong>Performance Trend</strong><br>
+                        <span id="performanceTrend">5% improvement this semester</span>
                     </div>
                     <div class="insight-item">
-                        <strong>Maintenance Prediction</strong><br>
-                        <span>Room 205 needs attention</span>
+                        <strong>At-Risk Students</strong><br>
+                        <span>23 students need intervention</span>
                     </div>
                     <div class="insight-item">
-                        <strong>Energy Efficiency</strong><br>
-                        <span>12% savings this month</span>
+                        <strong>Subject Analysis</strong><br>
+                        <span>Mathematics shows lowest scores</span>
                     </div>
                     <div class="insight-item">
-                        <strong>Student Satisfaction</strong><br>
-                        <span id="satisfactionRate">4.2/5 rating</span>
+                        <strong>Predicted Outcomes</strong><br>
+                        <span id="predictedPass">96% pass rate expected</span>
                     </div>
                 </div>
             </div>
 
             <div class="dashboard-cards">
                 <div class="card">
-                    <h3 id="totalRooms">584</h3>
-                    <p>Total Rooms</p>
+                    <h3 id="totalStudents">1,247</h3>
+                    <p>Total Students</p>
                 </div>
                 <div class="card">
-                    <h3 id="occupiedRooms">456</h3>
-                    <p>Occupied Rooms</p>
+                    <h3 id="averageGrade">B+</h3>
+                    <p>Average Grade</p>
                 </div>
                 <div class="card">
-                    <h3 id="occupancyRate">78%</h3>
-                    <p>Occupancy Rate</p>
+                    <h3 id="passRate">94%</h3>
+                    <p>Pass Rate</p>
                 </div>
                 <div class="card">
-                    <h3 id="availableRooms">128</h3>
-                    <p>Available Rooms</p>
+                    <h3 id="activeExams">12</h3>
+                    <p>Active Exams</p>
                 </div>
                 <div class="card">
-                    <h3 id="maintenanceRooms">15</h3>
-                    <p>Under Maintenance</p>
+                    <h3 id="pendingResults">156</h3>
+                    <p>Pending Results</p>
                 </div>
                 <div class="card">
-                    <h3 id="todayCheckIns">23</h3>
-                    <p>Today's Check-ins</p>
+                    <h3 id="upcomingExams">8</h3>
+                    <p>Upcoming Exams</p>
+                </div>
+            </div>
+
+            <div class="performance-chart">
+                <h3>Grade Distribution Overview</h3>
+                <div class="grade-distribution">
+                    <div class="grade-card grade-a">
+                        <div class="grade-letter">A</div>
+                        <div class="grade-count">248</div>
+                        <div class="grade-percentage">19.9%</div>
+                    </div>
+                    <div class="grade-card grade-b">
+                        <div class="grade-letter">B</div>
+                        <div class="grade-count">412</div>
+                        <div class="grade-percentage">33.0%</div>
+                    </div>
+                    <div class="grade-card grade-c">
+                        <div class="grade-letter">C</div>
+                        <div class="grade-count">387</div>
+                        <div class="grade-percentage">31.0%</div>
+                    </div>
+                    <div class="grade-card grade-d">
+                        <div class="grade-letter">D</div>
+                        <div class="grade-count">125</div>
+                        <div class="grade-percentage">10.0%</div>
+                    </div>
+                    <div class="grade-card grade-f">
+                        <div class="grade-letter">F</div>
+                        <div class="grade-count">75</div>
+                        <div class="grade-percentage">6.1%</div>
+                    </div>
                 </div>
             </div>
 
             <div class="table-container">
-                <h3>Recent Room Activities</h3>
+                <h3>Recent Examination Activities</h3>
                 <div class="search-filter">
                     <div class="search-group">
-                        <input type="text" id="searchActivities" placeholder="Search by room or student..." 
+                        <input type="text" id="searchActivities" placeholder="Search by subject or student..." 
                                onkeyup="filterActivities()" class="form-control">
                     </div>
                 </div>
                 <table class="table" id="activitiesTable">
                     <thead>
                         <tr>
-                            <th>Time</th>
-                            <th>Room</th>
-                            <th>Student</th>
-                            <th>Activity</th>
+                            <th>Date</th>
+                            <th>Subject</th>
+                            <th>Exam Type</th>
+                            <th>Students</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="activitiesTableBody">
                         <tr>
-                            <td>10:30 AM</td>
-                            <td>Room 101</td>
-                            <td>Rahul Kumar</td>
-                            <td>Check-in</td>
-                            <td><span class="status available">Completed</span></td>
+                            <td>2024-03-15</td>
+                            <td>Data Structures</td>
+                            <td>Mid-term</td>
+                            <td>156</td>
+                            <td><span class="status completed">Completed</span></td>
                             <td>
-                                <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px;" onclick="viewDetails('101')">View</button>
+                                <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px;" onclick="viewResults('DS_MID_2024')">Results</button>
                             </td>
                         </tr>
                         <tr>
-                            <td>09:45 AM</td>
-                            <td>Room 205</td>
-                            <td>Priya Singh</td>
-                            <td>Maintenance Request</td>
-                            <td><span class="status maintenance">Pending</span></td>
+                            <td>2024-03-18</td>
+                            <td>Computer Networks</td>
+                            <td>Quiz</td>
+                            <td>142</td>
+                            <td><span class="status ongoing">Ongoing</span></td>
                             <td>
-                                <button class="btn btn-warning" style="padding: 5px 10px; font-size: 12px;" onclick="handleMaintenance('205')">Handle</button>
+                                <button class="btn btn-warning" style="padding: 5px 10px; font-size: 12px;" onclick="monitorExam('CN_QUIZ_2024')">Monitor</button>
                             </td>
                         </tr>
                         <tr>
-                            <td>08:20 AM</td>
-                            <td>Room 303</td>
-                            <td>Amit Patel</td>
-                            <td>Room Change</td>
-                            <td><span class="status reserved">In Progress</span></td>
+                            <td>2024-03-22</td>
+                            <td>Database Management</td>
+                            <td>Final</td>
+                            <td>178</td>
+                            <td><span class="status scheduled">Scheduled</span></td>
                             <td>
-                                <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px;" onclick="viewDetails('303')">View</button>
+                                <button class="btn btn-success" style="padding: 5px 10px; font-size: 12px;" onclick="prepareExam('DB_FINAL_2024')">Prepare</button>
                             </td>
                         </tr>
                     </tbody>
@@ -723,159 +764,125 @@
             </div>
         </div>
 
-        <!-- Room Allocation Tab -->
-        <div id="room-allocation" class="tab-content">
+        <!-- Exam Scheduling Tab -->
+        <div id="exam-scheduling" class="tab-content">
             <div class="form-container">
-                <h3>🛏️ Room Allocation</h3>
+                <h3>📅 Schedule New Exam</h3>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="studentId">Student ID</label>
-                        <input type="text" id="studentId" placeholder="Enter student ID" 
-                               oninput="loadStudentInfo()" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="studentName">Student Name</label>
-                        <input type="text" id="studentName" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="studentDepartment">Department</label>
-                        <input type="text" id="studentDepartment" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="studentYear">Year</label>
-                        <input type="text" id="studentYear" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="roomType">Room Type</label>
-                        <select id="roomType" onchange="filterAvailableRooms()" required>
-                            <option value="">Select Room Type</option>
-                            <option value="single">Single Occupancy</option>
-                            <option value="double">Double Occupancy</option>
-                            <option value="triple">Triple Occupancy</option>
-                            <option value="quad">Quad Occupancy</option>
+                        <label for="examSubject">Subject</label>
+                        <select id="examSubject" required>
+                            <option value="">Select Subject</option>
+                            <option value="data-structures">Data Structures</option>
+                            <option value="algorithms">Algorithms</option>
+                            <option value="computer-networks">Computer Networks</option>
+                            <option value="database-management">Database Management</option>
+                            <option value="software-engineering">Software Engineering</option>
+                            <option value="operating-systems">Operating Systems</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="hostelBlock">Hostel Block</label>
-                        <select id="hostelBlock" onchange="filterAvailableRooms()" required>
-                            <option value="">Select Block</option>
-                            <option value="A">Block A (Boys)</option>
-                            <option value="B">Block B (Boys)</option>
-                            <option value="C">Block C (Girls)</option>
-                            <option value="D">Block D (Girls)</option>
+                        <label for="examType">Exam Type</label>
+                        <select id="examType" required>
+                            <option value="">Select Type</option>
+                            <option value="quiz">Quiz</option>
+                            <option value="mid-term">Mid-term</option>
+                            <option value="final">Final Exam</option>
+                            <option value="assignment">Assignment</option>
+                            <option value="practical">Practical</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="preferredFloor">Preferred Floor</label>
-                        <select id="preferredFloor" onchange="filterAvailableRooms()">
-                            <option value="">Any Floor</option>
-                            <option value="1">Ground Floor</option>
-                            <option value="2">First Floor</option>
-                            <option value="3">Second Floor</option>
-                            <option value="4">Third Floor</option>
+                        <label for="examDate">Exam Date</label>
+                        <input type="date" id="examDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="examTime">Exam Time</label>
+                        <input type="time" id="examTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="examDuration">Duration (Hours)</label>
+                        <select id="examDuration" required>
+                            <option value="">Select Duration</option>
+                            <option value="1">1 Hour</option>
+                            <option value="1.5">1.5 Hours</option>
+                            <option value="2">2 Hours</option>
+                            <option value="3">3 Hours</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="allocationDate">Allocation Date</label>
-                        <input type="date" id="allocationDate" required>
+                        <label for="examRoom">Exam Room</label>
+                        <select id="examRoom" required>
+                            <option value="">Select Room</option>
+                            <option value="hall-a">Examination Hall A</option>
+                            <option value="hall-b">Examination Hall B</option>
+                            <option value="lab-1">Computer Lab 1</option>
+                            <option value="lab-2">Computer Lab 2</option>
+                            <option value="auditorium">Main Auditorium</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="maxMarks">Maximum Marks</label>
+                        <input type="number" id="maxMarks" placeholder="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="passingMarks">Passing Marks</label>
+                        <input type="number" id="passingMarks" placeholder="40" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="specialRequirements">Special Requirements</label>
-                    <textarea id="specialRequirements" rows="3" placeholder="Any special needs or preferences..."></textarea>
+                    <label for="examInstructions">Exam Instructions</label>
+                    <textarea id="examInstructions" rows="4" placeholder="Enter special instructions for the exam..."></textarea>
                 </div>
-                <button type="button" class="btn" onclick="suggestRooms()">
-                    🤖 AI Room Suggestion
+                <button type="button" class="btn" onclick="scheduleExam()">
+                    📅 Schedule Exam
                 </button>
-                <button type="button" class="btn btn-success" onclick="allocateRoom()" style="margin-left: 10px;">
-                    🛏️ Allocate Room
+                <button type="button" class="btn btn-secondary" onclick="checkRoomAvailability()" style="margin-left: 10px;">
+                    🔍 Check Availability
                 </button>
-            </div>
-
-            <div class="form-container">
-                <h3>📋 Available Rooms</h3>
-                <div id="availableRoomsList" style="max-height: 400px; overflow-y: auto;">
-                    <div class="room-grid" id="roomGrid">
-                        <!-- Dynamic room cards will be populated here -->
-                    </div>
-                </div>
             </div>
 
             <div class="table-container">
-                <h3>Current Allocations</h3>
+                <h3>Scheduled Exams</h3>
                 <div class="search-filter">
                     <div class="search-group">
-                        <input type="text" id="searchAllocations" placeholder="Search allocations..." 
-                               onkeyup="filterAllocations()">
-                        <select id="blockFilter" onchange="filterAllocations()">
-                            <option value="">All Blocks</option>
-                            <option value="A">Block A</option>
-                            <option value="B">Block B</option>
-                            <option value="C">Block C</option>
-                            <option value="D">Block D</option>
+                        <input type="text" id="searchScheduled" placeholder="Search scheduled exams..." 
+                               onkeyup="filterScheduledExams()">
+                        <select id="statusFilter" onchange="filterScheduledExams()">
+                            <option value="">All Status</option>
+                            <option value="scheduled">Scheduled</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
                         </select>
                     </div>
-                    <button class="btn" onclick="exportAllocations()">📊 Export Data</button>
+                    <button class="btn" onclick="exportSchedule()">📊 Export Schedule</button>
                 </div>
-                <table class="table" id="allocationsTable">
+                <table class="table" id="scheduledExamsTable">
                     <thead>
                         <tr>
-                            <th>Student ID</th>
-                            <th>Name</th>
+                            <th>Subject</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Time</th>
                             <th>Room</th>
-                            <th>Block</th>
-                            <th>Allocation Date</th>
+                            <th>Duration</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="allocationsTableBody">
+                    <tbody id="scheduledExamsTableBody">
                         <!-- Dynamic content -->
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Room Map Tab -->
-        <div id="room-map" class="tab-content">
-            <div class="hostel-floor-map">
-                <h3>🗺️ Interactive Room Map</h3>
-                
-                <div class="floor-selector">
-                    <button class="floor-btn active" onclick="showFloor(1)">Ground Floor</button>
-                    <button class="floor-btn" onclick="showFloor(2)">First Floor</button>
-                    <button class="floor-btn" onclick="showFloor(3)">Second Floor</button>
-                    <button class="floor-btn" onclick="showFloor(4)">Third Floor</button>
-                </div>
-
-                <div class="search-filter">
-                    <div class="search-group">
-                        <input type="text" id="roomSearch" placeholder="Search room number..." 
-                               onkeyup="searchRoom()">
-                        <select id="statusFilter" onchange="filterRoomsByStatus()">
-                            <option value="">All Rooms</option>
-                            <option value="available">Available</option>
-                            <option value="occupied">Occupied</option>
-                            <option value="maintenance">Maintenance</option>
-                            <option value="reserved">Reserved</option>
-                        </select>
-                        <select id="blockFilterMap" onchange="filterRoomsByBlock()">
-                            <option value="">All Blocks</option>
-                            <option value="A">Block A</option>
-                            <option value="B">Block B</option>
-                            <option value="C">Block C</option>
-                            <option value="D">Block D</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div style="display: flex; gap: 20px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap;">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <div style="width: 15px; height: 15px; background: #d4edda; border-radius: 3px;"></div>
-                        <span>Available</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <div style="width: 15px; height: 15px; background: #f8d7da; border-radius: 3px;"></div>
-                        <span>Occupied</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px
+        <!-- Result Processing Tab -->
+        <div id="result-processing" class="tab-content">
+            <div class="form-container">
+                <h3>📊 Process Exam Results</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="resultExam">Select Exam</label>
+                        <select id="

@@ -606,6 +606,131 @@
             </div>
         </div>
 
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="stats-cards">
+                <div class="stat-card total">
+                    <div class="stat-number" id="totalApplications">1,247</div>
+                    <div class="stat-label">Total Applications</div>
+                </div>
+                <div class="stat-card pending">
+                    <div class="stat-number" id="pendingApplications">342</div>
+                    <div class="stat-label">Pending Review</div>
+                </div>
+                <div class="stat-card approved">
+                    <div class="stat-number" id="approvedApplications">756</div>
+                    <div class="stat-label">Approved</div>
+                </div>
+                <div class="stat-card rejected">
+                    <div class="stat-number" id="rejectedApplications">149</div>
+                    <div class="stat-label">Rejected</div>
+                </div>
+            </div>
+
+            <!-- Department-wise Statistics -->
+            <div class="admission-form">
+                <h2 style="margin-bottom: 20px;"><i class="fas fa-chart-bar"></i> Department-wise Applications</h2>
+                <canvas id="departmentChart" width="400" height="200"></canvas>
+            </div>
+
+            <!-- Recent Applications -->
+            <div class="table-container">
+                <div style="padding: 20px; border-bottom: 1px solid #e1e1e1;">
+                    <h3><i class="fas fa-clock"></i> Recent Applications</h3>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Application ID</th>
+                            <th>Student Name</th>
+                            <th>Department</th>
+                            <th>Date Applied</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentApplicationsTable">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- New Application Tab -->
+        <div id="apply" class="tab-content">
+            <!-- Progress Steps -->
+            <div class="progress-steps">
+                <div class="progress-line" id="progressLine" style="width: 20%;"></div>
+                <div class="step active" id="step1">
+                    1
+                    <div class="step-label">Basic Info</div>
+                </div>
+                <div class="step" id="step2">
+                    2
+                    <div class="step-label">Academic Details</div>
+                </div>
+                <div class="step" id="step3">
+                    3
+                    <div class="step-label">Documents</div>
+                </div>
+                <div class="step" id="step4">
+                    4
+                    <div class="step-label">Review</div>
+                </div>
+                <div class="step" id="step5">
+                    5
+                    <div class="step-label">Submit</div>
+                </div>
+            </div>
+
+            <!-- Department Selection -->
+            <div class="department-selector">
+                <h3><i class="fas fa-university"></i> Select Department/Field</h3>
+                <div class="department-grid">
+                    <div class="dept-card" data-dept="computer-science" onclick="selectDepartment(this)">
+                        <div class="dept-icon"><i class="fas fa-laptop-code"></i></div>
+                        <div class="dept-name">Computer Science & Engineering</div>
+                        <div class="dept-capacity">Seats: 120 | Available: 45</div>
+                    </div>
+                    <div class="dept-card" data-dept="biomedical" onclick="selectDepartment(this)">
+                        <div class="dept-icon"><i class="fas fa-heartbeat"></i></div>
+                        <div class="dept-name">Biomedical Engineering</div>
+                        <div class="dept-capacity">Seats: 60 | Available: 23</div>
+                    </div>
+                    <div class="dept-card" data-dept="civil" onclick="selectDepartment(this)">
+                        <div class="dept-icon"><i class="fas fa-building"></i></div>
+                        <div class="dept-name">Civil Engineering</div>
+                        <div class="dept-capacity">Seats: 90 | Available: 34</div>
+                    </div>
+                    <div class="dept-card" data-dept="mechanical" onclick="selectDepartment(this)">
+                        <div class="dept-icon"><i class="fas fa-cogs"></i></div>
+                        <div class="dept-name">Mechanical Engineering</div>
+                        <div class="dept-capacity">Seats: 100 | Available: 12</div>
+                    </div>
+                    <div class="dept-card" data-dept="chemical" onclick="selectDepartment(this)">
+                        <div class="dept-icon"><i class="fas fa-flask"></i></div>
+                        <div class="dept-name">Chemical Engineering</div>
+                        <div class="dept-capacity">Seats: 80 | Available: 28</div>
+                    </div>
+                    <div class="dept-card" data-dept="electrical" onclick="selectDepartment(this)">
+                        <div class="dept-icon"><i class="fas fa-bolt"></i></div>
+                        <div class="dept-name">Electrical Engineering</div>
+                        <div class="dept-capacity">Seats: 85 | Available: 19</div>
+                    </div>
+                    <div class="dept-card" data-dept="electronics" onclick="selectDepartment(this)">
+                        <div class="dept-icon"><i class="fas fa-microchip"></i></div>
+                        <div class="dept-name">Electronics & Communication</div>
+                        <div class="dept-capacity">Seats: 110 | Available: 41</div>
+                    </div>
+                    <div class="dept-card" data-dept="aerospace" onclick="selectDepartment(this)">
+                        <div class="dept-icon"><i class="fas fa-plane"></i></div>
+                        <div class="dept-name">Aerospace Engineering</div>
+                        <div class="dept-capacity">Seats: 50 | Available: 15</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Eligibility Checker -->
             <div class="eligibility-checker">
                 <h3><i class="fas fa-check-circle"></i> Quick Eligibility Check</h3>
                 <div class="form-row">

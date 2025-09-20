@@ -1213,24 +1213,10 @@
             setInterval(updateRealTimeData, 30000); // Update every 30 seconds
         });
 
-        // Go to main dashboard
+        // Go to main directory/homepage
         function goToMainDashboard() {
-            // Reset to dashboard view
-            showTab('dashboard');
-            
-            // Reset all nav tabs
-            const navTabs = document.querySelectorAll('.nav-tab');
-            navTabs.forEach(tab => tab.classList.remove('active'));
-            navTabs[0].classList.add('active');
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // Show confirmation
-            showNotification('Returned to main dashboard', 'success');
-            
-            // Update dashboard data
-            updateDashboard();
+            // Redirect to your main page
+            window.location.href = 'http://127.0.0.1:5500/index.html';
         }
 
         // Initialize rooms data

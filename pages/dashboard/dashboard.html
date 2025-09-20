@@ -814,4 +814,347 @@
             libraryBooks: 12450,
             recentActivities: [
                 { icon: 'fas fa-user-plus', title: 'New student admission - John Doe', time: '5 minutes ago', color: '#667eea' },
-                { icon: 'fas fa-money-bill', title: 'Fee payment received -
+                { icon: 'fas fa-money-bill', title: 'Fee payment received - ₹45,000', time: '15 minutes ago', color: '#00b894' },
+                { icon: 'fas fa-bed', title: 'Room allocated - Block A-204', time: '30 minutes ago', color: '#fdcb6e' },
+                { icon: 'fas fa-book', title: 'New book added - Data Structures', time: '1 hour ago', color: '#fd79a8' },
+                { icon: 'fas fa-graduation-cap', title: 'Exam results published - CS Dept', time: '2 hours ago', color: '#667eea' }
+            ],
+            notifications: [
+                { title: 'Fee Payment Reminder', message: '25 students pending fee payment', time: '10 min ago', urgent: true },
+                { title: 'Library Maintenance', message: 'Library will be closed on Sunday', time: '1 hour ago', urgent: false },
+                { title: 'New Admission', message: '5 new applications received', time: '2 hours ago', urgent: false }
+            ]
+        };
+
+        let enrollmentChart, departmentChart;
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDashboard();
+            updateTime();
+            setInterval(updateTime, 1000);
+        });
+
+        function initializeDashboard() {
+            animateCounters();
+            loadRecentActivities();
+            loadNotifications();
+            initializeCharts();
+            showWelcomeAlert();
+        }
+
+        function animateCounters() {
+            animateCounter('totalStudents', dashboardData.students, 0, 'number');
+            animateCounter('totalFees', dashboardData.totalFees, 0, 'currency');
+            animateCounter('hostelOccupancy', dashboardData.hostelOccupancy, 0, 'percentage');
+            animateCounter('libraryBooks', dashboardData.libraryBooks, 0, 'number');
+        }
+
+        function animateCounter(elementId, target, current, type) {
+            const element = document.getElementById(elementId);
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                
+                let displayValue = Math.floor(current);
+                switch(type) {
+                    case 'currency':
+                        displayValue = '₹' + (displayValue / 100000).toFixed(1) + 'L';
+                        break;
+                    case 'percentage':
+                        displayValue = displayValue + '%';
+                        break;
+                    case 'number':
+                        displayValue = displayValue.toLocaleString();
+                        break;
+                }
+                element.textContent = displayValue;
+            }, 20);
+        }
+
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-IN', {
+                timeZone: 'Asia/Kolkata',
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            const timeElement = document.getElementById('currentTime');
+            if (timeElement) {
+                timeElement.textContent = timeString;
+            }
+        }
+
+        function loadRecentActivities() {
+            const activityList = document.getElementById('activityList');
+            activityList.innerHTML = '';
+            
+            dashboardData.recentActivities.forEach(activity => {
+                const activityItem = document.createElement('div');
+                activityItem.className = 'activity-item';
+                activityItem.innerHTML = `
+                    <div class="activity-icon" style="background: ${activity.color};">
+                        <i class="${activity.icon}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">${activity.title}</div>
+                        <div class="activity-time">${activity.time}</div>
+                    </div>
+                `;
+                activityList.appendChild(activityItem);
+            });
+        }
+
+        function loadNotifications() {
+            const notificationsList = document.getElementById('notificationsList');
+            notificationsList.innerHTML = '';
+            
+            dashboardData.notifications.forEach(notification => {
+                const notificationItem = document.createElement('div');
+                notificationItem.className = `notification-item ${notification.urgent ? 'notification-urgent' : ''}`;
+                notificationItem.innerHTML = `
+                    <div style="font-weight: 600; margin-bottom: 5px;">${notification.title}</div>
+                    <div style="font-size: 14px; color: #666; margin-bottom: 5px;">${notification.message}</div>
+                    <div style="font-size: 12px; color: #999;">${notification.time}</div>
+                `;
+                notificationsList.appendChild(notificationItem);
+            });
+        }
+
+        function initializeCharts() {
+            // Enrollment Chart
+            const enrollmentCtx = document.getElementById('enrollmentChart').getContext('2d');
+            enrollmentChart = new Chart(enrollmentCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'New Enrollments',
+                        data: [65, 78, 90, 81, 96, 105],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Department Chart
+            const departmentCtx = document.getElementById('departmentChart').getContext('2d');
+            departmentChart = new Chart(departmentCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Computer Science', 'Mechanical', 'Electrical', 'Civil', 'IT'],
+                    datasets: [{
+                        data: [35, 25, 20, 15, 5],
+                        backgroundColor: [
+                            '#667eea',
+                            '#764ba2',
+                            '#f093fb',
+                            '#f5576c',
+                            '#4facfe'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function showDetails(type) {
+            let message = '';
+            switch(type) {
+                case 'students':
+                    message = 'Total Students: 1,247\n• New admissions this month: 12\n• Active students: 1,235\n• Graduated this year: 234';
+                    break;
+                case 'fees':
+                    message = 'Fee Collection: ₹45.2L\n• Total due: ₹50.8L\n• Collection rate: 89%\n• Pending: ₹5.6L';
+                    break;
+                case 'hostel':
+                    message = 'Hostel Occupancy: 78%\n• Occupied rooms: 456/584\n• Boys hostel: 245/324\n• Girls hostel: 211/260';
+                    break;
+                case 'library':
+                    message = 'Library Books: 12,450\n• Available: 8,216\n• Issued: 4,234\n• New arrivals: 45';
+                    break;
+            }
+            alert(message);
+        }
+
+        function changeChartPeriod(period, button) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            // Update chart data based on period
+            let newData, newLabels;
+            switch(period) {
+                case '6m':
+                    newLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+                    newData = [65, 78, 90, 81, 96, 105];
+                    break;
+                case '1y':
+                    newLabels = ['Q1', 'Q2', 'Q3', 'Q4'];
+                    newData = [233, 267, 298, 315];
+                    break;
+                case 'all':
+                    newLabels = ['2021', '2022', '2023', '2024'];
+                    newData = [890, 1045, 1156, 1247];
+                    break;
+            }
+            
+            enrollmentChart.data.labels = newLabels;
+            enrollmentChart.data.datasets[0].data = newData;
+            enrollmentChart.update();
+        }
+
+        function quickAction(action) {
+            let message = '';
+            switch(action) {
+                case 'addStudent':
+                    message = 'Redirecting to Student Registration...';
+                    break;
+                case 'feePayment':
+                    message = 'Opening Fee Payment Portal...';
+                    break;
+                case 'roomAllocation':
+                    message = 'Loading Room Allocation System...';
+                    break;
+                case 'generateReport':
+                    message = 'Generating Analytics Report...';
+                    break;
+                case 'gradeEntry':
+                    message = 'Opening Grade Entry System...';
+                    break;
+                case 'libraryMgmt':
+                    message = 'Loading Library Management...';
+                    break;
+            }
+            showAlert(message, 'success');
+        }
+
+        function toggleNotifications() {
+            const panel = document.getElementById('notificationsPanel');
+            panel.classList.toggle('show');
+        }
+
+        function toggleFloatingMenu() {
+            const menu = document.getElementById('floatingMenu');
+            menu.classList.toggle('show');
+        }
+
+        function refreshDashboard() {
+            showAlert('Dashboard refreshed successfully!', 'success');
+            // Add actual refresh logic here
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        }
+
+        function exportData() {
+            showAlert('Exporting dashboard data...', 'success');
+            // Add export logic here
+        }
+
+        function showHelp() {
+            alert('ERP Dashboard Help:\n\n• Click on stat cards for detailed information\n• Use chart filters to change time periods\n• Access quick actions for common tasks\n• Check notifications for important updates\n• Use floating menu for additional options');
+        }
+
+        function showAlert(message, type = 'success') {
+            const alertContainer = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            
+            alertContainer.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
+        }
+
+        function showWelcomeAlert() {
+            setTimeout(() => {
+                showAlert('Welcome to ERP Dashboard! All systems are running smoothly.', 'success');
+            }, 1000);
+        }
+
+        // Add some interactivity to cards
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.stat-card')) {
+                e.target.closest('.stat-card').style.transform = 'translateY(-10px) scale(1.02)';
+                setTimeout(() => {
+                    if (e.target.closest('.stat-card')) {
+                        e.target.closest('.stat-card').style.transform = '';
+                    }
+                }, 200);
+            }
+        });
+
+        // Close notifications when clicking outside
+        document.addEventListener('click', function(e) {
+            const panel = document.getElementById('notificationsPanel');
+            const floatingAction = document.querySelector('.floating-action');
+            
+            if (!panel.contains(e.target) && !floatingAction.contains(e.target)) {
+                panel.classList.remove('show');
+                document.getElementById('floatingMenu').classList.remove('show');
+            }
+        });
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey) {
+                switch(e.key) {
+                    case 'r':
+                        e.preventDefault();
+                        refreshDashboard();
+                        break;
+                    case 'n':
+                        e.preventDefault();
+                        toggleNotifications();
+                        break;
+                    case 'h':
+                        e.preventDefault();
+                        showHelp();
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

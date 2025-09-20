@@ -11,19 +11,54 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-muted: #6b7280;
+            --border-color: #f1f5f9;
+            --health-bg: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            --button-bg: rgba(255, 255, 255, 0.95);
+            --button-text: #667eea;
+            --shadow: rgba(0,0,0,0.1);
+            --shadow-hover: rgba(0,0,0,0.2);
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            --card-bg: rgba(30, 41, 59, 0.95);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --health-bg: linear-gradient(135deg, #334155, #1e293b);
+            --button-bg: rgba(30, 41, 59, 0.95);
+            --button-text: #60a5fa;
+            --shadow: rgba(0,0,0,0.3);
+            --shadow-hover: rgba(0,0,0,0.5);
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--bg-gradient);
             min-height: 100vh;
             padding: 20px;
+            transition: all 0.3s ease;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         .back-button {
             position: fixed;
             top: 20px;
             left: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #667eea;
+            background: var(--button-bg);
+            color: var(--button-text);
             padding: 12px 24px;
             border-radius: 25px;
             text-decoration: none;
@@ -33,15 +68,46 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px var(--shadow);
             backdrop-filter: blur(10px);
+            border: none;
+            cursor: pointer;
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--button-bg);
+            color: var(--button-text);
+            padding: 12px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 15px var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .dark-mode-toggle:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px) rotate(180deg);
+            box-shadow: 0 6px 20px var(--shadow-hover);
         }
 
         .back-button:hover {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 20px var(--shadow-hover);
         }
 
         .container {
@@ -50,14 +116,17 @@
             padding-top: 80px;
         }
 
-        .header-card {
-            background: rgba(255, 255, 255, 0.95);
+        /* Header Section - Top of Page */
+        .top-header {
+            background: var(--card-bg);
             border-radius: 25px;
             padding: 40px;
             text-align: center;
             margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px var(--shadow);
             position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
         .status-dot {
@@ -66,8 +135,14 @@
             right: 20px;
             width: 12px;
             height: 12px;
-            background: #fbbf24;
+            background: #10b981;
             border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
         .settings-icon {
@@ -86,14 +161,17 @@
         .header-title {
             font-size: 2.5rem;
             font-weight: 700;
-            color: #333;
+            color: var(--text-primary);
             margin-bottom: 15px;
+            transition: color 0.3s ease;
         }
 
         .header-subtitle {
             font-size: 1.1rem;
-            color: #666;
+            color: var(--text-secondary);
             line-height: 1.6;
+            margin-bottom: 30px;
+            transition: color 0.3s ease;
         }
 
         .stats-grid {
@@ -110,14 +188,16 @@
         .stat-value {
             font-size: 2.5rem;
             font-weight: 700;
-            color: #333;
+            color: var(--text-primary);
             margin-bottom: 10px;
+            transition: color 0.3s ease;
         }
 
         .stat-label {
             font-size: 1rem;
-            color: #666;
+            color: var(--text-secondary);
             font-weight: 500;
+            transition: color 0.3s ease;
         }
 
         .action-buttons {
@@ -167,20 +247,23 @@
         }
 
         .settings-section {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--card-bg);
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px var(--shadow);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
         .section-title {
             font-size: 1.4rem;
             font-weight: 700;
-            color: #333;
+            color: var(--text-primary);
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 12px;
+            transition: color 0.3s ease;
         }
 
         .section-icon {
@@ -206,7 +289,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 0;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .setting-item:last-child {
@@ -219,13 +302,15 @@
 
         .setting-name {
             font-weight: 600;
-            color: #333;
+            color: var(--text-primary);
             margin-bottom: 5px;
+            transition: color 0.3s ease;
         }
 
         .setting-desc {
             font-size: 0.9rem;
-            color: #666;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
         }
 
         .setting-control {
@@ -279,10 +364,12 @@
 
         .select-control {
             padding: 8px 12px;
-            border: 1px solid #cbd5e1;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            background: white;
+            background: var(--card-bg);
+            color: var(--text-primary);
             min-width: 120px;
+            font-size: 0.9rem;
         }
 
         .btn-small {
@@ -294,6 +381,7 @@
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-weight: 500;
         }
 
         .btn-small:hover {
@@ -301,12 +389,21 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
+        .btn-small:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* System Health Section - Bottom of Page */
         .system-health {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--card-bg);
             border-radius: 20px;
             padding: 30px;
-            margin-top: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 50px;
+            box-shadow: 0 10px 30px var(--shadow);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
         .health-grid {
@@ -320,7 +417,7 @@
             text-align: center;
             padding: 20px;
             border-radius: 15px;
-            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            background: var(--health-bg);
         }
 
         .health-value {
@@ -335,11 +432,138 @@
 
         .health-label {
             font-size: 0.9rem;
-            color: #666;
+            color: var(--text-secondary);
             font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 80px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 2000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .notification.info {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding-top: 100px;
+            }
+            
             .header-title {
                 font-size: 2rem;
             }
@@ -359,42 +583,23 @@
             }
             
             .health-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             }
-        }
-
-        .loading {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .success-message {
-            background: #10b981;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            margin-top: 10px;
-            display: none;
         }
     </style>
 </head>
 <body>
-    <a href="/index.html" class="back-button">
+    <button class="back-button" onclick="goToMainPage()">
         <span>←</span> Back to Main
-    </a>
+    </button>
+
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+        <span id="darkModeIcon">🌙</span>
+    </button>
 
     <div class="container">
-        <!-- Header Card -->
-        <div class="header-card">
+        <!-- Top Header Section -->
+        <div class="top-header">
             <div class="status-dot"></div>
             <div class="settings-icon">⚙</div>
             <h1 class="header-title">System Settings</h1>
@@ -402,15 +607,15 @@
             
             <div class="stats-grid">
                 <div class="stat-item">
-                    <div class="stat-value">45</div>
+                    <div class="stat-value" id="activeUsers">45</div>
                     <div class="stat-label">Active Users</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value">99.8%</div>
+                    <div class="stat-value" id="uptime">99.8%</div>
                     <div class="stat-label">Uptime</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value">Daily</div>
+                    <div class="stat-value" id="backupStatus">Daily</div>
                     <div class="stat-label">Backups</div>
                 </div>
             </div>
@@ -419,7 +624,7 @@
                 <button class="btn btn-primary" onclick="openSystemConfig()">
                     🔧 System Config
                 </button>
-                <button class="btn btn-secondary" onclick="openSystemHealth()">
+                <button class="btn btn-secondary" onclick="refreshSystemHealth()">
                     💓 System Health
                 </button>
             </div>
@@ -441,7 +646,7 @@
                     </div>
                     <div class="setting-control">
                         <label class="toggle-switch">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked onchange="handleToggle('roleAccess', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -454,7 +659,7 @@
                     </div>
                     <div class="setting-control">
                         <label class="toggle-switch">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked onchange="handleToggle('mfa', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -466,11 +671,11 @@
                         <div class="setting-desc">Auto logout after inactivity</div>
                     </div>
                     <div class="setting-control">
-                        <select class="select-control">
-                            <option>30 minutes</option>
-                            <option>1 hour</option>
-                            <option>2 hours</option>
-                            <option>4 hours</option>
+                        <select class="select-control" onchange="handleSelect('sessionTimeout', this)">
+                            <option value="30">30 minutes</option>
+                            <option value="60" selected>1 hour</option>
+                            <option value="120">2 hours</option>
+                            <option value="240">4 hours</option>
                         </select>
                     </div>
                 </div>
@@ -481,7 +686,7 @@
                         <div class="setting-desc">Manage user access</div>
                     </div>
                     <div class="setting-control">
-                        <button class="btn-small" onclick="manageUsers()">Manage</button>
+                        <button class="btn-small" onclick="openUserManagement()">Manage</button>
                     </div>
                 </div>
             </div>
@@ -500,7 +705,7 @@
                     </div>
                     <div class="setting-control">
                         <label class="toggle-switch">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked onchange="handleToggle('encryption', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -513,7 +718,7 @@
                     </div>
                     <div class="setting-control">
                         <label class="toggle-switch">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked onchange="handleToggle('auditLog', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -525,7 +730,7 @@
                         <div class="setting-desc">Restrict access by IP address</div>
                     </div>
                     <div class="setting-control">
-                        <button class="btn-small" onclick="configureIP()">Configure</button>
+                        <button class="btn-small" onclick="configureIPWhitelist()">Configure</button>
                     </div>
                 </div>
 
@@ -535,7 +740,7 @@
                         <div class="setting-desc">Secure connections (Valid until Dec 2024)</div>
                     </div>
                     <div class="setting-control">
-                        <button class="btn-small" onclick="renewSSL()">Renew</button>
+                        <button class="btn-small" onclick="renewSSLCertificate()">Renew</button>
                     </div>
                 </div>
             </div>
@@ -554,7 +759,7 @@
                     </div>
                     <div class="setting-control">
                         <label class="toggle-switch">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked onchange="handleToggle('autoBackup', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -566,10 +771,10 @@
                         <div class="setting-desc">How often to create backups</div>
                     </div>
                     <div class="setting-control">
-                        <select class="select-control">
-                            <option>Daily</option>
-                            <option>Weekly</option>
-                            <option>Monthly</option>
+                        <select class="select-control" onchange="handleBackupFrequency(this)">
+                            <option value="daily" selected>Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
                         </select>
                     </div>
                 </div>
@@ -581,7 +786,7 @@
                     </div>
                     <div class="setting-control">
                         <label class="toggle-switch">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked onchange="handleToggle('cloudStorage', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -593,7 +798,7 @@
                         <div class="setting-desc">Create backup now</div>
                     </div>
                     <div class="setting-control">
-                        <button class="btn-small" onclick="createBackup()">Backup Now</button>
+                        <button class="btn-small" onclick="createManualBackup()">Backup Now</button>
                     </div>
                 </div>
             </div>
@@ -612,7 +817,7 @@
                     </div>
                     <div class="setting-control">
                         <label class="toggle-switch">
-                            <input type="checkbox">
+                            <input type="checkbox" onchange="handleMaintenanceMode(this)">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -624,10 +829,11 @@
                         <div class="setting-desc">Default timezone for the system</div>
                     </div>
                     <div class="setting-control">
-                        <select class="select-control">
-                            <option>Asia/Kolkata</option>
-                            <option>UTC</option>
-                            <option>US/Eastern</option>
+                        <select class="select-control" onchange="handleSelect('timezone', this)">
+                            <option value="Asia/Kolkata" selected>Asia/Kolkata</option>
+                            <option value="UTC">UTC</option>
+                            <option value="US/Eastern">US/Eastern</option>
+                            <option value="Europe/London">Europe/London</option>
                         </select>
                     </div>
                 </div>
@@ -638,7 +844,7 @@
                         <div class="setting-desc">Clear system cache</div>
                     </div>
                     <div class="setting-control">
-                        <button class="btn-small" onclick="clearCache()">Clear Cache</button>
+                        <button class="btn-small" onclick="clearSystemCache()">Clear Cache</button>
                     </div>
                 </div>
 
@@ -648,7 +854,7 @@
                         <div class="setting-desc">Check for updates</div>
                     </div>
                     <div class="setting-control">
-                        <button class="btn-small" onclick="checkUpdates()">Check Updates</button>
+                        <button class="btn-small" onclick="checkSystemUpdates()">Check Updates</button>
                     </div>
                 </div>
             </div>
@@ -667,7 +873,7 @@
                     </div>
                     <div class="setting-control">
                         <label class="toggle-switch">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked onchange="handleToggle('emailNotifications', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -680,7 +886,7 @@
                     </div>
                     <div class="setting-control">
                         <label class="toggle-switch">
-                            <input type="checkbox">
+                            <input type="checkbox" onchange="handleToggle('smsAlerts', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -693,6 +899,19 @@
                     </div>
                     <div class="setting-control">
                         <button class="btn-small" onclick="configureWhatsApp()">Configure</button>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-name">Push Notifications</div>
+                        <div class="setting-desc">Browser push notifications</div>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" onchange="handleToggle('pushNotifications', this)">
+                            <span class="slider"></span>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -710,7 +929,7 @@
                         <div class="setting-desc">Connected and syncing</div>
                     </div>
                     <div class="setting-control">
-                        <button class="btn-small" onclick="configureGoogle()">Configure</button>
+                        <button class="btn-small" onclick="configureGoogleWorkspace()">Configure</button>
                     </div>
                 </div>
 
@@ -720,7 +939,7 @@
                         <div class="setting-desc">Razorpay integration</div>
                     </div>
                     <div class="setting-control">
-                        <button class="btn-small" onclick="configurePayment()">Configure</button>
+                        <button class="btn-small" onclick="configurePaymentGateway()">Configure</button>
                     </div>
                 </div>
 
@@ -730,7 +949,7 @@
                         <div class="setting-desc">OpenAI & Google AI integration</div>
                     </div>
                     <div class="setting-control">
-                        <button class="btn-small" onclick="configureAI()">Configure</button>
+                        <button class="btn-small" onclick="configureAIServices()">Configure</button>
                     </div>
                 </div>
 
@@ -741,7 +960,7 @@
                     </div>
                     <div class="setting-control">
                         <label class="toggle-switch">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked onchange="handleToggle('analytics', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -749,7 +968,7 @@
             </div>
         </div>
 
-        <!-- System Health -->
+        <!-- System Health Monitor - Bottom of Page -->
         <div class="system-health">
             <div class="section-title">
                 <div class="section-icon system">📊</div>
@@ -758,52 +977,306 @@
             
             <div class="health-grid">
                 <div class="health-item">
-                    <div class="health-value good">98.5%</div>
+                    <div class="health-value good" id="cpuUsage">2.1%</div>
                     <div class="health-label">CPU Usage</div>
                 </div>
                 <div class="health-item">
-                    <div class="health-value good">2.1GB</div>
+                    <div class="health-value good" id="memoryUsage">2.1GB</div>
                     <div class="health-label">Memory Used</div>
                 </div>
                 <div class="health-item">
-                    <div class="health-value warning">67%</div>
+                    <div class="health-value warning" id="diskUsage">67%</div>
                     <div class="health-label">Disk Usage</div>
                 </div>
                 <div class="health-item">
-                    <div class="health-value good">156ms</div>
+                    <div class="health-value good" id="responseTime">156ms</div>
                     <div class="health-label">Response Time</div>
                 </div>
                 <div class="health-item">
-                    <div class="health-value good">99.8%</div>
+                    <div class="health-value good" id="systemUptime">99.8%</div>
                     <div class="health-label">Uptime</div>
                 </div>
                 <div class="health-item">
-                    <div class="health-value good">45</div>
+                    <div class="health-value good" id="healthActiveUsers">45</div>
                     <div class="health-label">Active Users</div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Modal for configurations -->
+    <div id="configModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Configuration</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalBody">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Function handlers for various settings
+        // System State Management
+        const systemState = {
+            settings: {
+                roleAccess: true,
+                mfa: true,
+                encryption: true,
+                auditLog: true,
+                autoBackup: true,
+                cloudStorage: true,
+                emailNotifications: true,
+                smsAlerts: false,
+                pushNotifications: false,
+                analytics: true
+            },
+            stats: {
+                activeUsers: 45,
+                uptime: 99.8,
+                backupStatus: 'Daily'
+            },
+            health: {
+                cpuUsage: '2.1%',
+                memoryUsage: '2.1GB',
+                diskUsage: '67%',
+                responseTime: '156ms',
+                systemUptime: '99.8%',
+                healthActiveUsers: 45
+            }
+        };
+
+        // Dark Mode Functionality
+        function initializeDarkMode() {
+            const savedTheme = sessionStorage.getItem('darkMode');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'true' || (!savedTheme && prefersDark)) {
+                enableDarkMode();
+            } else {
+                disableDarkMode();
+            }
+        }
+
+        function toggleDarkMode() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                disableDarkMode();
+                sessionStorage.setItem('darkMode', 'false');
+            } else {
+                enableDarkMode();
+                sessionStorage.setItem('darkMode', 'true');
+            }
+        }
+
+        function enableDarkMode() {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('darkModeIcon').textContent = '☀️';
+            document.querySelector('.dark-mode-toggle').title = 'Switch to Light Mode';
+        }
+
+        function disableDarkMode() {
+            document.documentElement.setAttribute('data-theme', 'light');
+            document.getElementById('darkModeIcon').textContent = '🌙';
+            document.querySelector('.dark-mode-toggle').title = 'Switch to Dark Mode';
+        }
+
+        // Navigation
+        function goToMainPage() {
+            window.location.href = 'index.html';
+        }
+
+        // Notification System
+        function showNotification(message, type = 'success', duration = 3000) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, duration);
+        }
+
+        // Settings Handlers
+        function handleToggle(settingName, element) {
+            systemState.settings[settingName] = element.checked;
+            const status = element.checked ? 'enabled' : 'disabled';
+            
+            // Special handling for certain settings
+            if (settingName === 'mfa' && !element.checked) {
+                if (!confirm('Disabling multi-factor authentication will reduce security. Are you sure?')) {
+                    element.checked = true;
+                    return;
+                }
+            }
+            
+            if (settingName === 'encryption' && !element.checked) {
+                if (!confirm('Disabling data encryption is not recommended. Continue anyway?')) {
+                    element.checked = true;
+                    return;
+                }
+            }
+
+            showNotification(`${getSettingDisplayName(settingName)} has been ${status}`);
+            saveSettings();
+        }
+
+        function handleSelect(settingName, element) {
+            const value = element.value;
+            showNotification(`${getSettingDisplayName(settingName)} updated to ${value}`);
+            
+            if (settingName === 'sessionTimeout') {
+                showNotification('Session timeout will apply to new logins', 'info');
+            }
+            
+            saveSettings();
+        }
+
+        function handleMaintenanceMode(element) {
+            if (element.checked) {
+                const confirmed = confirm(
+                    'Are you sure you want to enable maintenance mode?\n\n' +
+                    'This will:\n' +
+                    '• Make the system unavailable to users\n' +
+                    '• Display a maintenance message\n' +
+                    '• Only administrators can access the system'
+                );
+                
+                if (confirmed) {
+                    showNotification('Maintenance mode enabled - System is now offline for users', 'warning', 5000);
+                    systemState.settings.maintenanceMode = true;
+                } else {
+                    element.checked = false;
+                }
+            } else {
+                systemState.settings.maintenanceMode = false;
+                showNotification('Maintenance mode disabled - System is back online');
+            }
+            saveSettings();
+        }
+
+        function handleBackupFrequency(element) {
+            const freq = element.value.charAt(0).toUpperCase() + element.value.slice(1);
+            document.getElementById('backupStatus').textContent = freq;
+            systemState.stats.backupStatus = freq;
+            showNotification(`Backup frequency set to ${freq}`);
+            
+            // Update next backup time
+            const nextBackup = calculateNextBackup(element.value);
+            showNotification(`Next backup scheduled for ${nextBackup}`, 'info');
+            
+            saveSettings();
+        }
+
+        // Action Handlers
         function openSystemConfig() {
-            alert('Opening advanced system configuration panel...');
+            showModal('Advanced System Configuration', `
+                <div style="padding: 20px;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 15px;">Database Configuration</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Configure database connections and performance settings.</p>
+                    
+                    <h3 style="color: var(--text-primary); margin-bottom: 15px;">Server Configuration</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Manage server resources, load balancing, and caching.</p>
+                    
+                    <h3 style="color: var(--text-primary); margin-bottom: 15px;">API Configuration</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Configure API endpoints, rate limiting, and authentication.</p>
+                    
+                    <div style="margin-top: 30px;">
+                        <button class="btn-small" onclick="showNotification('Configuration saved successfully')">Save Changes</button>
+                    </div>
+                </div>
+            `);
         }
 
-        function openSystemHealth() {
-            alert('Opening detailed system health dashboard...');
+        function refreshSystemHealth() {
+            showNotification('Refreshing system health data...', 'info');
+            
+            // Simulate real-time data update
+            setTimeout(() => {
+                updateHealthMetrics();
+                showNotification('System health data updated');
+            }, 1500);
         }
 
-        function manageUsers() {
-            alert('Opening user management panel...');
+        function updateHealthMetrics() {
+            const healthMetrics = {
+                cpuUsage: (Math.random() * 10 + 1).toFixed(1) + '%',
+                memoryUsage: (Math.random() * 3 + 1.5).toFixed(1) + 'GB',
+                diskUsage: Math.floor(Math.random() * 30 + 60) + '%',
+                responseTime: Math.floor(Math.random() * 100 + 100) + 'ms',
+                systemUptime: (99.5 + Math.random() * 0.4).toFixed(1) + '%',
+                healthActiveUsers: Math.floor(Math.random() * 20 + 35)
+            };
+
+            Object.keys(healthMetrics).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = healthMetrics[key];
+                    
+                    // Update health status classes
+                    if (key === 'diskUsage') {
+                        const value = parseInt(healthMetrics[key]);
+                        element.className = value > 80 ? 'health-value critical' : 
+                                          value > 70 ? 'health-value warning' : 'health-value good';
+                    }
+                }
+            });
+
+            systemState.health = healthMetrics;
         }
 
-        function configureIP() {
-            alert('Opening IP whitelist configuration...');
+        function openUserManagement() {
+            showModal('User Management', `
+                <div style="padding: 20px;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 15px;">Active Users: ${systemState.stats.activeUsers}</h3>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">User Roles</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 20px;">
+                            <li>Super Admin: 2 users</li>
+                            <li>Admin: 8 users</li>
+                            <li>Teacher: 15 users</li>
+                            <li>Student: 20 users</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-top: 30px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn-small" onclick="showNotification('User creation form opened', 'info')">Add New User</button>
+                        <button class="btn-small" onclick="showNotification('User list exported', 'success')">Export Users</button>
+                        <button class="btn-small" onclick="showNotification('Bulk import started', 'info')">Import Users</button>
+                    </div>
+                </div>
+            `);
         }
 
-        function renewSSL() {
+        function configureIPWhitelist() {
+            showModal('IP Whitelist Configuration', `
+                <div style="padding: 20px;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 15px;">Allowed IP Addresses</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Configure which IP addresses can access the system.</p>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Current Whitelist:</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 20px; font-family: monospace;">
+                            <li>192.168.1.0/24 (Local Network)</li>
+                            <li>203.0.113.0/24 (Office Network)</li>
+                            <li>198.51.100.50 (Admin Home)</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <input type="text" placeholder="Enter IP address..." style="padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; margin-right: 10px; background: var(--card-bg); color: var(--text-primary);">
+                        <button class="btn-small" onclick="showNotification('IP address added to whitelist')">Add IP</button>
+                    </div>
+                </div>
+            `);
+        }
+
+        function renewSSLCertificate() {
             const button = event.target;
             const originalText = button.innerHTML;
             
@@ -813,11 +1286,11 @@
             setTimeout(() => {
                 button.innerHTML = originalText;
                 button.disabled = false;
-                alert('SSL certificate renewed successfully!');
+                showNotification('SSL certificate renewed successfully! Valid until Dec 2025');
             }, 2000);
         }
 
-        function createBackup() {
+        function createManualBackup() {
             const button = event.target;
             const originalText = button.innerHTML;
             
@@ -827,11 +1300,12 @@
             setTimeout(() => {
                 button.innerHTML = originalText;
                 button.disabled = false;
-                alert('Backup created successfully!');
+                const backupId = 'BKP_' + Date.now();
+                showNotification(`Backup created successfully! ID: ${backupId}`);
             }, 3000);
         }
 
-        function clearCache() {
+        function clearSystemCache() {
             const button = event.target;
             const originalText = button.innerHTML;
             
@@ -841,11 +1315,11 @@
             setTimeout(() => {
                 button.innerHTML = originalText;
                 button.disabled = false;
-                alert('System cache cleared successfully!');
+                showNotification('System cache cleared successfully! Performance may improve.');
             }, 1500);
         }
 
-        function checkUpdates() {
+        function checkSystemUpdates() {
             const button = event.target;
             const originalText = button.innerHTML;
             
@@ -855,58 +1329,302 @@
             setTimeout(() => {
                 button.innerHTML = originalText;
                 button.disabled = false;
-                alert('System is up to date!');
+                
+                // Randomly show either up-to-date or updates available
+                const hasUpdates = Math.random() > 0.7;
+                if (hasUpdates) {
+                    showNotification('3 updates available! Click to install.', 'warning');
+                } else {
+                    showNotification('System is up to date!');
+                }
             }, 2000);
         }
 
         function configureWhatsApp() {
-            alert('Opening WhatsApp Business API configuration...');
+            showModal('WhatsApp Business API Configuration', `
+                <div style="padding: 20px;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 15px;">WhatsApp Integration Status</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Configure WhatsApp Business API for sending notifications and alerts.</p>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Current Settings:</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 20px;">
+                            <li>Status: Connected</li>
+                            <li>Phone Number: +91 98765 43210</li>
+                            <li>Monthly Messages: 1,247 / 10,000</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-top: 30px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn-small" onclick="showNotification('Test message sent successfully')">Send Test Message</button>
+                        <button class="btn-small" onclick="showNotification('WhatsApp settings updated')">Update Settings</button>
+                    </div>
+                </div>
+            `);
         }
 
-        function configureGoogle() {
-            alert('Opening Google Workspace integration settings...');
+        function configureGoogleWorkspace() {
+            showModal('Google Workspace Integration', `
+                <div style="padding: 20px;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 15px;">Google Workspace Status</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Manage Google Workspace integration for SSO, Drive, and Calendar.</p>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Connected Services:</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 20px;">
+                            <li>✅ Single Sign-On (SSO)</li>
+                            <li>✅ Google Drive Backup</li>
+                            <li>✅ Calendar Integration</li>
+                            <li>❌ Gmail API</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <button class="btn-small" onclick="showNotification('Synchronization started')">Sync Now</button>
+                        <button class="btn-small" onclick="showNotification('Gmail API enabled successfully')">Enable Gmail</button>
+                    </div>
+                </div>
+            `);
         }
 
-        function configurePayment() {
-            alert('Opening payment gateway configuration...');
+        function configurePaymentGateway() {
+            showModal('Payment Gateway Configuration', `
+                <div style="padding: 20px;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 15px;">Razorpay Integration</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Configure payment processing for fees and transactions.</p>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Account Status:</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 20px;">
+                            <li>Status: Active</li>
+                            <li>Account ID: rzp_live_ILHaRI6BWfNVGS</li>
+                            <li>This Month: ₹2,45,670 processed</li>
+                            <li>Success Rate: 98.5%</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <button class="btn-small" onclick="showNotification('Test payment processed successfully')">Test Payment</button>
+                        <button class="btn-small" onclick="showNotification('Settlement report downloaded')">Download Report</button>
+                    </div>
+                </div>
+            `);
         }
 
-        function configureAI() {
-            alert('Opening AI services configuration panel...');
+        function configureAIServices() {
+            showModal('AI Services Configuration', `
+                <div style="padding: 20px;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 15px;">AI Integration Services</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Configure AI-powered features and integrations.</p>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Available Services:</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 20px;">
+                            <li>✅ OpenAI GPT-4 (Content Generation)</li>
+                            <li>✅ Google AI (Translation)</li>
+                            <li>❌ Claude API (Analysis)</li>
+                            <li>✅ Auto Grading System</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: var(--text-primary); margin-bottom: 10px;">Usage This Month:</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 20px;">
+                            <li>API Calls: 12,450 / 50,000</li>
+                            <li>Tokens Used: 1.2M / 5M</li>
+                            <li>Cost: $124.50 / $500.00</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <button class="btn-small" onclick="showNotification('AI services tested successfully')">Test Services</button>
+                        <button class="btn-small" onclick="showNotification('Claude API enabled')">Enable Claude</button>
+                    </div>
+                </div>
+            `);
         }
 
-        // Add toggle switch event listeners
-        document.querySelectorAll('.toggle-switch input').forEach(toggle => {
-            toggle.addEventListener('change', function() {
-                const settingName = this.closest('.setting-item').querySelector('.setting-name').textContent;
-                const status = this.checked ? 'enabled' : 'disabled';
-                
-                // Show a brief confirmation (in real app, this would save to backend)
-                setTimeout(() => {
-                    console.log(`${settingName} has been ${status}`);
-                }, 100);
-            });
-        });
+        // Modal Functions
+        function showModal(title, content) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalBody').innerHTML = content;
+            document.getElementById('configModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
 
-        // Add select change listeners
-        document.querySelectorAll('.select-control').forEach(select => {
-            select.addEventListener('change', function() {
-                const settingName = this.closest('.setting-item').querySelector('.setting-name').textContent;
-                const value = this.value;
-                
-                console.log(`${settingName} changed to: ${value}`);
-            });
-        });
+        function closeModal() {
+            document.getElementById('configModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
 
-        // Maintenance mode special handling
-        document.querySelector('.setting-item:has(.setting-name:contains("Maintenance Mode")) .toggle-switch input')?.addEventListener('change', function() {
-            if (this.checked) {
-                const confirm = window.confirm('Are you sure you want to enable maintenance mode? This will make the system unavailable to users.');
-                if (!confirm) {
-                    this.checked = false;
+        // Utility Functions
+        function getSettingDisplayName(settingName) {
+            const displayNames = {
+                'roleAccess': 'Role-Based Access',
+                'mfa': 'Multi-Factor Authentication',
+                'encryption': 'Data Encryption',
+                'auditLog': 'Audit Logging',
+                'autoBackup': 'Automatic Backups',
+                'cloudStorage': 'Cloud Storage',
+                'emailNotifications': 'Email Notifications',
+                'smsAlerts': 'SMS Alerts',
+                'pushNotifications': 'Push Notifications',
+                'analytics': 'Analytics',
+                'sessionTimeout': 'Session Timeout',
+                'timezone': 'System Timezone'
+            };
+            return displayNames[settingName] || settingName;
+        }
+
+        function calculateNextBackup(frequency) {
+            const now = new Date();
+            let nextBackup = new Date(now);
+            
+            switch(frequency) {
+                case 'daily':
+                    nextBackup.setDate(now.getDate() + 1);
+                    break;
+                case 'weekly':
+                    nextBackup.setDate(now.getDate() + 7);
+                    break;
+                case 'monthly':
+                    nextBackup.setMonth(now.getMonth() + 1);
+                    break;
+            }
+            
+            return nextBackup.toLocaleDateString() + ' at 2:00 AM';
+        }
+
+        function saveSettings() {
+            try {
+                sessionStorage.setItem('erpSystemSettings', JSON.stringify(systemState));
+                console.log('Settings saved successfully');
+            } catch (error) {
+                console.error('Failed to save settings:', error);
+                showNotification('Failed to save settings', 'error');
+            }
+        }
+
+        function loadSettings() {
+            try {
+                const saved = sessionStorage.getItem('erpSystemSettings');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    Object.assign(systemState, parsed);
+                    applyLoadedSettings();
                 }
+            } catch (error) {
+                console.error('Failed to load settings:', error);
+            }
+        }
+
+        function applyLoadedSettings() {
+            // Apply toggle states
+            Object.keys(systemState.settings).forEach(settingName => {
+                const toggles = document.querySelectorAll(`input[onchange*="${settingName}"]`);
+                toggles.forEach(toggle => {
+                    if (toggle.type === 'checkbox') {
+                        toggle.checked = systemState.settings[settingName];
+                    }
+                });
+            });
+
+            // Apply stats
+            if (systemState.stats.activeUsers) {
+                document.getElementById('activeUsers').textContent = systemState.stats.activeUsers;
+            }
+            if (systemState.stats.uptime) {
+                document.getElementById('uptime').textContent = systemState.stats.uptime + '%';
+            }
+            if (systemState.stats.backupStatus) {
+                document.getElementById('backupStatus').textContent = systemState.stats.backupStatus;
+            }
+        }
+
+        // Real-time updates
+        function startRealTimeUpdates() {
+            setInterval(() => {
+                // Simulate real-time user count changes
+                const userChange = Math.floor(Math.random() * 5) - 2; // -2 to +2
+                const currentUsers = parseInt(document.getElementById('activeUsers').textContent);
+                const newUserCount = Math.max(1, currentUsers + userChange);
+                
+                if (newUserCount !== currentUsers) {
+                    document.getElementById('activeUsers').textContent = newUserCount;
+                    document.getElementById('healthActiveUsers').textContent = newUserCount;
+                    systemState.stats.activeUsers = newUserCount;
+                }
+                
+                // Update uptime (very slowly increasing)
+                const currentUptime = parseFloat(document.getElementById('uptime').textContent);
+                const newUptime = Math.min(99.99, currentUptime + 0.001);
+                document.getElementById('uptime').textContent = newUptime.toFixed(2) + '%';
+                document.getElementById('systemUptime').textContent = newUptime.toFixed(2) + '%';
+                systemState.stats.uptime = newUptime;
+                
+            }, 30000); // Update every 30 seconds
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure page starts at the top
+            window.scrollTo(0, 0);
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+            
+            initializeDarkMode();
+            loadSettings();
+            startRealTimeUpdates();
+            
+            // Update health metrics every 5 minutes
+            setInterval(updateHealthMetrics, 300000);
+        });
+
+        // Ensure page always starts at top on load/refresh
+        window.addEventListener('beforeunload', function() {
+            window.scrollTo(0, 0);
+        });
+
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }, 100);
+        });
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('configModal');
+            if (event.target === modal) {
+                closeModal();
             }
         });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            // Escape key closes modal
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+            
+            // Ctrl/Cmd + D toggles dark mode
+            if ((event.ctrlKey || event.metaKey) && event.key === 'd') {
+                event.preventDefault();
+                toggleDarkMode();
+            }
+            
+            // Ctrl/Cmd + B creates backup
+            if ((event.ctrlKey || event.metaKey) && event.key === 'b') {
+                event.preventDefault();
+                createManualBackup();
+            }
+        });
+
+        // Auto-save settings every 2 minutes
+        setInterval(saveSettings, 120000);
+
+        console.log('ERP System Settings initialized successfully');
     </script>
 </body>
 </html>

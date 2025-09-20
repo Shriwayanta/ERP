@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Hostel Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .back-to-main-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-right: 1.5rem;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .back-to-main-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+            background: linear-gradient(135deg, #5a6fd8, #6b42a6);
+        }
+
+        .back-to-main-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.4);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.9);
+            margin: 1rem 2rem;
+            border-radius: 15px;
+            padding: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: #666;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 2rem;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .ai-insights {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            grid-column: 1 / -1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-insights::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .ai-insights h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .insight-card {
+            background: rgba(255,255,255,0.15);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .insight-card h3 {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .insight-card .value {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .stat-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .content-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ee5a24;
+            transform: translateY(-2px);
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .room-card {
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .room-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .room-card.available {
+            border-color: #2ed573;
+            background: linear-gradient(135deg, #2ed573, #1e90ff);
+            color: white;
+        }
+
+        .room-card.occupied {
+            border-color: #ff6b6b;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+
+        .room-card.maintenance {
+            border-color: #ffa502;
+            background: linear-gradient(135deg, #ffa502, #ff6348);
+            color: white;
+        }
+
+        .room-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .room-status {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .room-occupancy {
+            font-size: 0.8rem;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-in-progress {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .visitor-card {
+            background: white;
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .visitor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .visitor-name {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .visitor-time {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .visitor-details {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .mess-menu {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .mess-day {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .mess-meals {
+            padding: 1.5rem;
+        }
+
+        .meal-time {
+            margin-bottom: 1rem;
+        }
+
+        .meal-time h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .meal-items {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .progress-bar {
+            background: #e1e5e9;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .nav-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+
+            .nav-tabs::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav-tab {
+                flex: none;
+                min-width: 100px;
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .container {
+                padding: 0 1rem 1rem;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+
+            .nav-tabs {
+                margin: 1rem;
+            }
+
+            .dashboard-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .room-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .back-to-main-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                margin-right: 1rem;
+            }
+        }
+
+        .floating-action {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .floating-action:hover {
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            z-index: 1001;
+            min-width: 300px;
+            border-left: 4px solid #667eea;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="back-to-main-btn" onclick="goToMainDashboard()" title="Return to Main Dashboard">
+            ← Back to Main
+        </button>
+        <div class="logo">
+            🏫 Hostel Management System
+        </div>
+        <div style="margin-left: auto; color: #666;">
+            Room allocation, occupancy tracking, maintenance with AI optimization
+        </div>
+    </div>
+
+    <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showTab('dashboard')">Dashboard</button>
+        <button class="nav-tab" onclick="showTab('room-allocation')">Room Allocation</button>
+        <button class="nav-tab" onclick="showTab('room-map')">Room Map</button>
+        <button class="nav-tab" onclick="showTab('maintenance')">Maintenance</button>
+        <button class="nav-tab" onclick="showTab('visitor-management')">Visitor Management</button>
+        <button class="nav-tab" onclick="showTab('mess-management')">Mess Management</button>
+        <button class="nav-tab" onclick="showTab('reports')">Reports</button>
+    </div>
+
+    <div class="container">
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="ai-insights">
+                <h2>🤖 AI Hostel Insights</h2>
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <h3>Optimal Occupancy</h3>
+                        <div class="value">85% recommended</div>
+                    </div>
+                    <div class="insight-card">
+                        <h3>Maintenance Prediction</h3>
+                        <div class="value">Room 205 needs attention</div>
+                    </div>
+                    <div class="insight-card">
+                        <h3>Energy Efficiency</h3>
+                        <div class="value">12% savings this month</div>
+                    </div>
+                    <div class="insight-card">
+                        <h3>Student Satisfaction</h3>
+                        <div class="value">4.2/5 rating</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Rooms</h3>
+                    <div class="stat-value">120</div>
+                    <div class="stat-label">Available capacity</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Occupied Rooms</h3>
+                    <div class="stat-value">98</div>
+                    <div class="stat-label">81.7% occupancy</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Available Rooms</h3>
+                    <div class="stat-value">15</div>
+                    <div class="stat-label">Ready for allocation</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Maintenance Requests</h3>
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">Pending resolution</div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Recent Activities</h3>
+                <div class="alert alert-success">
+                    Room 301 successfully allocated to John Doe (Student ID: 2024001)
+                </div>
+                <div class="alert alert-warning">
+                    Maintenance request submitted for Room 205 - Electrical issue
+                </div>
+                <div class="alert alert-success">
+                    Visitor verification completed for Sarah Johnson visiting Room 114
+                </div>
+            </div>
+        </div>
+
+        <!-- Room Allocation Tab -->
+        <div id="room-allocation" class="tab-content">
+            <div class="content-card">
+                <h3>New Room Allocation</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Reporter</label>
+                        <input type="text" id="reporter" placeholder="Your name">
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label>Description</label>
+                        <textarea id="issueDescription" rows="3" placeholder="Describe the issue in detail..."></textarea>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="submitMaintenanceRequest()">Submit Request</button>
+            </div>
+
+            <div class="content-card">
+                <h3>Maintenance Requests</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Room No.</th>
+                            <th>Issue Type</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Reporter</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="maintenanceTableBody">
+                        <tr>
+                            <td>#MR001</td>
+                            <td>205</td>
+                            <td>Electrical</td>
+                            <td>High</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>John Doe</td>
+                            <td>2024-01-20</td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="updateMaintenanceStatus('MR001', 'in-progress')">Start</button>
+                                <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="viewMaintenanceDetails('MR001')">Details</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#MR002</td>
+                            <td>315</td>
+                            <td>Plumbing</td>
+                            <td>Medium</td>
+                            <td><span class="status-badge status-in-progress">In Progress</span></td>
+                            <td>Jane Smith</td>
+                            <td>2024-01-19</td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="updateMaintenanceStatus('MR002', 'completed')">Complete</button>
+                                <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="viewMaintenanceDetails('MR002')">Details</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#MR003</td>
+                            <td>118</td>
+                            <td>Furniture</td>
+                            <td>Low</td>
+                            <td><span class="status-badge status-completed">Completed</span></td>
+                            <td>Mike Wilson</td>
+                            <td>2024-01-18</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="viewMaintenanceDetails('MR003')">Details</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Visitor Management Tab -->
+        <div id="visitor-management" class="tab-content">
+            <div class="content-card">
+                <h3>Register New Visitor</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Visitor Name</label>
+                        <input type="text" id="visitorName" placeholder="Enter visitor name">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="visitorPhone" placeholder="Enter phone number">
+                    </div>
+                    <div class="form-group">
+                        <label>Room to Visit</label>
+                        <input type="text" id="visitRoom" placeholder="Enter room number">
+                    </div>
+                    <div class="form-group">
+                        <label>Student to Meet</label>
+                        <input type="text" id="studentToMeet" placeholder="Student name">
+                    </div>
+                    <div class="form-group">
+                        <label>Visit Purpose</label>
+                        <select id="visitPurpose">
+                            <option>Personal Visit</option>
+                            <option>Academic</option>
+                            <option>Official</option>
+                            <option>Delivery</option>
+                            <option>Maintenance</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Expected Duration</label>
+                        <select id="visitDuration">
+                            <option>< 1 hour</option>
+                            <option>1-2 hours</option>
+                            <option>2-4 hours</option>
+                            <option>Half day</option>
+                            <option>Full day</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="registerVisitor()">AI Verification & Register</button>
+            </div>
+
+            <div class="content-card">
+                <h3>Today's Visitors</h3>
+                <input type="text" class="search-bar" placeholder="Search visitors..." onkeyup="searchVisitors(this.value)">
+                <div id="visitorsContainer">
+                    <div class="visitor-card">
+                        <div class="visitor-header">
+                            <span class="visitor-name">Sarah Johnson</span>
+                            <span class="visitor-time">10:30 AM - Active</span>
+                        </div>
+                        <div class="visitor-details">
+                            Visiting Room 114 | Meeting: Alex Thompson | Purpose: Personal Visit
+                            <div style="margin-top: 0.5rem;">
+                                <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="checkoutVisitor('V001')">Check Out</button>
+                                <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="extendVisit('V001')">Extend Visit</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="visitor-card">
+                        <div class="visitor-header">
+                            <span class="visitor-name">Robert Davis</span>
+                            <span class="visitor-time">2:15 PM - Checked Out</span>
+                        </div>
+                        <div class="visitor-details">
+                            Visited Room 205 | Met: John Doe | Purpose: Academic | Duration: 1.5 hours
+                        </div>
+                    </div>
+                    
+                    <div class="visitor-card">
+                        <div class="visitor-header">
+                            <span class="visitor-name">Delivery Agent</span>
+                            <span class="visitor-time">11:45 AM - Checked Out</span>
+                        </div>
+                        <div class="visitor-details">
+                            Package delivery to Room 301 | Contact: Jane Smith | Duration: 15 minutes
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mess Management Tab -->
+        <div id="mess-management" class="tab-content">
+            <div class="content-card">
+                <h3>Weekly Mess Menu</h3>
+                <div class="dashboard-grid">
+                    <div class="mess-menu">
+                        <div class="mess-day">Monday</div>
+                        <div class="mess-meals">
+                            <div class="meal-time">
+                                <h4>Breakfast (7:00 AM - 9:00 AM)</h4>
+                                <div class="meal-items">Idli, Sambar, Chutney, Tea/Coffee</div>
+                            </div>
+                            <div class="meal-time">
+                                <h4>Lunch (12:00 PM - 2:00 PM)</h4>
+                                <div class="meal-items">Rice, Dal, Vegetable Curry, Chapati, Pickle</div>
+                            </div>
+                            <div class="meal-time">
+                                <h4>Dinner (7:00 PM - 9:00 PM)</h4>
+                                <div class="meal-items">Rice, Rajma, Mixed Vegetables, Chapati</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mess-menu">
+                        <div class="mess-day">Tuesday</div>
+                        <div class="mess-meals">
+                            <div class="meal-time">
+                                <h4>Breakfast</h4>
+                                <div class="meal-items">Poha, Tea/Coffee, Banana</div>
+                            </div>
+                            <div class="meal-time">
+                                <h4>Lunch</h4>
+                                <div class="meal-items">Rice, Sambar, Dry Vegetable, Chapati, Curd</div>
+                            </div>
+                            <div class="meal-time">
+                                <h4>Dinner</h4>
+                                <div class="meal-items">Rice, Dal Tadka, Paneer Curry, Chapati</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mess-menu">
+                        <div class="mess-day">Wednesday</div>
+                        <div class="mess-meals">
+                            <div class="meal-time">
+                                <h4>Breakfast</h4>
+                                <div class="meal-items">Upma, Chutney, Tea/Coffee</div>
+                            </div>
+                            <div class="meal-time">
+                                <h4>Lunch</h4>
+                                <div class="meal-items">Rice, Rasam, Vegetable Fry, Chapati, Pickle</div>
+                            </div>
+                            <div class="meal-time">
+                                <h4>Dinner</h4>
+                                <div class="meal-items">Rice, Chole, Mixed Dal, Chapati</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Mess Feedback & Analytics</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Daily Footfall</h3>
+                        <div class="stat-value">285</div>
+                        <div class="stat-label">Students served today</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Food Rating</h3>
+                        <div class="stat-value">4.1/5</div>
+                        <div class="stat-label">Average satisfaction</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Food Waste</h3>
+                        <div class="stat-value">8.2%</div>
+                        <div class="stat-label">Below target of 10%</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Cost per Meal</h3>
+                        <div class="stat-value">₹45</div>
+                        <div class="stat-label">Within budget</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1.5rem;">
+                    <h4>Submit Feedback</h4>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Meal Type</label>
+                            <select id="feedbackMeal">
+                                <option>Breakfast</option>
+                                <option>Lunch</option>
+                                <option>Dinner</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Rating</label>
+                            <select id="feedbackRating">
+                                <option>5 - Excellent</option>
+                                <option>4 - Good</option>
+                                <option>3 - Average</option>
+                                <option>2 - Poor</option>
+                                <option>1 - Very Poor</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label>Comments</label>
+                            <textarea id="feedbackComments" rows="3" placeholder="Your feedback about food quality, service, etc..."></textarea>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="submitMessFeedback()">Submit Feedback</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="reports" class="tab-content">
+            <div class="content-card">
+                <h3>AI-Powered Analytics Dashboard</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Occupancy Trends</h3>
+                        <div class="stat-value">↗️ 3.2%</div>
+                        <div class="stat-label">Increase this month</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 82%;"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Revenue Generated</h3>
+                        <div class="stat-value">₹12.4L</div>
+                        <div class="stat-label">This semester</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 78%;"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Maintenance Efficiency</h3>
+                        <div class="stat-value">94%</div>
+                        <div class="stat-label">Resolved within SLA</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 94%;"></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Student Satisfaction</h3>
+                        <div class="stat-value">4.3/5</div>
+                        <div class="stat-label">Improved from 4.1</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 86%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Generate Reports</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Report Type</label>
+                        <select id="reportType">
+                            <option>Occupancy Report</option>
+                            <option>Financial Report</option>
+                            <option>Maintenance Report</option>
+                            <option>Visitor Report</option>
+                            <option>Mess Utilization</option>
+                            <option>Student Feedback</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Time Period</label>
+                        <select id="reportPeriod">
+                            <option>Last 7 days</option>
+                            <option>Last 30 days</option>
+                            <option>This Month</option>
+                            <option>Last Month</option>
+                            <option>This Semester</option>
+                            <option>Custom Range</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Format</label>
+                        <select id="reportFormat">
+                            <option>PDF</option>
+                            <option>Excel</option>
+                            <option>CSV</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="generateReport()">Generate AI Report</button>
+                <button class="btn btn-secondary" onclick="scheduleReport()">Schedule Report</button>
+            </div>
+
+            <div class="content-card">
+                <h3>Recent Reports</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Report Name</th>
+                            <th>Type</th>
+                            <th>Generated</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Monthly Occupancy Analysis</td>
+                            <td>Occupancy</td>
+                            <td>2024-01-20 10:30 AM</td>
+                            <td><span class="status-badge status-completed">Ready</span></td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="downloadReport('OCR001')">Download</button>
+                                <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="viewReport('OCR001')">View</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Maintenance Cost Analysis</td>
+                            <td>Financial</td>
+                            <td>2024-01-19 3:45 PM</td>
+                            <td><span class="status-badge status-completed">Ready</span></td>
+                            <td>
+                                <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="downloadReport('FCR002')">Download</button>
+                                <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="viewReport('FCR002')">View</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Student Satisfaction Survey</td>
+                            <td>Feedback</td>
+                            <td>2024-01-18 11:15 AM</td>
+                            <td><span class="status-badge status-in-progress">Processing</span></td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" disabled>Processing...</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="floating-action" onclick="showQuickActions()" title="Quick Actions">
+        +
+    </div>
+
+    <!-- Modals -->
+    <div id="quickActionsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Quick Actions</h3>
+                <span class="close" onclick="closeModal('quickActionsModal')">&times;</span>
+            </div>
+            <div style="display: grid; gap: 1rem;">
+                <button class="btn btn-primary" onclick="quickAllocateRoom()">Quick Room Allocation</button>
+                <button class="btn btn-primary" onclick="emergencyMaintenance()">Emergency Maintenance</button>
+                <button class="btn btn-primary" onclick="bulkCheckIn()">Bulk Check-in</button>
+                <button class="btn btn-primary" onclick="generateInstantReport()">Instant Report</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="roomDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="roomDetailsTitle">Room Details</h3>
+                <span class="close" onclick="closeModal('roomDetailsModal')">&times;</span>
+            </div>
+            <div id="roomDetailsContent">
+                <!-- Room details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global data store
+        let hostelData = {
+            rooms: [],
+            students: [],
+            maintenanceRequests: [],
+            visitors: [],
+            allocations: []
+        };
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeRooms();
+            updateDashboard();
+            setInterval(updateRealTimeData, 30000); // Update every 30 seconds
+        });
+
+        // Go to main dashboard
+        function goToMainDashboard() {
+            // Reset to dashboard view
+            showTab('dashboard');
+            
+            // Reset all nav tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            navTabs[0].classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Show confirmation
+            showNotification('Returned to main dashboard', 'success');
+            
+            // Update dashboard data
+            updateDashboard();
+        }
+
+        // Initialize rooms data
+        function initializeRooms() {
+            const rooms = [];
+            
+            // Generate 120 rooms across 4 floors
+            for (let floor = 1; floor <= 4; floor++) {
+                for (let room = 1; room <= 30; room++) {
+                    const roomNumber = `${floor}${String(room).padStart(2, '0')}`;
+                    const status = Math.random() > 0.82 ? 'available' : 
+                                 Math.random() > 0.94 ? 'maintenance' : 'occupied';
+                    
+                    rooms.push({
+                        number: roomNumber,
+                        floor: floor,
+                        status: status,
+                        capacity: floor <= 2 ? 2 : 3,
+                        currentOccupancy: status === 'occupied' ? 
+                            (floor <= 2 ? Math.ceil(Math.random() * 2) : Math.ceil(Math.random() * 3)) : 0,
+                        type: floor <= 2 ? 'Double' : 'Triple',
+                        lastMaintenance: new Date(2024, 0, Math.floor(Math.random() * 20) + 1),
+                        monthlyRent: floor <= 2 ? 8000 : 6000
+                    });
+                }
+            }
+            
+            hostelData.rooms = rooms;
+            renderRoomGrid();
+        }
+
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all nav tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked nav tab
+            event.target.classList.add('active');
+            
+            // Special handling for different tabs
+            if (tabName === 'room-map') {
+                renderRoomGrid();
+            } else if (tabName === 'reports') {
+                generateCharts();
+            }
+        }
+
+        // Room grid rendering
+        function renderRoomGrid() {
+            const roomGrid = document.getElementById('roomGrid');
+            roomGrid.innerHTML = '';
+            
+            hostelData.rooms.forEach(room => {
+                const roomCard = document.createElement('div');
+                roomCard.className = `room-card ${room.status}`;
+                roomCard.onclick = () => showRoomDetails(room.number);
+                
+                roomCard.innerHTML = `
+                    <div class="room-number">Room ${room.number}</div>
+                    <div class="room-status">${room.status.charAt(0).toUpperCase() + room.status.slice(1)}</div>
+                    <div class="room-occupancy">${room.currentOccupancy}/${room.capacity} occupied</div>
+                `;
+                
+                roomGrid.appendChild(roomCard);
+            });
+        }
+
+        // Room details modal
+        function showRoomDetails(roomNumber) {
+            const room = hostelData.rooms.find(r => r.number === roomNumber);
+            if (!room) return;
+            
+            document.getElementById('roomDetailsTitle').textContent = `Room ${roomNumber} Details`;
+            
+            const statusColor = room.status === 'available' ? '#2ed573' : 
+                              room.status === 'occupied' ? '#ff6b6b' : '#ffa502';
+            
+            document.getElementById('roomDetailsContent').innerHTML = `
+                <div style="display: grid; gap: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h4>Status</h4>
+                        <span style="padding: 0.25rem 0.75rem; background: ${statusColor}; color: white; border-radius: 20px; font-size: 0.8rem;">
+                            ${room.status.charAt(0).toUpperCase() + room.status.slice(1)}
+                        </span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Floor:</span>
+                        <span>${room.floor}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Type:</span>
+                        <span>${room.type} Sharing</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Capacity:</span>
+                        <span>${room.capacity} students</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Current Occupancy:</span>
+                        <span>${room.currentOccupancy}/${room.capacity}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Monthly Rent:</span>
+                        <span>₹${room.monthlyRent.toLocaleString()}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Last Maintenance:</span>
+                        <span>${room.lastMaintenance.toLocaleDateString()}</span>
+                    </div>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                        ${room.status === 'available' ? '<button class="btn btn-primary" onclick="quickAllocateToRoom(\'' + roomNumber + '\')">Allocate Room</button>' : ''}
+                        <button class="btn btn-secondary" onclick="requestMaintenance('${roomNumber}')">Request Maintenance</button>
+                        <button class="btn btn-secondary" onclick="closeModal('roomDetailsModal')">Close</button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('roomDetailsModal').style.display = 'block';
+        }
+
+        // AI-powered room allocation
+        function allocateRoom() {
+            const studentName = document.getElementById('studentName').value;
+            const studentId = document.getElementById('studentId').value;
+            const course = document.getElementById('course').value;
+            const year = document.getElementById('year').value;
+            const preference = document.getElementById('roomPreference').value;
+            
+            if (!studentName || !studentId || course === 'Select Course' || year === 'Select Year') {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            // AI allocation logic
+            const availableRooms = hostelData.rooms.filter(room => room.status === 'available' || 
+                (room.status === 'occupied' && room.currentOccupancy < room.capacity));
+            
+            if (availableRooms.length === 0) {
+                alert('No available rooms found');
+                return;
+            }
+            
+            // Score rooms based on preferences and AI criteria
+            let bestRoom = availableRooms[0];
+            let bestScore = 0;
+            
+            availableRooms.forEach(room => {
+                let score = 0;
+                
+                // Preference matching
+                if (preference !== 'No Preference') {
+                    const preferredFloor = preference === 'Ground Floor' ? 1 : 
+                                         preference === 'First Floor' ? 2 :
+                                         preference === 'Second Floor' ? 3 : 4;
+                    if (room.floor === preferredFloor) score += 30;
+                }
+                
+                // Occupancy optimization (prefer rooms with some occupancy for community)
+                if (room.currentOccupancy > 0 && room.currentOccupancy < room.capacity) score += 20;
+                
+                // Year-based allocation (senior students get preference for higher floors)
+                const yearNum = parseInt(year.charAt(0));
+                if (yearNum >= 3 && room.floor >= 3) score += 15;
+                if (yearNum <= 2 && room.floor <= 2) score += 15;
+                
+                // Random factor for AI variability
+                score += Math.random() * 10;
+                
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestRoom = room;
+                }
+            });
+            
+            // Allocate the room
+            bestRoom.status = 'occupied';
+            bestRoom.currentOccupancy++;
+            
+            // Add to allocations
+            const allocation = {
+                roomNumber: bestRoom.number,
+                studentName: studentName,
+                studentId: studentId,
+                course: course,
+                year: year,
+                checkInDate: new Date().toISOString().split('T')[0]
+            };
+            
+            hostelData.allocations.push(allocation);
+            
+            // Update UI
+            renderRoomGrid();
+            updateAllocationsTable();
+            
+            // Clear form
+            document.getElementById('studentName').value = '';
+            document.getElementById('studentId').value = '';
+            document.getElementById('course').selectedIndex = 0;
+            document.getElementById('year').selectedIndex = 0;
+            document.getElementById('roomPreference').selectedIndex = 0;
+            document.getElementById('specialReqs').value = '';
+            
+            alert(`Room ${bestRoom.number} successfully allocated to ${studentName}!\n\nAI Recommendation Score: ${bestScore.toFixed(1)}/100\nRoom Type: ${bestRoom.type} sharing\nFloor: ${bestRoom.floor}\nMonthly Rent: ₹${bestRoom.monthlyRent.toLocaleString()}`);
+        }
+
+        // Update allocations table
+        function updateAllocationsTable() {
+            const tbody = document.getElementById('allocationsTableBody');
+            tbody.innerHTML = '';
+            
+            // Add sample data if no allocations exist
+            const sampleAllocations = [
+                {roomNumber: '101', studentName: 'John Doe', studentId: '2024001', course: 'Computer Science', checkInDate: '2024-01-15'},
+                {roomNumber: '102', studentName: 'Jane Smith', studentId: '2024002', course: 'Mechanical Engineering', checkInDate: '2024-01-16'}
+            ];
+            
+            const allAllocations = [...sampleAllocations, ...hostelData.allocations];
+            
+            allAllocations.forEach(allocation => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${allocation.roomNumber}</td>
+                    <td>${allocation.studentName}</td>
+                    <td>${allocation.studentId}</td>
+                    <td>${allocation.course}</td>
+                    <td>${allocation.checkInDate}</td>
+                    <td>
+                        <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="editAllocation('${allocation.roomNumber}')">Edit</button>
+                        <button class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="deallocateRoom('${allocation.roomNumber}')">Deallocate</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Search functionality for allocations
+        function searchAllocations(searchTerm) {
+            const table = document.getElementById('allocationsTable');
+            const rows = table.getElementsByTagName('tr');
+            
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                const text = row.textContent.toLowerCase();
+                
+                if (text.includes(searchTerm.toLowerCase())) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        }
+
+        // Manual allocation
+        function manualAllocation() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Manual Room Allocation</h3>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Available Room</label>
+                        <select id="manualRoomSelect">
+                            ${hostelData.rooms.filter(r => r.status === 'available' || (r.status === 'occupied' && r.currentOccupancy < r.capacity))
+                                .map(room => `<option value="${room.number}">Room ${room.number} (${room.type}, Floor ${room.floor}) - ${room.currentOccupancy}/${room.capacity} occupied</option>`).join('')}
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="confirmManualAllocation()">Allocate Selected Room</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Confirm manual allocation
+        function confirmManualAllocation() {
+            const roomNumber = document.getElementById('manualRoomSelect').value;
+            const studentName = document.getElementById('studentName').value;
+            const studentId = document.getElementById('studentId').value;
+            
+            if (!studentName || !studentId) {
+                alert('Please fill student details first');
+                return;
+            }
+            
+            const room = hostelData.rooms.find(r => r.number === roomNumber);
+            room.status = 'occupied';
+            room.currentOccupancy++;
+            
+            renderRoomGrid();
+            updateAllocationsTable();
+            
+            document.querySelector('.modal').remove();
+            alert(`Room ${roomNumber} manually allocated to ${studentName}`);
+        }
+
+        // Deallocate room
+        function deallocateRoom(roomNumber) {
+            if (!confirm(`Are you sure you want to deallocate room ${roomNumber}?`)) return;
+            
+            const room = hostelData.rooms.find(r => r.number === roomNumber);
+            if (room) {
+                room.currentOccupancy--;
+                if (room.currentOccupancy === 0) {
+                    room.status = 'available';
+                }
+            }
+            
+            // Remove from allocations
+            hostelData.allocations = hostelData.allocations.filter(a => a.roomNumber !== roomNumber);
+            
+            renderRoomGrid();
+            updateAllocationsTable();
+            
+            alert(`Room ${roomNumber} has been deallocated`);
+        }
+
+        // Edit allocation
+        function editAllocation(roomNumber) {
+            alert('Edit allocation feature would be implemented here');
+        }
+
+        // Maintenance request submission
+        function submitMaintenanceRequest() {
+            const room = document.getElementById('maintenanceRoom').value;
+            const issueType = document.getElementById('issueType').value;
+            const priority = document.getElementById('priority').value;
+            const reporter = document.getElementById('reporter').value;
+            const description = document.getElementById('issueDescription').value;
+            
+            if (!room || !issueType || !reporter || !description) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            const requestId = 'MR' + String(Date.now()).slice(-3);
+            const request = {
+                id: requestId,
+                room: room,
+                issueType: issueType,
+                priority: priority,
+                reporter: reporter,
+                description: description,
+                status: 'pending',
+                date: new Date().toISOString().split('T')[0],
+                aiPrediction: generateMaintenancePrediction(issueType, priority)
+            };
+            
+            hostelData.maintenanceRequests.push(request);
+            
+            // Update room status if high priority
+            if (priority === 'Emergency' || priority === 'High') {
+                const roomObj = hostelData.rooms.find(r => r.number === room);
+                if (roomObj && roomObj.status !== 'maintenance') {
+                    roomObj.status = 'maintenance';
+                    renderRoomGrid();
+                }
+            }
+            
+            // Clear form
+            document.getElementById('maintenanceRoom').value = '';
+            document.getElementById('issueType').selectedIndex = 0;
+            document.getElementById('priority').selectedIndex = 0;
+            document.getElementById('reporter').value = '';
+            document.getElementById('issueDescription').value = '';
+            
+            alert(`Maintenance request ${requestId} submitted successfully!\n\nAI Prediction: ${request.aiPrediction.estimatedTime}\nPriority: ${priority}\nRecommended Action: ${request.aiPrediction.recommendedAction}`);
+        }
+
+        // Generate AI maintenance prediction
+        function generateMaintenancePrediction(issueType, priority) {
+            const predictions = {
+                'Electrical': { estimatedTime: '2-4 hours', recommendedAction: 'Contact certified electrician', cost: '₹500-2000' },
+                'Plumbing': { estimatedTime: '1-3 hours', recommendedAction: 'Check water supply and pipes', cost: '₹300-1500' },
+                'Furniture': { estimatedTime: '30-90 minutes', recommendedAction: 'Assess damage and repair/replace', cost: '₹200-1000' },
+                'Cleaning': { estimatedTime: '15-30 minutes', recommendedAction: 'Deep cleaning required', cost: '₹100-300' },
+                'Security': { estimatedTime: '1-2 hours', recommendedAction: 'Check locks and security systems', cost: '₹400-1200' },
+                'Other': { estimatedTime: '1-2 hours', recommendedAction: 'On-site assessment needed', cost: '₹300-800' }
+            };
+            
+            let prediction = predictions[issueType] || predictions['Other'];
+            
+            // Adjust based on priority
+            if (priority === 'Emergency') {
+                prediction.estimatedTime = 'Immediate (< 1 hour)';
+            } else if (priority === 'High') {
+                prediction.estimatedTime = prediction.estimatedTime.split('-')[0] + ' hours (expedited)';
+            }
+            
+            return prediction;
+        }
+
+        // Update maintenance status
+        function updateMaintenanceStatus(requestId, newStatus) {
+            const request = hostelData.maintenanceRequests.find(r => r.id === requestId);
+            if (request) {
+                request.status = newStatus;
+                
+                // Update room status if completed
+                if (newStatus === 'completed') {
+                    const room = hostelData.rooms.find(r => r.number === request.room);
+                    if (room && room.status === 'maintenance') {
+                        room.status = room.currentOccupancy > 0 ? 'occupied' : 'available';
+                        renderRoomGrid();
+                    }
+                }
+                
+                alert(`Maintenance request ${requestId} status updated to: ${newStatus}`);
+            }
+        }
+
+        // View maintenance details
+        function viewMaintenanceDetails(requestId) {
+            alert(`Viewing details for maintenance request ${requestId}`);
+        }
+
+        // Request maintenance for specific room
+        function requestMaintenance(roomNumber) {
+            showTab('maintenance');
+            document.getElementById('maintenanceRoom').value = roomNumber;
+            closeModal('roomDetailsModal');
+        }
+
+        // Visitor registration
+        function registerVisitor() {
+            const visitorName = document.getElementById('visitorName').value;
+            const phone = document.getElementById('visitorPhone').value;
+            const room = document.getElementById('visitRoom').value;
+            const studentToMeet = document.getElementById('studentToMeet').value;
+            const purpose = document.getElementById('visitPurpose').value;
+            const duration = document.getElementById('visitDuration').value;
+            
+            if (!visitorName || !phone || !room || !studentToMeet) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            const visitorId = 'V' + String(Date.now()).slice(-3);
+            const visitor = {
+                id: visitorId,
+                name: visitorName,
+                phone: phone,
+                room: room,
+                studentToMeet: studentToMeet,
+                purpose: purpose,
+                duration: duration,
+                checkInTime: new Date(),
+                status: 'active',
+                aiVerification: performAIVerification(visitorName, phone)
+            };
+            
+            hostelData.visitors.push(visitor);
+            updateVisitorsDisplay();
+            
+            // Clear form
+            document.getElementById('visitorName').value = '';
+            document.getElementById('visitorPhone').value = '';
+            document.getElementById('visitRoom').value = '';
+            document.getElementById('studentToMeet').value = '';
+            document.getElementById('visitPurpose').selectedIndex = 0;
+            document.getElementById('visitDuration').selectedIndex = 0;
+            
+            alert(`Visitor registered successfully!\n\nVisitor ID: ${visitorId}\nAI Verification: ${visitor.aiVerification.status}\nSecurity Score: ${visitor.aiVerification.securityScore}/100\n\nPlease provide visitor pass and inform security.`);
+        }
+
+        // AI verification simulation
+        function performAIVerification(name, phone) {
+            const securityScore = Math.floor(Math.random() * 20) + 80; // 80-100 range
+            const status = securityScore >= 85 ? 'Verified' : securityScore >= 70 ? 'Caution' : 'Manual Review';
+            
+            return {
+                status: status,
+                securityScore: securityScore,
+                checks: {
+                    nameValidation: true,
+                    phoneValidation: phone.length === 10,
+                    blacklistCheck: Math.random() > 0.95, // 5% chance of blacklist hit
+                    behaviorAnalysis: securityScore > 75
+                }
+            };
+        }
+
+        // Update visitors display
+        function updateVisitorsDisplay() {
+            const container = document.getElementById('visitorsContainer');
+            const recentVisitors = hostelData.visitors.slice(-10); // Show last 10 visitors
+            
+            recentVisitors.forEach(visitor => {
+                const timeStr = visitor.checkInTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                const statusStr = visitor.status === 'active' ? 'Active' : 'Checked Out';
+                
+                const visitorCard = document.createElement('div');
+                visitorCard.className = 'visitor-card';
+                visitorCard.innerHTML = `
+                    <div class="visitor-header">
+                        <span class="visitor-name">${visitor.name}</span>
+                        <span class="visitor-time">${timeStr} - ${statusStr}</span>
+                    </div>
+                    <div class="visitor-details">
+                        Visiting Room ${visitor.room} | Meeting: ${visitor.studentToMeet} | Purpose: ${visitor.purpose}
+                        <div style="margin-top: 0.5rem;">
+                            ${visitor.status === 'active' ? 
+                                `<button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="checkoutVisitor('${visitor.id}')">Check Out</button>
+                                 <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="extendVisit('${visitor.id}')">Extend Visit</button>` :
+                                `<span style="color: #666; font-size: 0.8rem;">Visit Duration: ${Math.floor(Math.random() * 3) + 1} hours</span>`
+                            }
+                        </div>
+                    </div>
+                `;
+                container.insertBefore(visitorCard, container.firstChild);
+            });
+        }
+
+        // Check out visitor
+        function checkoutVisitor(visitorId) {
+            const visitor = hostelData.visitors.find(v => v.id === visitorId);
+            if (visitor) {
+                visitor.status = 'checked-out';
+                visitor.checkOutTime = new Date();
+                updateVisitorsDisplay();
+                alert(`Visitor ${visitor.name} checked out successfully`);
+            }
+        }
+
+        // Extend visit
+        function extendVisit(visitorId) {
+            alert(`Visit extended for visitor ID: ${visitorId}`);
+        }
+
+        // Search visitors
+        function searchVisitors(searchTerm) {
+            const cards = document.querySelectorAll('.visitor-card');
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(searchTerm.toLowerCase()) ? 'block' : 'none';
+            });
+        }
+
+        // Submit mess feedback
+        function submitMessFeedback() {
+            const meal = document.getElementById('feedbackMeal').value;
+            const rating = document.getElementById('feedbackRating').value;
+            const comments = document.getElementById('feedbackComments').value;
+            
+            if (!comments.trim()) {
+                alert('Please provide feedback comments');
+                return;
+            }
+            
+            const feedback = {
+                id: 'FB' + Date.now(),
+                meal: meal,
+                rating: parseInt(rating.charAt(0)),
+                comments: comments,
+                date: new Date(),
+                aiAnalysis: analyzeMessFeedback(comments, parseInt(rating.charAt(0)))
+            };
+            
+            // Clear form
+            document.getElementById('feedbackMeal').selectedIndex = 0;
+            document.getElementById('feedbackRating').selectedIndex = 0;
+            document.getElementById('feedbackComments').value = '';
+            
+            alert(`Thank you for your feedback!\n\nAI Analysis:\nSentiment: ${feedback.aiAnalysis.sentiment}\nKey Issues: ${feedback.aiAnalysis.keyIssues.join(', ')}\nRecommendation: ${feedback.aiAnalysis.recommendation}`);
+        }
+
+        // AI feedback analysis
+        function analyzeMessFeedback(comments, rating) {
+            const positiveWords = ['good', 'great', 'excellent', 'delicious', 'tasty', 'fresh', 'quality'];
+            const negativeWords = ['bad', 'poor', 'stale', 'cold', 'bland', 'dirty', 'late'];
+            const issueWords = {
+                'taste': ['taste', 'flavor', 'bland', 'spicy', 'sweet', 'sour'],
+                'quality': ['quality', 'fresh', 'stale', 'old'],
+                'service': ['service', 'staff', 'slow', 'fast', 'late'],
+                'hygiene': ['clean', 'dirty', 'hygiene', 'sanitize']
+            };
+            
+            const lowerComments = comments.toLowerCase();
+            let sentiment = rating >= 4 ? 'Positive' : rating >= 3 ? 'Neutral' : 'Negative';
+            
+            // Detect key issues
+            const keyIssues = [];
+            Object.keys(issueWords).forEach(issue => {
+                if (issueWords[issue].some(word => lowerComments.includes(word))) {
+                    keyIssues.push(issue);
+                }
+            });
+            
+            // Generate recommendation
+            let recommendation = 'Continue current practices';
+            if (rating <= 2) {
+                recommendation = 'Immediate attention required - investigate specific issues';
+            } else if (rating === 3) {
+                recommendation = 'Monitor closely - room for improvement';
+            } else if (rating >= 4) {
+                recommendation = 'Good performance - maintain standards';
+            }
+            
+            return {
+                sentiment: sentiment,
+                keyIssues: keyIssues.length > 0 ? keyIssues : ['general'],
+                recommendation: recommendation,
+                urgencyLevel: rating <= 2 ? 'High' : rating === 3 ? 'Medium' : 'Low'
+            };
+        }
+
+        // Generate reports
+        function generateReport() {
+            const reportType = document.getElementById('reportType').value;
+            const period = document.getElementById('reportPeriod').value;
+            const format = document.getElementById('reportFormat').value;
+            
+            // Simulate AI report generation
+            const reportId = 'RPT' + Date.now();
+            const reportData = generateReportData(reportType, period);
+            
+            // Show processing animation
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '🔄 Generating AI Report...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                
+                alert(`Report Generated Successfully!\n\nReport ID: ${reportId}\nType: ${reportType}\nPeriod: ${period}\nFormat: ${format}\n\nKey Insights:\n${reportData.insights.join('\n')}\n\nReport is ready for download.`);
+            }, 2000);
+        }
+
+        // Schedule report
+        function scheduleReport() {
+            alert('Report scheduling feature would be implemented here');
+        }
+
+        // Generate report data
+        function generateReportData(type, period) {
+            const insights = [];
+            
+            switch(type) {
+                case 'Occupancy Report':
+                    insights.push('• Overall occupancy rate: 81.7% (↗ 3.2% from last month)');
+                    insights.push('• Peak occupancy hours: 10 PM - 6 AM');
+                    insights.push('• Floor 2 has highest occupancy (95%)');
+                    insights.push('• Predicted 5% increase next semester');
+                    break;
+                case 'Financial Report':
+                    insights.push('• Total revenue: ₹12.4 lakhs');
+                    insights.push('• Collection efficiency: 94.2%');
+                    insights.push('• Outstanding dues: ₹85,000');
+                    insights.push('• Maintenance cost: 8% of revenue');
+                    break;
+                case 'Maintenance Report':
+                    insights.push('• 94% of requests resolved within SLA');
+                    insights.push('• Most common issue: Electrical (35%)');
+                    insights.push('• Average resolution time: 2.3 hours');
+                    insights.push('• Predictive maintenance saved ₹25,000');
+                    break;
+                default:
+                    insights.push('• Report generated successfully');
+                    insights.push('• Data analysis completed');
+                    insights.push('• Recommendations included');
+            }
+            
+            return { insights };
+        }
+
+        // Download report
+        function downloadReport(reportId) {
+            alert(`Downloading report ${reportId}`);
+        }
+
+        // View report
+        function viewReport(reportId) {
+            alert(`Viewing report ${reportId}`);
+        }
+
+        // Quick actions modal
+        function showQuickActions() {
+            document.getElementById('quickActionsModal').style.display = 'block';
+        }
+
+        // Close modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Quick actions
+        function quickAllocateRoom() {
+            closeModal('quickActionsModal');
+            showTab('room-allocation');
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            navTabs[1].classList.add('active');
+        }
+
+        function emergencyMaintenance() {
+            closeModal('quickActionsModal');
+            showTab('maintenance');
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            navTabs[3].classList.add('active');
+            document.getElementById('priority').value = 'Emergency';
+        }
+
+        function bulkCheckIn() {
+            alert('Bulk check-in feature would be implemented here');
+        }
+
+        function generateInstantReport() {
+            alert('Generating instant report...');
+        }
+
+        function quickAllocateToRoom(roomNumber) {
+            closeModal('roomDetailsModal');
+            showTab('room-allocation');
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            navTabs[1].classList.add('active');
+        }
+
+        // Real-time data updates
+        function updateRealTimeData() {
+            // Simulate real-time updates
+            const stats = document.querySelectorAll('.stat-value');
+            if (stats.length > 0) {
+                // Randomly update some statistics
+                const occupiedRooms = stats[1];
+                if (Math.random() > 0.8) {
+                    const currentValue = parseInt(occupiedRooms.textContent);
+                    const newValue = currentValue + (Math.random() > 0.5 ? 1 : -1);
+                    occupiedRooms.textContent = Math.max(0, Math.min(120, newValue));
+                }
+            }
+        }
+
+        // Update dashboard with latest data
+        function updateDashboard() {
+            const occupiedRooms = hostelData.rooms.filter(r => r.status === 'occupied').length;
+            const availableRooms = hostelData.rooms.filter(r => r.status === 'available').length;
+            const maintenanceRooms = hostelData.rooms.filter(r => r.status === 'maintenance').length;
+            
+            // Update stats if elements exist
+            const statCards = document.querySelectorAll('.stat-value');
+            if (statCards.length >= 4) {
+                statCards[1].textContent = occupiedRooms;
+                statCards[2].textContent = availableRooms;
+                statCards[3].textContent = hostelData.maintenanceRequests.length;
+            }
+        }
+
+        // Initialize charts for reports (placeholder)
+        function generateCharts() {
+            console.log('Charts would be generated here with real data visualization');
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification show alert-${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Mobile responsive enhancements
+        window.addEventListener('resize', function() {
+            if (window.innerWidth <= 768) {
+                const navTabs = document.querySelector('.nav-tabs');
+                if (navTabs) {
+                    navTabs.style.overflowX = 'auto';
+                }
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case '1':
+                        e.preventDefault();
+                        showTab('dashboard');
+                        break;
+                    case '2':
+                        e.preventDefault();
+                        showTab('room-allocation');
+                        break;
+                    case '3':
+                        e.preventDefault();
+                        showTab('room-map');
+                        break;
+                }
+            }
+        });
+
+        // Auto-save functionality for forms
+        function autoSaveFormData() {
+            const formInputs = document.querySelectorAll('input, select, textarea');
+            formInputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    window.formDataCache = window.formDataCache || {};
+                    window.formDataCache[input.id] = input.value;
+                });
+            });
+        }
+
+        // Initialize auto-save
+        document.addEventListener('DOMContentLoaded', autoSaveFormData);
+
+        // Error handling and logging
+        window.addEventListener('error', function(e) {
+            console.error('Application error:', e.error);
+            showNotification('An error occurred. Please refresh the page if issues persist.', 'danger');
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+
+        console.log('Hostel Management System with AI Integration loaded successfully!');
+        console.log('Features: AI-powered room allocation, predictive maintenance, smart analytics');
+    </script>
+</body>
+</html>
+                        <label>Student Name</label>
+                        <input type="text" id="studentName" placeholder="Enter student name">
+                    </div>
+                    <div class="form-group">
+                        <label>Student ID</label>
+                        <input type="text" id="studentId" placeholder="Enter student ID">
+                    </div>
+                    <div class="form-group">
+                        <label>Course</label>
+                        <select id="course">
+                            <option>Select Course</option>
+                            <option>Computer Science</option>
+                            <option>Mechanical Engineering</option>
+                            <option>Electrical Engineering</option>
+                            <option>Civil Engineering</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Year</label>
+                        <select id="year">
+                            <option>Select Year</option>
+                            <option>1st Year</option>
+                            <option>2nd Year</option>
+                            <option>3rd Year</option>
+                            <option>4th Year</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Room Preference</label>
+                        <select id="roomPreference">
+                            <option>No Preference</option>
+                            <option>Ground Floor</option>
+                            <option>First Floor</option>
+                            <option>Second Floor</option>
+                            <option>Third Floor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Special Requirements</label>
+                        <textarea id="specialReqs" rows="3" placeholder="Any special requirements..."></textarea>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="allocateRoom()">🤖 AI-Powered Room Allocation</button>
+                <button class="btn btn-secondary" onclick="manualAllocation()">Manual Allocation</button>
+            </div>
+
+            <div class="content-card">
+                <h3>Current Allocations</h3>
+                <input type="text" class="search-bar" placeholder="Search by student name or room number..." onkeyup="searchAllocations(this.value)">
+                <table class="table" id="allocationsTable">
+                    <thead>
+                        <tr>
+                            <th>Room No.</th>
+                            <th>Student Name</th>
+                            <th>Student ID</th>
+                            <th>Course</th>
+                            <th>Check-in Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allocationsTableBody">
+                        <tr>
+                            <td>101</td>
+                            <td>John Doe</td>
+                            <td>2024001</td>
+                            <td>Computer Science</td>
+                            <td>2024-01-15</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="editAllocation('101')">Edit</button>
+                                <button class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="deallocateRoom('101')">Deallocate</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>102</td>
+                            <td>Jane Smith</td>
+                            <td>2024002</td>
+                            <td>Mechanical Engineering</td>
+                            <td>2024-01-16</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="editAllocation('102')">Edit</button>
+                                <button class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;" onclick="deallocateRoom('102')">Deallocate</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Room Map Tab -->
+        <div id="room-map" class="tab-content">
+            <div class="content-card">
+                <h3>Hostel Room Layout</h3>
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #2ed573, #1e90ff); border-radius: 50%;"></div>
+                        <span>Available</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #ff6b6b, #ee5a24); border-radius: 50%;"></div>
+                        <span>Occupied</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #ffa502, #ff6348); border-radius: 50%;"></div>
+                        <span>Maintenance</span>
+                    </div>
+                </div>
+                <div class="room-grid" id="roomGrid">
+                    <!-- Rooms will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Maintenance Tab -->
+        <div id="maintenance" class="tab-content">
+            <div class="content-card">
+                <h3>Submit Maintenance Request</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Room Number</label>
+                        <input type="text" id="maintenanceRoom" placeholder="Enter room number">
+                    </div>
+                    <div class="form-group">
+                        <label>Issue Type</label>
+                        <select id="issueType">
+                            <option>Select Issue Type</option>
+                            <option>Electrical</option>
+                            <option>Plumbing</option>
+                            <option>Furniture</option>
+                            <option>Cleaning</option>
+                            <option>Security</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="priority">
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                            <option>Emergency</option>
+                        </select>
+                    </div>
+                    <div class="form-group">

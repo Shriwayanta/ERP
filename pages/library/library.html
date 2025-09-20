@@ -610,7 +610,7 @@
     </style>
 </head>
 <body>
-    <a href="#" class="back-to-main-btn" onclick="goToMain(); return false;">
+    <a href="/index.html" class="back-to-main-btn" onclick="goToMain(); return false;">
         <span>←</span> Back to Main
     </a>
 
@@ -1420,8 +1420,9 @@
         // Back to main function
         function goToMain() {
             showNotification('Returning to main menu...', 'success');
-            // You can add actual navigation logic here
-            // For example: window.location.href = 'main-page.html';
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 500);
         }
     </script>
 </body>

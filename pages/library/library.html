@@ -540,6 +540,40 @@
             margin: 15px 0;
         }
 
+        .back-to-main-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-to-main-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            text-decoration: none;
+            border-color: transparent;
+        }
+
+        .back-to-main-btn:active {
+            transform: translateY(0);
+        }
+
         @media (max-width: 768px) {
             .dashboard-cards {
                 grid-template-columns: 1fr;
@@ -576,6 +610,10 @@
     </style>
 </head>
 <body>
+    <a href="#" class="back-to-main-btn" onclick="goToMain(); return false;">
+        <span>←</span> Back to Main
+    </a>
+
     <div class="container">
         <div class="header">
             <h1>📚 Library Management System</h1>
@@ -1377,6 +1415,13 @@
             if (event.target == modal) {
                 modal.style.display = 'none';
             }
+        }
+
+        // Back to main function
+        function goToMain() {
+            showNotification('Returning to main menu...', 'success');
+            // You can add actual navigation logic here
+            // For example: window.location.href = 'main-page.html';
         }
     </script>
 </body>

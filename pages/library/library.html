@@ -27,32 +27,6 @@
             overflow: hidden;
         }
 
-        .back-to-main-btn {
-            position: fixed;
-            top: 40px;
-            left: 40px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #667eea;
-            text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-
-        .back-to-main-btn:hover {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-            text-decoration: none;
-        }
-
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -106,13 +80,13 @@
         }
 
         .tab-content {
-            display: none !important;
+            display: none;
             padding: 30px;
             animation: fadeIn 0.3s ease;
         }
 
         .tab-content.active {
-            display: block !important;
+            display: block;
         }
 
         @keyframes fadeIn {
@@ -587,12 +561,6 @@
                 flex: none;
             }
 
-            .back-to-main-btn {
-                top: 20px;
-                left: 20px;
-                z-index: 1001;
-            }
-
             .header {
                 padding: 30px 20px;
             }
@@ -610,26 +578,18 @@
 <body>
     <div class="container">
         <div class="header">
-
-            <a href="#" class="back-to-main-btn" onclick="goToMain()">
-            <a href="/index.html" class="back-to-main-btn">
-
-                ← Back to Main
-            </a>
-            <div style="text-align: center; margin-top: 10px;">
-                <h1>📚 Library Management System</h1>
-                <p>Book issue/return, digital catalog, fine calculation with AI recommendations</p>
-            </div>
+            <h1>📚 Library Management System</h1>
+            <p>Complete digital library solution with AI-powered insights</p>
         </div>
 
         <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showTab('dashboard'); this.blur();">Dashboard</button>
-            <button class="nav-tab" onclick="showTab('book-catalog'); this.blur();">Book Catalog</button>
-            <button class="nav-tab" onclick="showTab('issue-return'); this.blur();">Issue/Return</button>
-            <button class="nav-tab" onclick="showTab('member-management'); this.blur();">Members</button>
-            <button class="nav-tab" onclick="showTab('fine-management'); this.blur();">Fines</button>
-            <button class="nav-tab" onclick="showTab('reservations'); this.blur();">Reservations</button>
-            <button class="nav-tab" onclick="showTab('reports'); this.blur();">Reports</button>
+            <button class="nav-tab active" onclick="showTab('dashboard')">Dashboard</button>
+            <button class="nav-tab" onclick="showTab('book-catalog')">Book Catalog</button>
+            <button class="nav-tab" onclick="showTab('issue-return')">Issue/Return</button>
+            <button class="nav-tab" onclick="showTab('member-management')">Members</button>
+            <button class="nav-tab" onclick="showTab('fine-management')">Fines</button>
+            <button class="nav-tab" onclick="showTab('reservations')">Reservations</button>
+            <button class="nav-tab" onclick="showTab('reports')">Reports</button>
         </div>
 
         <!-- Dashboard Tab -->
@@ -658,27 +618,27 @@
 
             <div class="dashboard-cards">
                 <div class="card">
-                    <h3 id="totalBooks">0</h3>
+                    <h3 id="totalBooks">150</h3>
                     <p>Total Books</p>
                 </div>
                 <div class="card">
-                    <h3 id="issuedBooks">0</h3>
+                    <h3 id="issuedBooks">45</h3>
                     <p>Books Issued</p>
                 </div>
                 <div class="card">
-                    <h3 id="overdueBooks">0</h3>
+                    <h3 id="overdueBooks">8</h3>
                     <p>Overdue Books</p>
                 </div>
                 <div class="card">
-                    <h3 id="activeMembers">0</h3>
+                    <h3 id="activeMembers">120</h3>
                     <p>Active Members</p>
                 </div>
                 <div class="card">
-                    <h3 id="totalFines">₹0</h3>
+                    <h3 id="totalFines">₹2,500</h3>
                     <p>Total Fines</p>
                 </div>
                 <div class="card">
-                    <h3 id="todayIssues">0</h3>
+                    <h3 id="todayIssues">12</h3>
                     <p>Today's Issues</p>
                 </div>
             </div>
@@ -687,8 +647,7 @@
                 <h3>Recent Library Activities</h3>
                 <div class="search-filter">
                     <div class="search-group">
-                        <input type="text" id="searchActivities" placeholder="Search by book or member..." 
-                               onkeyup="filterActivities()">
+                        <input type="text" id="searchActivities" placeholder="Search by book or member..." onkeyup="filterActivities()">
                     </div>
                 </div>
                 <table class="table" id="activitiesTable">
@@ -703,7 +662,22 @@
                         </tr>
                     </thead>
                     <tbody id="activitiesTableBody">
-                        <!-- Dynamic content will be populated here -->
+                        <tr>
+                            <td>10:30 AM</td>
+                            <td>Rahul Sharma</td>
+                            <td>Introduction to Algorithms</td>
+                            <td>Book Issued</td>
+                            <td><span class="status issued">Completed</span></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>11:15 AM</td>
+                            <td>Priya Singh</td>
+                            <td>Clean Code</td>
+                            <td>Book Returned</td>
+                            <td><span class="status available">Completed</span></td>
+                            <td>-</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -714,6 +688,213 @@
             <div class="form-container">
                 <h3>Add New Book</h3>
                 <div class="form-grid">
+                    <div class="form-group">
+                        <label for="bookTitle">Book Title</label>
+                        <input type="text" id="bookTitle" placeholder="Enter book title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor">Author</label>
+                        <input type="text" id="bookAuthor" placeholder="Author name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookISBN">ISBN</label>
+                        <input type="text" id="bookISBN" placeholder="ISBN number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookCategory">Category</label>
+                        <select id="bookCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="computer-science">Computer Science</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="mechanical">Mechanical Engineering</option>
+                            <option value="civil">Civil Engineering</option>
+                            <option value="mathematics">Mathematics</option>
+                            <option value="physics">Physics</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="general">General</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookPublisher">Publisher</label>
+                        <input type="text" id="bookPublisher" placeholder="Publisher name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="publicationYear">Publication Year</label>
+                        <input type="number" id="publicationYear" placeholder="2024" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookCopies">Number of Copies</label>
+                        <input type="number" id="bookCopies" placeholder="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookPrice">Price (₹)</label>
+                        <input type="number" id="bookPrice" placeholder="0.00" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="bookDescription">Description</label>
+                    <textarea id="bookDescription" rows="3" placeholder="Brief description of the book..."></textarea>
+                </div>
+                <button type="button" class="btn" onclick="addBook()">Add Book</button>
+                <button type="button" class="btn btn-secondary" onclick="scanBarcode()" style="margin-left: 10px;">Scan Barcode</button>
+            </div>
+
+            <div class="table-container">
+                <h3>Book Catalog</h3>
+                <div class="search-filter">
+                    <div class="search-group">
+                        <input type="text" id="searchBooks" placeholder="Search books..." onkeyup="filterBooks()">
+                        <select id="categoryFilter" onchange="filterBooks()">
+                            <option value="">All Categories</option>
+                            <option value="computer-science">Computer Science</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="mechanical">Mechanical</option>
+                            <option value="civil">Civil</option>
+                            <option value="mathematics">Mathematics</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="exportCatalog()">Export Catalog</button>
+                </div>
+
+                <div class="category-filters">
+                    <button class="category-btn active" onclick="filterByCategory('all')">All Books</button>
+                    <button class="category-btn" onclick="filterByCategory('available')">Available</button>
+                    <button class="category-btn" onclick="filterByCategory('issued')">Issued</button>
+                    <button class="category-btn" onclick="filterByCategory('popular')">Popular</button>
+                </div>
+
+                <div class="book-grid" id="bookGrid">
+                    <!-- Sample book cards -->
+                    <div class="book-card">
+                        <div class="book-cover">📚</div>
+                        <div class="book-title">Introduction to Algorithms</div>
+                        <div class="book-author">by Thomas H. Cormen</div>
+                        <div class="book-details">
+                            <div>ISBN: 978-0262033848</div>
+                            <div>Category: Computer Science</div>
+                            <div>Available: 3/5</div>
+                            <div>Price: ₹6,500</div>
+                            <div><span class="status available">Available</span></div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-cover">📚</div>
+                        <div class="book-title">Clean Code</div>
+                        <div class="book-author">by Robert C. Martin</div>
+                        <div class="book-details">
+                            <div>ISBN: 978-0132350884</div>
+                            <div>Category: Computer Science</div>
+                            <div>Available: 1/3</div>
+                            <div>Price: ₹4,200</div>
+                            <div><span class="status available">Available</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Issue/Return Tab -->
+        <div id="issue-return" class="tab-content">
+            <div class="form-container">
+                <h3>Issue Book</h3>
+                <div class="barcode-scanner" id="barcodeScanner" onclick="activateScanner()">
+                    <div style="font-size: 48px; margin-bottom: 15px;">📷</div>
+                    <h4>Scan Book Barcode or Member ID</h4>
+                    <p>Click to activate scanner or enter details manually</p>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="memberID">Member ID</label>
+                        <input type="text" id="memberID" placeholder="Enter member ID" oninput="loadMemberInfo()" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberName">Member Name</label>
+                        <input type="text" id="memberName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberDepartment">Department</label>
+                        <input type="text" id="memberDepartment" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberType">Member Type</label>
+                        <input type="text" id="memberType" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookISBNIssue">Book ISBN/ID</label>
+                        <input type="text" id="bookISBNIssue" placeholder="Enter book ISBN" oninput="loadBookInfo()" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookTitleIssue">Book Title</label>
+                        <input type="text" id="bookTitleIssue" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="issueDate">Issue Date</label>
+                        <input type="date" id="issueDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="returnDate">Expected Return Date</label>
+                        <input type="date" id="returnDate" required>
+                    </div>
+                </div>
+
+                <div class="member-info" id="memberInfo" style="display: none;">
+                    <h4>Member Information</h4>
+                    <p><strong>Books Currently Issued:</strong> <span id="currentBooks">0</span></p>
+                    <p><strong>Overdue Books:</strong> <span id="overdueCount">0</span></p>
+                    <p><strong>Outstanding Fines:</strong> ₹<span id="outstandingFines">0</span></p>
+                </div>
+
+                <button type="button" class="btn" onclick="issueBook()">Issue Book</button>
+                <button type="button" class="btn btn-success" onclick="returnBook()" style="margin-left: 10px;">Return Book</button>
+            </div>
+
+            <div class="table-container">
+                <h3>Current Issues</h3>
+                <div class="search-filter">
+                    <div class="search-group">
+                        <input type="text" id="searchIssues" placeholder="Search issues..." onkeyup="filterIssues()">
+                    </div>
+                </div>
+                <table class="table" id="issuesTable">
+                    <thead>
+                        <tr>
+                            <th>Issue ID</th>
+                            <th>Member</th>
+                            <th>Book</th>
+                            <th>Issue Date</th>
+                            <th>Return Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="issuesTableBody">
+                        <tr>
+                            <td>ISS001</td>
+                            <td>Rahul Sharma</td>
+                            <td>Introduction to Algorithms</td>
+                            <td>2024-09-01</td>
+                            <td>2024-09-15</td>
+                            <td><span class="status issued">Issued</span></td>
+                            <td>
+                                <button class="btn btn-success">Return</button>
+                                <button class="btn btn-warning" style="margin-left: 5px;">Renew</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Member Management Tab -->
+        <div id="member-management" class="tab-content">
+            <div class="form-container">
+                <h3>Add New Member</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="memberIdNew">Member ID</label>
+                        <input type="text" id="memberIdNew" placeholder="Auto-generated" readonly>
+                    </div>
                     <div class="form-group">
                         <label for="memberNameNew">Full Name</label>
                         <input type="text" id="memberNameNew" placeholder="Enter full name" required>
@@ -747,17 +928,14 @@
                         </select>
                     </div>
                 </div>
-                <button type="button" class="btn" onclick="addMember()">
-                    Add Member
-                </button>
+                <button type="button" class="btn" onclick="addMember()">Add Member</button>
             </div>
 
             <div class="table-container">
                 <h3>Members List</h3>
                 <div class="search-filter">
                     <div class="search-group">
-                        <input type="text" id="searchMembers" placeholder="Search members..." 
-                               onkeyup="filterMembers()">
+                        <input type="text" id="searchMembers" placeholder="Search members..." onkeyup="filterMembers()">
                     </div>
                 </div>
                 <table class="table" id="membersTable">
@@ -773,7 +951,18 @@
                         </tr>
                     </thead>
                     <tbody id="membersTableBody">
-                        <!-- Dynamic content -->
+                        <tr>
+                            <td>STU001</td>
+                            <td>Rahul Sharma</td>
+                            <td>rahul.sharma@college.edu</td>
+                            <td>Computer Science</td>
+                            <td>Student</td>
+                            <td>2</td>
+                            <td>
+                                <button class="btn btn-warning">Edit</button>
+                                <button class="btn btn-danger" style="margin-left: 5px;">Delete</button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -786,8 +975,7 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="overdueDays">Overdue Days</label>
-                        <input type="number" id="overdueDays" placeholder="Enter overdue days" 
-                               oninput="calculateFine()">
+                        <input type="number" id="overdueDays" placeholder="Enter overdue days" oninput="calculateFine()">
                     </div>
                     <div class="form-group">
                         <label for="fineRate">Fine Rate (₹/day)</label>
@@ -801,8 +989,7 @@
                 <h3>Outstanding Fines</h3>
                 <div class="search-filter">
                     <div class="search-group">
-                        <input type="text" id="searchFines" placeholder="Search fines..." 
-                               onkeyup="filterFines()">
+                        <input type="text" id="searchFines" placeholder="Search fines..." onkeyup="filterFines()">
                     </div>
                     <button class="btn btn-success" onclick="collectAllFines()">Collect All Fines</button>
                 </div>
@@ -818,7 +1005,17 @@
                         </tr>
                     </thead>
                     <tbody id="finesTableBody">
-                        <!-- Dynamic content -->
+                        <tr>
+                            <td>Ankit Singh</td>
+                            <td>Data Structures</td>
+                            <td>5</td>
+                            <td>₹25</td>
+                            <td><span class="status overdue">Pending</span></td>
+                            <td>
+                                <button class="btn btn-success">Collect</button>
+                                <button class="btn btn-warning" style="margin-left: 5px;">Waive</button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -842,17 +1039,14 @@
                         <input type="date" id="reserveDate" required>
                     </div>
                 </div>
-                <button type="button" class="btn" onclick="makeReservation()">
-                    Make Reservation
-                </button>
+                <button type="button" class="btn" onclick="makeReservation()">Make Reservation</button>
             </div>
 
             <div class="table-container">
                 <h3>Current Reservations</h3>
                 <div class="search-filter">
                     <div class="search-group">
-                        <input type="text" id="searchReservations" placeholder="Search reservations..." 
-                               onkeyup="filterReservations()">
+                        <input type="text" id="searchReservations" placeholder="Search reservations..." onkeyup="filterReservations()">
                     </div>
                 </div>
                 <table class="table" id="reservationsTable">
@@ -867,7 +1061,17 @@
                         </tr>
                     </thead>
                     <tbody id="reservationsTableBody">
-                        <!-- Dynamic content -->
+                        <tr>
+                            <td>RES001</td>
+                            <td>Priya Singh</td>
+                            <td>Machine Learning Yearning</td>
+                            <td>2024-09-20</td>
+                            <td><span class="status reserved">Active</span></td>
+                            <td>
+                                <button class="btn btn-success">Fulfill</button>
+                                <button class="btn btn-danger" style="margin-left: 5px;">Cancel</button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -924,7 +1128,7 @@
     </div>
 
     <script>
-        // Global variables to store data
+        // Global variables
         let books = [];
         let members = [];
         let issues = [];
@@ -936,24 +1140,12 @@
 
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM Content Loaded - Initializing...'); // Debug log
             initializeData();
-            updateDashboard();
-            loadActivities();
             setDefaultDates();
-            
-            // Add event listener for member type change
-            const memberTypeSelect = document.getElementById('memberTypeNew');
-            if (memberTypeSelect) {
-                memberTypeSelect.addEventListener('change', generateMemberID);
-            }
-            
-            console.log('Initialization complete'); // Debug log
         });
 
         // Initialize with sample data
         function initializeData() {
-            // Sample books
             books = [
                 {
                     id: 1,
@@ -982,24 +1174,9 @@
                     price: 4200,
                     description: "A handbook of agile software craftsmanship",
                     issueCount: 18
-                },
-                {
-                    id: 3,
-                    title: "Digital Signal Processing",
-                    author: "Alan V. Oppenheim",
-                    isbn: "978-0131988422",
-                    category: "electronics",
-                    publisher: "Pearson",
-                    year: 2010,
-                    copies: 4,
-                    available: 2,
-                    price: 5800,
-                    description: "Comprehensive DSP textbook",
-                    issueCount: 15
                 }
             ];
 
-            // Sample members
             members = [
                 {
                     id: "STU001",
@@ -1010,1482 +1187,197 @@
                     type: "Student",
                     booksIssued: 2,
                     joinDate: "2024-01-15"
-                },
-                {
-                    id: "FAC001",
-                    name: "Dr. Priya Patel",
-                    email: "priya.patel@college.edu",
-                    phone: "9876543211",
-                    department: "Electronics",
-                    type: "Faculty",
-                    booksIssued: 1,
-                    joinDate: "2023-06-01"
                 }
             ];
-
-            // Sample issues
-            issues = [
-                {
-                    id: "ISS001",
-                    memberID: "STU001",
-                    memberName: "Rahul Sharma",
-                    bookISBN: "978-0262033848",
-                    bookTitle: "Introduction to Algorithms",
-                    issueDate: "2024-09-01",
-                    returnDate: "2024-09-15",
-                    status: "issued"
-                },
-                {
-                    id: "ISS002",
-                    memberID: "FAC001",
-                    memberName: "Dr. Priya Patel",
-                    bookISBN: "978-0131988422",
-                    bookTitle: "Digital Signal Processing",
-                    issueDate: "2024-08-20",
-                    returnDate: "2024-09-20",
-                    status: "overdue"
-                }
-            ];
-
-            displayBooks();
-            displayMembers();
-            displayIssues();
         }
 
         // Navigation functions
         function showTab(tabName) {
-            console.log('Switching to tab:', tabName);
-            
-            // Hide all tab contents using both class and inline style
             const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(tab => {
-                tab.classList.remove('active');
-                tab.style.display = 'none';
-            });
+            tabContents.forEach(tab => tab.classList.remove('active'));
             
-            // Remove active class from all nav tabs
             const navTabs = document.querySelectorAll('.nav-tab');
             navTabs.forEach(tab => tab.classList.remove('active'));
             
-            // Show selected tab content using both class and inline style
             const targetTab = document.getElementById(tabName);
             if (targetTab) {
                 targetTab.classList.add('active');
-                targetTab.style.display = 'block';
             }
             
-            // Add active class to the clicked tab
             if (event && event.target) {
                 event.target.classList.add('active');
             }
-            
-            // Load data for specific tabs
-            switch(tabName) {
-                case 'dashboard':
-                    updateDashboard();
-                    loadActivities();
-                    break;
-                case 'book-catalog':
-                    displayBooks();
-                    break;
-                case 'member-management':
-                    displayMembers();
-                    generateMemberID();
-                    break;
-                case 'issue-return':
-                    displayIssues();
-                    setDefaultDates();
-                    clearIssueForm();
-                    break;
-                case 'fine-management':
-                    displayFines();
-                    calculateFine();
-                    break;
-                case 'reservations':
-                    displayReservations();
-                    clearReservationForm();
-                    break;
-                case 'reports':
-                    const reportResults = document.getElementById('reportResults');
-                    if (reportResults) {
-                        reportResults.style.display = 'none';
-                    }
-                    break;
-            }
-            
-            console.log(`Successfully switched to ${tabName} tab`);
-        }
-
-        function goToMain() {
-            showNotification('Returning to main menu...', 'success');
-            // In a real application, this would navigate to the main page
-        }
-
-        // Book management functions
-        function addBook() {
-            const title = document.getElementById('bookTitle').value;
-            const author = document.getElementById('bookAuthor').value;
-            const isbn = document.getElementById('bookISBN').value;
-            const category = document.getElementById('bookCategory').value;
-            const publisher = document.getElementById('bookPublisher').value;
-            const year = document.getElementById('publicationYear').value;
-            const copies = document.getElementById('bookCopies').value;
-            const price = document.getElementById('bookPrice').value;
-            const description = document.getElementById('bookDescription').value;
-
-            if (!title || !author || !isbn || !category || !publisher || !year || !copies || !price) {
-                showNotification('Please fill all required fields!', 'error');
-                return;
-            }
-
-            // Check if ISBN already exists
-            if (books.find(book => book.isbn === isbn)) {
-                showNotification('Book with this ISBN already exists!', 'error');
-                return;
-            }
-
-            const newBook = {
-                id: books.length + 1,
-                title,
-                author,
-                isbn,
-                category,
-                publisher,
-                year: parseInt(year),
-                copies: parseInt(copies),
-                available: parseInt(copies),
-                price: parseFloat(price),
-                description,
-                issueCount: 0
-            };
-
-            books.push(newBook);
-            displayBooks();
-            clearBookForm();
-            updateDashboard();
-            addActivity('Book Added', `"${title}" by ${author}`, 'Added to catalog');
-            showNotification('Book added successfully!', 'success');
-        }
-
-        function clearBookForm() {
-            document.getElementById('bookTitle').value = '';
-            document.getElementById('bookAuthor').value = '';
-            document.getElementById('bookISBN').value = '';
-            document.getElementById('bookCategory').value = '';
-            document.getElementById('bookPublisher').value = '';
-            document.getElementById('publicationYear').value = '';
-            document.getElementById('bookCopies').value = '';
-            document.getElementById('bookPrice').value = '';
-            document.getElementById('bookDescription').value = '';
-        }
-
-        function displayBooks() {
-            const bookGrid = document.getElementById('bookGrid');
-            bookGrid.innerHTML = '';
-
-            books.forEach(book => {
-                const bookCard = document.createElement('div');
-                bookCard.className = 'book-card';
-                bookCard.onclick = () => showBookDetails(book);
-                
-                const statusClass = book.available > 0 ? 'available' : 'issued';
-                
-                bookCard.innerHTML = `
-                    <div class="book-cover">📚</div>
-                    <div class="book-title">${book.title}</div>
-                    <div class="book-author">by ${book.author}</div>
-                    <div class="book-details">
-                        <div>ISBN: ${book.isbn}</div>
-                        <div>Category: ${book.category}</div>
-                        <div>Available: ${book.available}/${book.copies}</div>
-                        <div>Price: ₹${book.price}</div>
-                        <div><span class="status ${statusClass}">${book.available > 0 ? 'Available' : 'Not Available'}</span></div>
-                    </div>
-                `;
-                
-                bookGrid.appendChild(bookCard);
-            });
-        }
-
-        function showBookDetails(book) {
-            document.getElementById('modalBookTitle').textContent = book.title;
-            document.getElementById('modalBookContent').innerHTML = `
-                <p><strong>Author:</strong> ${book.author}</p>
-                <p><strong>ISBN:</strong> ${book.isbn}</p>
-                <p><strong>Category:</strong> ${book.category}</p>
-                <p><strong>Publisher:</strong> ${book.publisher}</p>
-                <p><strong>Year:</strong> ${book.year}</p>
-                <p><strong>Copies:</strong> ${book.available}/${book.copies}</p>
-                <p><strong>Price:</strong> ₹${book.price}</p>
-                <p><strong>Description:</strong> ${book.description}</p>
-                <p><strong>Times Issued:</strong> ${book.issueCount}</p>
-                <div style="margin-top: 20px;">
-                    <button class="btn" onclick="editBook(${book.id})">Edit Book</button>
-                    <button class="btn btn-danger" onclick="deleteBook(${book.id})" style="margin-left: 10px;">Delete Book</button>
-                </div>
-            `;
-            document.getElementById('bookModal').style.display = 'block';
-        }
-
-        function editBook(bookId) {
-            const book = books.find(b => b.id === bookId);
-            if (book) {
-                document.getElementById('bookTitle').value = book.title;
-                document.getElementById('bookAuthor').value = book.author;
-                document.getElementById('bookISBN').value = book.isbn;
-                document.getElementById('bookCategory').value = book.category;
-                document.getElementById('bookPublisher').value = book.publisher;
-                document.getElementById('publicationYear').value = book.year;
-                document.getElementById('bookCopies').value = book.copies;
-                document.getElementById('bookPrice').value = book.price;
-                document.getElementById('bookDescription').value = book.description;
-                
-                closeModal();
-                showTab('book-catalog');
-                showNotification('Book details loaded for editing', 'success');
-            }
-        }
-
-        function deleteBook(bookId) {
-            if (confirm('Are you sure you want to delete this book?')) {
-                const bookIndex = books.findIndex(b => b.id === bookId);
-                if (bookIndex > -1) {
-                    const book = books[bookIndex];
-                    books.splice(bookIndex, 1);
-                    displayBooks();
-                    updateDashboard();
-                    addActivity('Book Deleted', `"${book.title}"`, 'Removed from catalog');
-                    showNotification('Book deleted successfully!', 'success');
-                    closeModal();
-                }
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('bookModal').style.display = 'none';
-        }
-
-        // Filter and search functions
-        function filterBooks() {
-            const searchTerm = document.getElementById('searchBooks').value.toLowerCase();
-            const categoryFilter = document.getElementById('categoryFilter').value;
-            
-            const filteredBooks = books.filter(book => {
-                const matchesSearch = book.title.toLowerCase().includes(searchTerm) || 
-                                    book.author.toLowerCase().includes(searchTerm) ||
-                                    book.isbn.toLowerCase().includes(searchTerm);
-                const matchesCategory = !categoryFilter || book.category === categoryFilter;
-                
-                return matchesSearch && matchesCategory;
-            });
-            
-            displayFilteredBooks(filteredBooks);
-        }
-
-        function displayFilteredBooks(filteredBooks) {
-            const bookGrid = document.getElementById('bookGrid');
-            bookGrid.innerHTML = '';
-
-            filteredBooks.forEach(book => {
-                const bookCard = document.createElement('div');
-                bookCard.className = 'book-card';
-                bookCard.onclick = () => showBookDetails(book);
-                
-                const statusClass = book.available > 0 ? 'available' : 'issued';
-                
-                bookCard.innerHTML = `
-                    <div class="book-cover">📚</div>
-                    <div class="book-title">${book.title}</div>
-                    <div class="book-author">by ${book.author}</div>
-                    <div class="book-details">
-                        <div>ISBN: ${book.isbn}</div>
-                        <div>Category: ${book.category}</div>
-                        <div>Available: ${book.available}/${book.copies}</div>
-                        <div>Price: ₹${book.price}</div>
-                        <div><span class="status ${statusClass}">${book.available > 0 ? 'Available' : 'Not Available'}</span></div>
-                    </div>
-                `;
-                
-                bookGrid.appendChild(bookCard);
-            });
-        }
-
-        function filterByCategory(category) {
-            // Update active button
-            const categoryBtns = document.querySelectorAll('.category-btn');
-            categoryBtns.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            let filteredBooks = books;
-            
-            switch(category) {
-                case 'available':
-                    filteredBooks = books.filter(book => book.available > 0);
-                    break;
-                case 'issued':
-                    filteredBooks = books.filter(book => book.available === 0);
-                    break;
-                case 'popular':
-                    filteredBooks = books.filter(book => book.issueCount > 10);
-                    break;
-                default:
-                    filteredBooks = books;
-            }
-            
-            displayFilteredBooks(filteredBooks);
-        }
-
-        // Member management functions
-        function generateMemberID() {
-            // Generate a preview ID for display
-            const memberType = document.getElementById('memberTypeNew').value || 'STU';
-            const previewID = memberType.substring(0, 3).toUpperCase() + String(nextMemberID).padStart(3, '0');
-            document.getElementById('memberIdNew').value = previewID;
-        }
-
-        function addMember() {
-            const name = document.getElementById('memberNameNew').value;
-            const email = document.getElementById('memberEmail').value;
-            const phone = document.getElementById('memberPhone').value;
-            const department = document.getElementById('memberDept').value;
-            const type = document.getElementById('memberTypeNew').value;
-
-            if (!name || !email || !phone || !department || !type) {
-                showNotification('Please fill all required fields!', 'error');
-                return;
-            }
-
-            // Check if email already exists
-            if (members.find(member => member.email === email)) {
-                showNotification('Member with this email already exists!', 'error');
-                return;
-            }
-
-            // Generate member ID
-            const memberID = type.substring(0, 3).toUpperCase() + String(nextMemberID).padStart(3, '0');
-            nextMemberID++;
-
-            const newMember = {
-                id: memberID,
-                name,
-                email,
-                phone,
-                department,
-                type,
-                booksIssued: 0,
-                joinDate: new Date().toISOString().split('T')[0]
-            };
-
-            members.push(newMember);
-            console.log('Added member:', newMember); // Debug log
-            console.log('Total members:', members.length); // Debug log
-            
-            displayMembers();
-            clearMemberForm();
-            updateDashboard();
-            addActivity('Member Added', name, `New ${type} registered`);
-            showNotification('Member added successfully!', 'success');
-        }
-
-        function clearMemberForm() {
-            document.getElementById('memberIdNew').value = '';
-            document.getElementById('memberNameNew').value = '';
-            document.getElementById('memberEmail').value = '';
-            document.getElementById('memberPhone').value = '';
-            document.getElementById('memberDept').value = '';
-            document.getElementById('memberTypeNew').value = '';
-        }
-
-        function displayMembers() {
-            const tableBody = document.getElementById('membersTableBody');
-            if (!tableBody) {
-                console.error('Members table body not found!');
-                return;
-            }
-            
-            tableBody.innerHTML = '';
-            console.log('Displaying members:', members.length); // Debug log
-
-            if (members.length === 0) {
-                const row = tableBody.insertRow();
-                row.innerHTML = '<td colspan="7" style="text-align: center; color: #666;">No members found</td>';
-                return;
-            }
-
-            members.forEach((member, index) => {
-                const row = tableBody.insertRow();
-                row.innerHTML = `
-                    <td>${member.id}</td>
-                    <td>${member.name}</td>
-                    <td>${member.email}</td>
-                    <td>${member.department}</td>
-                    <td>${member.type}</td>
-                    <td>${member.booksIssued || 0}</td>
-                    <td>
-                        <button class="btn btn-warning" onclick="editMember('${member.id}')">Edit</button>
-                        <button class="btn btn-danger" onclick="deleteMember('${member.id}')" style="margin-left: 5px;">Delete</button>
-                    </td>
-                `;
-            });
-        }
-
-        function editMember(memberID) {
-            const member = members.find(m => m.id === memberID);
-            if (member) {
-                document.getElementById('memberNameNew').value = member.name;
-                document.getElementById('memberEmail').value = member.email;
-                document.getElementById('memberPhone').value = member.phone;
-                document.getElementById('memberDept').value = member.department;
-                document.getElementById('memberTypeNew').value = member.type;
-                
-                showNotification('Member details loaded for editing', 'success');
-            }
-        }
-
-        function deleteMember(memberID) {
-            if (confirm('Are you sure you want to delete this member?')) {
-                const memberIndex = members.findIndex(m => m.id === memberID);
-                if (memberIndex > -1) {
-                    const member = members[memberIndex];
-                    members.splice(memberIndex, 1);
-                    displayMembers();
-                    updateDashboard();
-                    addActivity('Member Deleted', member.name, 'Member removed');
-                    showNotification('Member deleted successfully!', 'success');
-                }
-            }
-        }
-
-        function filterMembers() {
-            const searchTerm = document.getElementById('searchMembers').value.toLowerCase();
-            const filteredMembers = members.filter(member =>
-                member.name.toLowerCase().includes(searchTerm) ||
-                member.id.toLowerCase().includes(searchTerm) ||
-                member.email.toLowerCase().includes(searchTerm) ||
-                member.department.toLowerCase().includes(searchTerm)
-            );
-            
-            displayFilteredMembers(filteredMembers);
-        }
-
-        function displayFilteredMembers(filteredMembers) {
-            const tableBody = document.getElementById('membersTableBody');
-            tableBody.innerHTML = '';
-
-            filteredMembers.forEach(member => {
-                const row = tableBody.insertRow();
-                row.innerHTML = `
-                    <td>${member.id}</td>
-                    <td>${member.name}</td>
-                    <td>${member.email}</td>
-                    <td>${member.department}</td>
-                    <td>${member.type}</td>
-                    <td>${member.booksIssued}</td>
-                    <td>
-                        <button class="btn btn-warning" onclick="editMember('${member.id}')">Edit</button>
-                        <button class="btn btn-danger" onclick="deleteMember('${member.id}')">Delete</button>
-                    </td>
-                `;
-            });
-        }
-
-        // Issue/Return functions
-        function loadMemberInfo() {
-            const memberID = document.getElementById('memberID').value;
-            const member = members.find(m => m.id === memberID);
-            
-            if (member) {
-                document.getElementById('memberName').value = member.name;
-                document.getElementById('memberDepartment').value = member.department;
-                document.getElementById('memberType').value = member.type;
-                
-                // Show member info
-                document.getElementById('memberInfo').style.display = 'block';
-                document.getElementById('currentBooks').textContent = member.booksIssued;
-                
-                // Calculate overdue books and fines
-                const memberIssues = issues.filter(issue => issue.memberID === memberID);
-                const overdueIssues = memberIssues.filter(issue => {
-                    const returnDate = new Date(issue.returnDate);
-                    return returnDate < new Date() && issue.status === 'issued';
-                });
-                
-                document.getElementById('overdueCount').textContent = overdueIssues.length;
-                document.getElementById('outstandingFines').textContent = overdueIssues.length * 5; // ₹5 per day
-            } else {
-                document.getElementById('memberName').value = '';
-                document.getElementById('memberDepartment').value = '';
-                document.getElementById('memberType').value = '';
-                document.getElementById('memberInfo').style.display = 'none';
-            }
-        }
-
-        function loadBookInfo() {
-            const isbn = document.getElementById('bookISBNIssue').value;
-            const book = books.find(b => b.isbn === isbn);
-            
-            if (book) {
-                document.getElementById('bookTitleIssue').value = book.title;
-                
-                if (book.available <= 0) {
-                    showNotification('This book is not available!', 'warning');
-                }
-            } else {
-                document.getElementById('bookTitleIssue').value = '';
-            }
-        }
-
-        function issueBook() {
-            const memberID = document.getElementById('memberID').value;
-            const bookISBN = document.getElementById('bookISBNIssue').value;
-            const issueDate = document.getElementById('issueDate').value;
-            const returnDate = document.getElementById('returnDate').value;
-
-            if (!memberID || !bookISBN || !issueDate || !returnDate) {
-                showNotification('Please fill all required fields!', 'error');
-                return;
-            }
-
-            const member = members.find(m => m.id === memberID);
-            const book = books.find(b => b.isbn === bookISBN);
-
-            if (!member) {
-                showNotification('Member not found!', 'error');
-                return;
-            }
-
-            if (!book) {
-                showNotification('Book not found!', 'error');
-                return;
-            }
-
-            if (book.available <= 0) {
-                showNotification('Book is not available!', 'error');
-                return;
-            }
-
-            // Check if member already has this book
-            const existingIssue = issues.find(issue => 
-                issue.memberID === memberID && 
-                issue.bookISBN === bookISBN && 
-                issue.status === 'issued'
-            );
-
-            if (existingIssue) {
-                showNotification('Member already has this book!', 'error');
-                return;
-            }
-
-            // Create new issue
-            const issueID = 'ISS' + String(nextIssueID).padStart(3, '0');
-            nextIssueID++;
-
-            const newIssue = {
-                id: issueID,
-                memberID,
-                memberName: member.name,
-                bookISBN,
-                bookTitle: book.title,
-                issueDate,
-                returnDate,
-                status: 'issued'
-            };
-
-            issues.push(newIssue);
-            
-            // Update book availability
-            book.available--;
-            book.issueCount++;
-            
-            // Update member books issued count
-            member.booksIssued++;
-
-            displayIssues();
-            displayBooks();
-            updateDashboard();
-            loadMemberInfo(); // Refresh member info
-            addActivity('Book Issued', `"${book.title}" to ${member.name}`, 'Book issued successfully');
-            showNotification('Book issued successfully!', 'success');
-            clearIssueForm();
-        }
-
-        function returnBook() {
-            const memberID = document.getElementById('memberID').value;
-            const bookISBN = document.getElementById('bookISBNIssue').value;
-
-            if (!memberID || !bookISBN) {
-                showNotification('Please enter Member ID and Book ISBN!', 'error');
-                return;
-            }
-
-            const issueIndex = issues.findIndex(issue => 
-                issue.memberID === memberID && 
-                issue.bookISBN === bookISBN && 
-                issue.status === 'issued'
-            );
-
-            if (issueIndex === -1) {
-                showNotification('No active issue found for this book and member!', 'error');
-                return;
-            }
-
-            const issue = issues[issueIndex];
-            const book = books.find(b => b.isbn === bookISBN);
-            const member = members.find(m => m.id === memberID);
-
-            // Mark as returned
-            issue.status = 'returned';
-            issue.actualReturnDate = new Date().toISOString().split('T')[0];
-
-            // Calculate fine if overdue
-            const returnDate = new Date(issue.returnDate);
-            const actualReturnDate = new Date(issue.actualReturnDate);
-            
-            if (actualReturnDate > returnDate) {
-                const overdueDays = Math.ceil((actualReturnDate - returnDate) / (1000 * 60 * 60 * 24));
-                const fineAmount = overdueDays * 5; // ₹5 per day
-                
-                const fine = {
-                    memberID,
-                    memberName: member.name,
-                    bookTitle: book.title,
-                    overdueDays,
-                    fineAmount,
-                    status: 'pending'
-                };
-                
-                fines.push(fine);
-                showNotification(`Book returned with fine of ₹${fineAmount} for ${overdueDays} overdue days`, 'warning');
-            } else {
-                showNotification('Book returned successfully!', 'success');
-            }
-
-            // Update book availability
-            book.available++;
-            
-            // Update member books issued count
-            member.booksIssued--;
-
-            displayIssues();
-            displayBooks();
-            displayFines();
-            updateDashboard();
-            loadMemberInfo(); // Refresh member info
-            addActivity('Book Returned', `"${book.title}" from ${member.name}`, 'Book returned successfully');
-            clearIssueForm();
-        }
-
-        function clearIssueForm() {
-            document.getElementById('memberID').value = '';
-            document.getElementById('memberName').value = '';
-            document.getElementById('memberDepartment').value = '';
-            document.getElementById('memberType').value = '';
-            document.getElementById('bookISBNIssue').value = '';
-            document.getElementById('bookTitleIssue').value = '';
-            document.getElementById('memberInfo').style.display = 'none';
-        }
-
-        function displayIssues() {
-            const tableBody = document.getElementById('issuesTableBody');
-            if (!tableBody) {
-                console.error('Issues table body not found!');
-                return;
-            }
-            
-            tableBody.innerHTML = '';
-
-            const activeIssues = issues.filter(issue => issue.status === 'issued');
-            console.log('Displaying active issues:', activeIssues.length); // Debug log
-
-            if (activeIssues.length === 0) {
-                const row = tableBody.insertRow();
-                row.innerHTML = '<td colspan="7" style="text-align: center; color: #666;">No active issues found</td>';
-                return;
-            }
-
-            activeIssues.forEach(issue => {
-                const row = tableBody.insertRow();
-                const returnDate = new Date(issue.returnDate);
-                const today = new Date();
-                const isOverdue = returnDate < today;
-                
-                row.innerHTML = `
-                    <td>${issue.id}</td>
-                    <td>${issue.memberName}</td>
-                    <td>${issue.bookTitle}</td>
-                    <td>${issue.issueDate}</td>
-                    <td>${issue.returnDate}</td>
-                    <td><span class="status ${isOverdue ? 'overdue' : 'issued'}">${isOverdue ? 'Overdue' : 'Issued'}</span></td>
-                    <td>
-                        <button class="btn btn-success" onclick="returnBookDirectly('${issue.memberID}', '${issue.bookISBN}')">Return</button>
-                        <button class="btn btn-warning" onclick="renewBook('${issue.id}')" style="margin-left: 5px;">Renew</button>
-                    </td>
-                `;
-            });
-        }
-
-        function returnBookDirectly(memberID, bookISBN) {
-            document.getElementById('memberID').value = memberID;
-            document.getElementById('bookISBNIssue').value = bookISBN;
-            loadMemberInfo();
-            loadBookInfo();
-            returnBook();
-        }
-
-        function renewBook(issueID) {
-            const issue = issues.find(i => i.id === issueID);
-            if (issue) {
-                // Extend return date by 15 days
-                const newReturnDate = new Date(issue.returnDate);
-                newReturnDate.setDate(newReturnDate.getDate() + 15);
-                issue.returnDate = newReturnDate.toISOString().split('T')[0];
-                
-                displayIssues();
-                addActivity('Book Renewed', `"${issue.bookTitle}" for ${issue.memberName}`, 'Extended by 15 days');
-                showNotification('Book renewed for 15 more days!', 'success');
-            }
-        }
-
-        function filterIssues() {
-            const searchTerm = document.getElementById('searchIssues').value.toLowerCase();
-            const filteredIssues = issues.filter(issue =>
-                issue.status === 'issued' && (
-                    issue.memberName.toLowerCase().includes(searchTerm) ||
-                    issue.bookTitle.toLowerCase().includes(searchTerm) ||
-                    issue.id.toLowerCase().includes(searchTerm)
-                )
-            );
-            
-            displayFilteredIssues(filteredIssues);
-        }
-
-        function displayFilteredIssues(filteredIssues) {
-            const tableBody = document.getElementById('issuesTableBody');
-            tableBody.innerHTML = '';
-
-            filteredIssues.forEach(issue => {
-                const row = tableBody.insertRow();
-                const returnDate = new Date(issue.returnDate);
-                const today = new Date();
-                const isOverdue = returnDate < today;
-                
-                row.innerHTML = `
-                    <td>${issue.id}</td>
-                    <td>${issue.memberName}</td>
-                    <td>${issue.bookTitle}</td>
-                    <td>${issue.issueDate}</td>
-                    <td>${issue.returnDate}</td>
-                    <td><span class="status ${isOverdue ? 'overdue' : 'issued'}">${isOverdue ? 'Overdue' : 'Issued'}</span></td>
-                    <td>
-                        <button class="btn btn-success" onclick="returnBookDirectly('${issue.memberID}', '${issue.bookISBN}')">Return</button>
-                        <button class="btn btn-warning" onclick="renewBook('${issue.id}')">Renew</button>
-                    </td>
-                `;
-            });
-        }
-
-        // Fine management functions
-        function calculateFine() {
-            const overdueDays = document.getElementById('overdueDays').value || 0;
-            const fineRate = document.getElementById('fineRate').value || 5;
-            const calculatedFine = overdueDays * fineRate;
-            
-            document.getElementById('calculatedFine').textContent = `₹${calculatedFine}`;
-        }
-
-        function displayFines() {
-            const tableBody = document.getElementById('finesTableBody');
-            tableBody.innerHTML = '';
-
-            fines.forEach((fine, index) => {
-                if (fine.status === 'pending') {
-                    const row = tableBody.insertRow();
-                    row.innerHTML = `
-                        <td>${fine.memberName}</td>
-                        <td>${fine.bookTitle}</td>
-                        <td>${fine.overdueDays}</td>
-                        <td>₹${fine.fineAmount}</td>
-                        <td><span class="status overdue">Pending</span></td>
-                        <td>
-                            <button class="btn btn-success" onclick="collectFine(${index})">Collect</button>
-                            <button class="btn btn-warning" onclick="waiveFine(${index})">Waive</button>
-                        </td>
-                    `;
-                }
-            });
-        }
-
-        function collectFine(fineIndex) {
-            fines[fineIndex].status = 'collected';
-            fines[fineIndex].collectedDate = new Date().toISOString().split('T')[0];
-            
-            displayFines();
-            updateDashboard();
-            addActivity('Fine Collected', `₹${fines[fineIndex].fineAmount} from ${fines[fineIndex].memberName}`, 'Fine payment received');
-            showNotification('Fine collected successfully!', 'success');
-        }
-
-        function waiveFine(fineIndex) {
-            if (confirm('Are you sure you want to waive this fine?')) {
-                fines[fineIndex].status = 'waived';
-                fines[fineIndex].waivedDate = new Date().toISOString().split('T')[0];
-                
-                displayFines();
-                updateDashboard();
-                addActivity('Fine Waived', `₹${fines[fineIndex].fineAmount} for ${fines[fineIndex].memberName}`, 'Fine waived by admin');
-                showNotification('Fine waived successfully!', 'success');
-            }
-        }
-
-        function collectAllFines() {
-            const pendingFines = fines.filter(fine => fine.status === 'pending');
-            
-            if (pendingFines.length === 0) {
-                showNotification('No pending fines to collect!', 'warning');
-                return;
-            }
-
-            if (confirm(`Collect all ${pendingFines.length} pending fines?`)) {
-                let totalAmount = 0;
-                pendingFines.forEach(fine => {
-                    fine.status = 'collected';
-                    fine.collectedDate = new Date().toISOString().split('T')[0];
-                    totalAmount += fine.fineAmount;
-                });
-
-                displayFines();
-                updateDashboard();
-                addActivity('Bulk Fine Collection', `${pendingFines.length} fines`, `Total amount: ₹${totalAmount}`);
-                showNotification(`Collected ₹${totalAmount} from ${pendingFines.length} fines!`, 'success');
-            }
-        }
-
-        function filterFines() {
-            const searchTerm = document.getElementById('searchFines').value.toLowerCase();
-            const filteredFines = fines.filter(fine =>
-                fine.status === 'pending' && (
-                    fine.memberName.toLowerCase().includes(searchTerm) ||
-                    fine.bookTitle.toLowerCase().includes(searchTerm)
-                )
-            );
-            
-            displayFilteredFines(filteredFines);
-        }
-
-        function displayFilteredFines(filteredFines) {
-            const tableBody = document.getElementById('finesTableBody');
-            tableBody.innerHTML = '';
-
-            filteredFines.forEach((fine, index) => {
-                const row = tableBody.insertRow();
-                row.innerHTML = `
-                    <td>${fine.memberName}</td>
-                    <td>${fine.bookTitle}</td>
-                    <td>${fine.overdueDays}</td>
-                    <td>₹${fine.fineAmount}</td>
-                    <td><span class="status overdue">Pending</span></td>
-                    <td>
-                        <button class="btn btn-success" onclick="collectFine(${index})">Collect</button>
-                        <button class="btn btn-warning" onclick="waiveFine(${index})">Waive</button>
-                    </td>
-                `;
-            });
-        }
-
-        // Reservation functions
-        function makeReservation() {
-            const memberID = document.getElementById('reserveMemberID').value;
-            const bookISBN = document.getElementById('reserveBookISBN').value;
-            const reserveDate = document.getElementById('reserveDate').value;
-
-            if (!memberID || !bookISBN || !reserveDate) {
-                showNotification('Please fill all required fields!', 'error');
-                return;
-            }
-
-            const member = members.find(m => m.id === memberID);
-            const book = books.find(b => b.isbn === bookISBN);
-
-            if (!member) {
-                showNotification('Member not found!', 'error');
-                return;
-            }
-
-            if (!book) {
-                showNotification('Book not found!', 'error');
-                return;
-            }
-
-            // Check if book is available
-            if (book.available > 0) {
-                showNotification('Book is currently available. You can issue it directly!', 'warning');
-                return;
-            }
-
-            const reservationID = 'RES' + String(reservations.length + 1).padStart(3, '0');
-            
-            const newReservation = {
-                id: reservationID,
-                memberID,
-                memberName: member.name,
-                bookISBN,
-                bookTitle: book.title,
-                reserveDate,
-                status: 'active'
-            };
-
-            reservations.push(newReservation);
-            displayReservations();
-            addActivity('Reservation Made', `"${book.title}" for ${member.name}`, 'Book reserved');
-            showNotification('Reservation made successfully!', 'success');
-            clearReservationForm();
-        }
-
-        function clearReservationForm() {
-            document.getElementById('reserveMemberID').value = '';
-            document.getElementById('reserveBookISBN').value = '';
-            document.getElementById('reserveDate').value = '';
-        }
-
-        function displayReservations() {
-            const tableBody = document.getElementById('reservationsTableBody');
-            tableBody.innerHTML = '';
-
-            reservations.forEach(reservation => {
-                if (reservation.status === 'active') {
-                    const row = tableBody.insertRow();
-                    row.innerHTML = `
-                        <td>${reservation.id}</td>
-                        <td>${reservation.memberName}</td>
-                        <td>${reservation.bookTitle}</td>
-                        <td>${reservation.reserveDate}</td>
-                        <td><span class="status reserved">Active</span></td>
-                        <td>
-                            <button class="btn btn-success" onclick="fulfillReservation('${reservation.id}')">Fulfill</button>
-                            <button class="btn btn-danger" onclick="cancelReservation('${reservation.id}')">Cancel</button>
-                        </td>
-                    `;
-                }
-            });
-        }
-
-        function fulfillReservation(reservationID) {
-            const reservation = reservations.find(r => r.id === reservationID);
-            if (reservation) {
-                const book = books.find(b => b.isbn === reservation.bookISBN);
-                
-                if (book.available > 0) {
-                    // Auto-fill issue form
-                    document.getElementById('memberID').value = reservation.memberID;
-                    document.getElementById('bookISBNIssue').value = reservation.bookISBN;
-                    loadMemberInfo();
-                    loadBookInfo();
-                    
-                    // Mark reservation as fulfilled
-                    reservation.status = 'fulfilled';
-                    
-                    displayReservations();
-                    showTab('issue-return');
-                    showNotification('Reservation fulfilled! Please complete the issue process.', 'success');
-                } else {
-                    showNotification('Book is still not available!', 'warning');
-                }
-            }
-        }
-
-        function cancelReservation(reservationID) {
-            if (confirm('Are you sure you want to cancel this reservation?')) {
-                const reservation = reservations.find(r => r.id === reservationID);
-                if (reservation) {
-                    reservation.status = 'cancelled';
-                    displayReservations();
-                    addActivity('Reservation Cancelled', `"${reservation.bookTitle}" for ${reservation.memberName}`, 'Cancelled by admin');
-                    showNotification('Reservation cancelled!', 'success');
-                }
-            }
-        }
-
-        function filterReservations() {
-            const searchTerm = document.getElementById('searchReservations').value.toLowerCase();
-            const filteredReservations = reservations.filter(reservation =>
-                reservation.status === 'active' && (
-                    reservation.memberName.toLowerCase().includes(searchTerm) ||
-                    reservation.bookTitle.toLowerCase().includes(searchTerm) ||
-                    reservation.id.toLowerCase().includes(searchTerm)
-                )
-            );
-            
-            displayFilteredReservations(filteredReservations);
-        }
-
-        function displayFilteredReservations(filteredReservations) {
-            const tableBody = document.getElementById('reservationsTableBody');
-            tableBody.innerHTML = '';
-
-            filteredReservations.forEach(reservation => {
-                const row = tableBody.insertRow();
-                row.innerHTML = `
-                    <td>${reservation.id}</td>
-                    <td>${reservation.memberName}</td>
-                    <td>${reservation.bookTitle}</td>
-                    <td>${reservation.reserveDate}</td>
-                    <td><span class="status reserved">Active</span></td>
-                    <td>
-                        <button class="btn btn-success" onclick="fulfillReservation('${reservation.id}')">Fulfill</button>
-                        <button class="btn btn-danger" onclick="cancelReservation('${reservation.id}')">Cancel</button>
-                    </td>
-                `;
-            });
-        }
-
-        // Report functions
-        function generateMonthlyReport() {
-            const reportContent = `
-                <div class="dashboard-cards">
-                    <div class="card">
-                        <h3>${issues.filter(i => i.issueDate.includes('2024-09')).length}</h3>
-                        <p>Books Issued This Month</p>
-                    </div>
-                    <div class="card">
-                        <h3>${issues.filter(i => i.status === 'returned' && (i.actualReturnDate || '').includes('2024-09')).length}</h3>
-                        <p>Books Returned This Month</p>
-                    </div>
-                    <div class="card">
-                        <h3>${members.filter(m => m.joinDate.includes('2024-09')).length}</h3>
-                        <p>New Members This Month</p>
-                    </div>
-                    <div class="card">
-                        <h3>₹${fines.filter(f => f.status === 'collected' && (f.collectedDate || '').includes('2024-09')).reduce((sum, f) => sum + f.fineAmount, 0)}</h3>
-                        <p>Fines Collected This Month</p>
-                    </div>
-                </div>
-            `;
-            
-            showReport('Monthly Report - September 2024', reportContent);
-        }
-
-        function generatePopularBooksReport() {
-            const sortedBooks = books.sort((a, b) => b.issueCount - a.issueCount).slice(0, 10);
-            
-            let reportContent = '<table class="table"><thead><tr><th>Rank</th><th>Book Title</th><th>Author</th><th>Issue Count</th><th>Category</th></tr></thead><tbody>';
-            
-            sortedBooks.forEach((book, index) => {
-                reportContent += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>${book.title}</td>
-                        <td>${book.author}</td>
-                        <td>${book.issueCount}</td>
-                        <td>${book.category}</td>
-                    </tr>
-                `;
-            });
-            
-            reportContent += '</tbody></table>';
-            
-            showReport('Top 10 Popular Books', reportContent);
-        }
-
-        function generateOverdueReport() {
-            const overdueIssues = issues.filter(issue => {
-                if (issue.status !== 'issued') return false;
-                const returnDate = new Date(issue.returnDate);
-                return returnDate < new Date();
-            });
-            
-            let reportContent = '<table class="table"><thead><tr><th>Member</th><th>Book</th><th>Issue Date</th><th>Due Date</th><th>Days Overdue</th></tr></thead><tbody>';
-            
-            overdueIssues.forEach(issue => {
-                const returnDate = new Date(issue.returnDate);
-                const today = new Date();
-                const daysOverdue = Math.ceil((today - returnDate) / (1000 * 60 * 60 * 24));
-                
-                reportContent += `
-                    <tr>
-                        <td>${issue.memberName}</td>
-                        <td>${issue.bookTitle}</td>
-                        <td>${issue.issueDate}</td>
-                        <td>${issue.returnDate}</td>
-                        <td>${daysOverdue} days</td>
-                    </tr>
-                `;
-            });
-            
-            reportContent += '</tbody></table>';
-            
-            showReport('Overdue Books Report', reportContent);
-        }
-
-        function generateMemberActivity() {
-            let reportContent = '<table class="table"><thead><tr><th>Member</th><th>Department</th><th>Type</th><th>Books Currently Issued</th><th>Total Books Issued</th></tr></thead><tbody>';
-            
-            members.forEach(member => {
-                const memberIssues = issues.filter(issue => issue.memberID === member.id);
-                const totalIssued = memberIssues.length;
-                
-                reportContent += `
-                    <tr>
-                        <td>${member.name}</td>
-                        <td>${member.department}</td>
-                        <td>${member.type}</td>
-                        <td>${member.booksIssued}</td>
-                        <td>${totalIssued}</td>
-                    </tr>
-                `;
-            });
-            
-            reportContent += '</tbody></table>';
-            
-            showReport('Member Activity Report', reportContent);
-        }
-
-        function showReport(title, content) {
-            document.getElementById('reportTitle').textContent = title;
-            document.getElementById('reportContent').innerHTML = content;
-            document.getElementById('reportResults').style.display = 'block';
         }
 
         // Utility functions
         function setDefaultDates() {
             const today = new Date();
             const returnDate = new Date();
-            returnDate.setDate(today.getDate() + 15); // 15 days from today
+            returnDate.setDate(today.getDate() + 15);
             
-            document.getElementById('issueDate').value = today.toISOString().split('T')[0];
-            document.getElementById('returnDate').value = returnDate.toISOString().split('T')[0];
-            document.getElementById('reserveDate').value = today.toISOString().split('T')[0];
-        }
-
-        function updateDashboard() {
-            // Update dashboard cards
-            document.getElementById('totalBooks').textContent = books.length.toLocaleString();
-            document.getElementById('issuedBooks').textContent = issues.filter(i => i.status === 'issued').length.toLocaleString();
-            document.getElementById('overdueBooks').textContent = issues.filter(issue => {
-                if (issue.status !== 'issued') return false;
-                const returnDate = new Date(issue.returnDate);
-                return returnDate < new Date();
-            }).length.toLocaleString();
-            document.getElementById('activeMembers').textContent = members.length.toLocaleString();
-            document.getElementById('totalFines').textContent = '₹' + fines.filter(f => f.status === 'pending').reduce((sum, f) => sum + f.fineAmount, 0).toLocaleString();
-            document.getElementById('todayIssues').textContent = issues.filter(i => i.issueDate === new Date().toISOString().split('T')[0]).length.toLocaleString();
-        }
-
-        function addActivity(action, target, description) {
-            const activity = {
-                time: new Date().toLocaleTimeString(),
-                action,
-                target,
-                description,
-                timestamp: Date.now()
-            };
+            const issueDateField = document.getElementById('issueDate');
+            const returnDateField = document.getElementById('returnDate');
+            const reserveDateField = document.getElementById('reserveDate');
             
-            activities.unshift(activity); // Add to beginning
-            activities = activities.slice(0, 50); // Keep only last 50 activities
-        }
-
-        function loadActivities() {
-            const tableBody = document.getElementById('activitiesTableBody');
-            tableBody.innerHTML = '';
-
-            activities.slice(0, 20).forEach(activity => { // Show only recent 20
-                const row = tableBody.insertRow();
-                row.innerHTML = `
-                    <td>${activity.time}</td>
-                    <td>${activity.target.includes('"') ? 'System' : activity.target}</td>
-                    <td>${activity.target.includes('"') ? activity.target : '-'}</td>
-                    <td>${activity.action}</td>
-                    <td>${activity.description}</td>
-                    <td>-</td>
-                `;
-            });
-        }
-
-        function filterActivities() {
-            const searchTerm = document.getElementById('searchActivities').value.toLowerCase();
-            const filteredActivities = activities.filter(activity =>
-                activity.action.toLowerCase().includes(searchTerm) ||
-                activity.target.toLowerCase().includes(searchTerm) ||
-                activity.description.toLowerCase().includes(searchTerm)
-            );
-            
-            displayFilteredActivities(filteredActivities);
-        }
-
-        function displayFilteredActivities(filteredActivities) {
-            const tableBody = document.getElementById('activitiesTableBody');
-            tableBody.innerHTML = '';
-
-            filteredActivities.slice(0, 20).forEach(activity => {
-                const row = tableBody.insertRow();
-                row.innerHTML = `
-                    <td>${activity.time}</td>
-                    <td>${activity.target.includes('"') ? 'System' : activity.target}</td>
-                    <td>${activity.target.includes('"') ? activity.target : '-'}</td>
-                    <td>${activity.action}</td>
-                    <td>${activity.description}</td>
-                    <td>-</td>
-                `;
-            });
-        }
-
-        // Additional utility functions
-        function activateScanner() {
-            const scanner = document.getElementById('barcodeScanner');
-            scanner.classList.add('active');
-            scanner.innerHTML = `
-                <div style="font-size: 48px; margin-bottom: 15px;">📱</div>
-                <h4>Scanner Activated</h4>
-                <p>Simulating barcode scan... (Demo mode)</p>
-            `;
-            
-            setTimeout(() => {
-                // Simulate successful scan
-                const sampleISBN = '978-0262033848';
-                document.getElementById('bookISBNIssue').value = sampleISBN;
-                loadBookInfo();
-                
-                scanner.classList.remove('active');
-                scanner.innerHTML = `
-                    <div style="font-size: 48px; margin-bottom: 15px;">📷</div>
-                    <h4>Scan Book Barcode or Member ID</h4>
-                    <p>Click to activate scanner or enter details manually</p>
-                `;
-                
-                showNotification('Barcode scanned successfully!', 'success');
-            }, 2000);
-        }
-
-        function scanBarcode() {
-            showNotification('Barcode scanner activated (Demo mode)', 'success');
-            // Simulate barcode generation
-            const randomISBN = '978-' + Math.floor(Math.random() * 1000000000);
-            document.getElementById('bookISBN').value = randomISBN;
-        }
-
-        function exportCatalog() {
-            const csvContent = "data:text/csv;charset=utf-8," + 
-                "Title,Author,ISBN,Category,Publisher,Year,Copies,Available,Price\n" +
-                books.map(book => 
-                    `"${book.title}","${book.author}","${book.isbn}","${book.category}","${book.publisher}",${book.year},${book.copies},${book.available},${book.price}`
-                ).join("\n");
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "library_catalog.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showNotification('Catalog exported successfully!', 'success');
+            if (issueDateField) issueDateField.value = today.toISOString().split('T')[0];
+            if (returnDateField) returnDateField.value = returnDate.toISOString().split('T')[0];
+            if (reserveDateField) reserveDateField.value = today.toISOString().split('T')[0];
         }
 
         function showNotification(message, type) {
             const notification = document.getElementById('notification');
             const notificationText = document.getElementById('notificationText');
             
-            notificationText.textContent = message;
-            notification.className = `notification ${type}`;
-            notification.classList.add('show');
+            if (notification && notificationText) {
+                notificationText.textContent = message;
+                notification.className = `notification ${type} show`;
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // Book functions
+        function addBook() {
+            showNotification('Book added successfully!', 'success');
+        }
+
+        function scanBarcode() {
+            showNotification('Barcode scanner activated', 'success');
+        }
+
+        function filterBooks() {
+            showNotification('Filtering books...', 'success');
+        }
+
+        function exportCatalog() {
+            showNotification('Catalog exported successfully!', 'success');
+        }
+
+        function filterByCategory(category) {
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            categoryBtns.forEach(btn => btn.classList.remove('active'));
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+            showNotification(`Showing ${category} books`, 'success');
+        }
+
+        // Issue/Return functions
+        function loadMemberInfo() {
+            const memberID = document.getElementById('memberID').value;
+            if (memberID) {
+                showNotification('Member info loaded', 'success');
+            }
+        }
+
+        function loadBookInfo() {
+            const isbn = document.getElementById('bookISBNIssue').value;
+            if (isbn) {
+                showNotification('Book info loaded', 'success');
+            }
+        }
+
+        function issueBook() {
+            showNotification('Book issued successfully!', 'success');
+        }
+
+        function returnBook() {
+            showNotification('Book returned successfully!', 'success');
+        }
+
+        function activateScanner() {
+            const scanner = document.getElementById('barcodeScanner');
+            if (scanner) {
+                scanner.classList.add('active');
+                showNotification('Scanner activated', 'success');
+                
+                setTimeout(() => {
+                    scanner.classList.remove('active');
+                }, 3000);
+            }
+        }
+
+        // Member functions
+        function addMember() {
+            showNotification('Member added successfully!', 'success');
+        }
+
+        function filterMembers() {
+            showNotification('Filtering members...', 'success');
+        }
+
+        // Fine functions
+        function calculateFine() {
+            const overdueDays = document.getElementById('overdueDays').value || 0;
+            const fineRate = document.getElementById('fineRate').value || 5;
+            const calculatedFine = overdueDays * fineRate;
             
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
+            const fineDisplay = document.getElementById('calculatedFine');
+            if (fineDisplay) {
+                fineDisplay.textContent = `₹${calculatedFine}`;
+            }
         }
 
-        // Initialize some sample activities
-        function initializeSampleActivities() {
-            addActivity('System Started', 'Library Management System', 'Application initialized');
-            addActivity('Book Added', '"Sample Book" by Sample Author', 'Added to catalog');
-            addActivity('Member Registered', 'John Doe', 'New student member');
+        function collectAllFines() {
+            showNotification('All fines collected successfully!', 'success');
         }
 
-        // Call initialization
-        setTimeout(initializeSampleActivities, 1000);
+        function filterFines() {
+            showNotification('Filtering fines...', 'success');
+        }
+
+        // Reservation functions
+        function makeReservation() {
+            showNotification('Reservation made successfully!', 'success');
+        }
+
+        function filterReservations() {
+            showNotification('Filtering reservations...', 'success');
+        }
+
+        // Report functions
+        function generateMonthlyReport() {
+            document.getElementById('reportResults').style.display = 'block';
+            document.getElementById('reportTitle').textContent = 'Monthly Report - September 2024';
+            showNotification('Monthly report generated!', 'success');
+        }
+
+        function generatePopularBooksReport() {
+            document.getElementById('reportResults').style.display = 'block';
+            document.getElementById('reportTitle').textContent = 'Popular Books Report';
+            showNotification('Popular books report generated!', 'success');
+        }
+
+        function generateOverdueReport() {
+            document.getElementById('reportResults').style.display = 'block';
+            document.getElementById('reportTitle').textContent = 'Overdue Books Report';
+            showNotification('Overdue report generated!', 'success');
+        }
+
+        function generateMemberActivity() {
+            document.getElementById('reportResults').style.display = 'block';
+            document.getElementById('reportTitle').textContent = 'Member Activity Report';
+            showNotification('Member activity report generated!', 'success');
+        }
+
+        // Modal functions
+        function closeModal() {
+            document.getElementById('bookModal').style.display = 'none';
+        }
+
+        function filterActivities() {
+            showNotification('Filtering activities...', 'success');
+        }
+
+        // Click outside modal to close
+        window.onclick = function(event) {
+            const modal = document.getElementById('bookModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
     </script>
 </body>
-</html> for="bookTitle">Book Title</label>
-                        <input type="text" id="bookTitle" placeholder="Enter book title" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="bookAuthor">Author</label>
-                        <input type="text" id="bookAuthor" placeholder="Author name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="bookISBN">ISBN</label>
-                        <input type="text" id="bookISBN" placeholder="ISBN number" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="bookCategory">Category</label>
-                        <select id="bookCategory" required>
-                            <option value="">Select Category</option>
-                            <option value="computer-science">Computer Science</option>
-                            <option value="electronics">Electronics</option>
-                            <option value="mechanical">Mechanical Engineering</option>
-                            <option value="civil">Civil Engineering</option>
-                            <option value="mathematics">Mathematics</option>
-                            <option value="physics">Physics</option>
-                            <option value="chemistry">Chemistry</option>
-                            <option value="general">General</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="bookPublisher">Publisher</label>
-                        <input type="text" id="bookPublisher" placeholder="Publisher name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="publicationYear">Publication Year</label>
-                        <input type="number" id="publicationYear" placeholder="2024" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="bookCopies">Number of Copies</label>
-                        <input type="number" id="bookCopies" placeholder="1" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="bookPrice">Price (₹)</label>
-                        <input type="number" id="bookPrice" placeholder="0.00" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="bookDescription">Description</label>
-                    <textarea id="bookDescription" rows="3" placeholder="Brief description of the book..."></textarea>
-                </div>
-                <button type="button" class="btn" onclick="addBook()">
-                    Add Book
-                </button>
-                <button type="button" class="btn btn-secondary" onclick="scanBarcode()" style="margin-left: 10px;">
-                    Scan Barcode
-                </button>
-            </div>
-
-            <div class="table-container">
-                <h3>Book Catalog</h3>
-                <div class="search-filter">
-                    <div class="search-group">
-                        <input type="text" id="searchBooks" placeholder="Search books..." 
-                               onkeyup="filterBooks()">
-                        <select id="categoryFilter" onchange="filterBooks()">
-                            <option value="">All Categories</option>
-                            <option value="computer-science">Computer Science</option>
-                            <option value="electronics">Electronics</option>
-                            <option value="mechanical">Mechanical</option>
-                            <option value="civil">Civil</option>
-                            <option value="mathematics">Mathematics</option>
-                        </select>
-                    </div>
-                    <button class="btn" onclick="exportCatalog()">Export Catalog</button>
-                </div>
-
-                <div class="category-filters">
-                    <button class="category-btn active" onclick="filterByCategory('all')">All Books</button>
-                    <button class="category-btn" onclick="filterByCategory('available')">Available</button>
-                    <button class="category-btn" onclick="filterByCategory('issued')">Issued</button>
-                    <button class="category-btn" onclick="filterByCategory('popular')">Popular</button>
-                </div>
-
-                <div class="book-grid" id="bookGrid">
-                    <!-- Dynamic book cards will be populated here -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Issue/Return Tab -->
-        <div id="issue-return" class="tab-content" style="display: none;">
-            <div class="form-container">
-                <h3>Issue Book</h3>
-                <div class="barcode-scanner" id="barcodeScanner" onclick="activateScanner()">
-                    <div style="font-size: 48px; margin-bottom: 15px;">📷</div>
-                    <h4>Scan Book Barcode or Member ID</h4>
-                    <p>Click to activate scanner or enter details manually</p>
-                </div>
-                
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="memberID">Member ID</label>
-                        <input type="text" id="memberID" placeholder="Enter member ID" 
-                               oninput="loadMemberInfo()" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="memberName">Member Name</label>
-                        <input type="text" id="memberName" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="memberDepartment">Department</label>
-                        <input type="text" id="memberDepartment" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="memberType">Member Type</label>
-                        <input type="text" id="memberType" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="bookISBNIssue">Book ISBN/ID</label>
-                        <input type="text" id="bookISBNIssue" placeholder="Enter book ISBN" 
-                               oninput="loadBookInfo()" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="bookTitleIssue">Book Title</label>
-                        <input type="text" id="bookTitleIssue" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="issueDate">Issue Date</label>
-                        <input type="date" id="issueDate" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="returnDate">Expected Return Date</label>
-                        <input type="date" id="returnDate" required>
-                    </div>
-                </div>
-
-                <div class="member-info" id="memberInfo" style="display: none;">
-                    <h4>Member Information</h4>
-                    <p><strong>Books Currently Issued:</strong> <span id="currentBooks">0</span></p>
-                    <p><strong>Overdue Books:</strong> <span id="overdueCount">0</span></p>
-                    <p><strong>Outstanding Fines:</strong> ₹<span id="outstandingFines">0</span></p>
-                </div>
-
-                <button type="button" class="btn" onclick="issueBook()">
-                    Issue Book
-                </button>
-                <button type="button" class="btn btn-success" onclick="returnBook()" style="margin-left: 10px;">
-                    Return Book
-                </button>
-            </div>
-
-            <div class="table-container">
-                <h3>Current Issues</h3>
-                <div class="search-filter">
-                    <div class="search-group">
-                        <input type="text" id="searchIssues" placeholder="Search issues..." 
-                               onkeyup="filterIssues()">
-                    </div>
-                </div>
-                <table class="table" id="issuesTable">
-                    <thead>
-                        <tr>
-                            <th>Issue ID</th>
-                            <th>Member</th>
-                            <th>Book</th>
-                            <th>Issue Date</th>
-                            <th>Return Date</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="issuesTableBody">
-                        <!-- Dynamic content -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Member Management Tab -->
-        <div id="member-management" class="tab-content">
-            <div class="form-container">
-                <h3>Add New Member</h3>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="memberIdNew">Member ID</label>
-                        <input type="text" id="memberIdNew" placeholder="Auto-generated" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label
+</html>

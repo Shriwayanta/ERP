@@ -578,8 +578,18 @@
 <body>
     <div class="container">
         <div class="header">
+<<<<<<< Updated upstream
             <h1>📚 Library Management System</h1>
             <p>Complete digital library solution with AI-powered insights</p>
+=======
+            <a href="#" class="back-to-main-btn" onclick="goToMain()">
+                ← Back to Main
+            </a>
+            <div style="text-align: center; margin-top: 10px;">
+                <h1>📚 Library Management System</h1>
+                <p>Book issue/return, digital catalog, fine calculation with AI recommendations</p>
+            </div>
+>>>>>>> Stashed changes
         </div>
 
         <div class="nav-tabs">
@@ -684,7 +694,7 @@
         </div>
 
         <!-- Book Catalog Tab -->
-        <div id="book-catalog" class="tab-content">
+        <div id="book-catalog" class="tab-content" style="display: none;">
             <div class="form-container">
                 <h3>Add New Book</h3>
                 <div class="form-grid">
@@ -735,15 +745,29 @@
                     <label for="bookDescription">Description</label>
                     <textarea id="bookDescription" rows="3" placeholder="Brief description of the book..."></textarea>
                 </div>
+<<<<<<< Updated upstream
                 <button type="button" class="btn" onclick="addBook()">Add Book</button>
                 <button type="button" class="btn btn-secondary" onclick="scanBarcode()" style="margin-left: 10px;">Scan Barcode</button>
+=======
+                <button type="button" class="btn" onclick="addBook()">
+                    Add Book
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="scanBarcode()" style="margin-left: 10px;">
+                    Scan Barcode
+                </button>
+>>>>>>> Stashed changes
             </div>
 
             <div class="table-container">
                 <h3>Book Catalog</h3>
                 <div class="search-filter">
                     <div class="search-group">
+<<<<<<< Updated upstream
                         <input type="text" id="searchBooks" placeholder="Search books..." onkeyup="filterBooks()">
+=======
+                        <input type="text" id="searchBooks" placeholder="Search books..." 
+                               onkeyup="filterBooks()">
+>>>>>>> Stashed changes
                         <select id="categoryFilter" onchange="filterBooks()">
                             <option value="">All Categories</option>
                             <option value="computer-science">Computer Science</option>
@@ -764,6 +788,7 @@
                 </div>
 
                 <div class="book-grid" id="bookGrid">
+<<<<<<< Updated upstream
                     <!-- Sample book cards -->
                     <div class="book-card">
                         <div class="book-cover">📚</div>
@@ -789,10 +814,14 @@
                             <div><span class="status available">Available</span></div>
                         </div>
                     </div>
+=======
+                    <!-- Dynamic book cards will be populated here -->
+>>>>>>> Stashed changes
                 </div>
             </div>
         </div>
 
+<<<<<<< Updated upstream
         <!-- Issue/Return Tab -->
         <div id="issue-return" class="tab-content">
             <div class="form-container">
@@ -888,6 +917,10 @@
 
         <!-- Member Management Tab -->
         <div id="member-management" class="tab-content">
+=======
+        <!-- Member Management Tab -->
+        <div id="member-management" class="tab-content" style="display: none;">
+>>>>>>> Stashed changes
             <div class="form-container">
                 <h3>Add New Member</h3>
                 <div class="form-grid">
@@ -969,7 +1002,7 @@
         </div>
 
         <!-- Fine Management Tab -->
-        <div id="fine-management" class="tab-content">
+        <div id="fine-management" class="tab-content" style="display: none;">
             <div class="fine-calculator">
                 <h4>Fine Calculator</h4>
                 <div class="form-grid">
@@ -1022,7 +1055,7 @@
         </div>
 
         <!-- Reservations Tab -->
-        <div id="reservations" class="tab-content">
+        <div id="reservations" class="tab-content" style="display: none;">
             <div class="form-container">
                 <h3>Make Reservation</h3>
                 <div class="form-grid">
@@ -1078,7 +1111,7 @@
         </div>
 
         <!-- Reports Tab -->
-        <div id="reports" class="tab-content">
+        <div id="reports" class="tab-content" style="display: none;">
             <div class="dashboard-cards">
                 <div class="card">
                     <h3>Monthly Report</h3>
@@ -1380,4 +1413,180 @@
         }
     </script>
 </body>
+<<<<<<< Updated upstream
 </html>
+=======
+</html> for="bookTitle">Book Title</label>
+                        <input type="text" id="bookTitle" placeholder="Enter book title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookAuthor">Author</label>
+                        <input type="text" id="bookAuthor" placeholder="Author name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookISBN">ISBN</label>
+                        <input type="text" id="bookISBN" placeholder="ISBN number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookCategory">Category</label>
+                        <select id="bookCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="computer-science">Computer Science</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="mechanical">Mechanical Engineering</option>
+                            <option value="civil">Civil Engineering</option>
+                            <option value="mathematics">Mathematics</option>
+                            <option value="physics">Physics</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="general">General</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookPublisher">Publisher</label>
+                        <input type="text" id="bookPublisher" placeholder="Publisher name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="publicationYear">Publication Year</label>
+                        <input type="number" id="publicationYear" placeholder="2024" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookCopies">Number of Copies</label>
+                        <input type="number" id="bookCopies" placeholder="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookPrice">Price (₹)</label>
+                        <input type="number" id="bookPrice" placeholder="0.00" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="bookDescription">Description</label>
+                    <textarea id="bookDescription" rows="3" placeholder="Brief description of the book..."></textarea>
+                </div>
+                <button type="button" class="btn" onclick="addBook()">
+                    Add Book
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="scanBarcode()" style="margin-left: 10px;">
+                    Scan Barcode
+                </button>
+            </div>
+
+            <div class="table-container">
+                <h3>Book Catalog</h3>
+                <div class="search-filter">
+                    <div class="search-group">
+                        <input type="text" id="searchBooks" placeholder="Search books..." 
+                               onkeyup="filterBooks()">
+                        <select id="categoryFilter" onchange="filterBooks()">
+                            <option value="">All Categories</option>
+                            <option value="computer-science">Computer Science</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="mechanical">Mechanical</option>
+                            <option value="civil">Civil</option>
+                            <option value="mathematics">Mathematics</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="exportCatalog()">Export Catalog</button>
+                </div>
+
+                <div class="category-filters">
+                    <button class="category-btn active" onclick="filterByCategory('all')">All Books</button>
+                    <button class="category-btn" onclick="filterByCategory('available')">Available</button>
+                    <button class="category-btn" onclick="filterByCategory('issued')">Issued</button>
+                    <button class="category-btn" onclick="filterByCategory('popular')">Popular</button>
+                </div>
+
+                <div class="book-grid" id="bookGrid">
+                    <!-- Dynamic book cards will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Issue/Return Tab -->
+        <div id="issue-return" class="tab-content" style="display: none;">
+            <div class="form-container">
+                <h3>Issue Book</h3>
+                <div class="barcode-scanner" id="barcodeScanner" onclick="activateScanner()">
+                    <div style="font-size: 48px; margin-bottom: 15px;">📷</div>
+                    <h4>Scan Book Barcode or Member ID</h4>
+                    <p>Click to activate scanner or enter details manually</p>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="memberID">Member ID</label>
+                        <input type="text" id="memberID" placeholder="Enter member ID" 
+                               oninput="loadMemberInfo()" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberName">Member Name</label>
+                        <input type="text" id="memberName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberDepartment">Department</label>
+                        <input type="text" id="memberDepartment" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberType">Member Type</label>
+                        <input type="text" id="memberType" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookISBNIssue">Book ISBN/ID</label>
+                        <input type="text" id="bookISBNIssue" placeholder="Enter book ISBN" 
+                               oninput="loadBookInfo()" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookTitleIssue">Book Title</label>
+                        <input type="text" id="bookTitleIssue" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="issueDate">Issue Date</label>
+                        <input type="date" id="issueDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="returnDate">Expected Return Date</label>
+                        <input type="date" id="returnDate" required>
+                    </div>
+                </div>
+
+                <div class="member-info" id="memberInfo" style="display: none;">
+                    <h4>Member Information</h4>
+                    <p><strong>Books Currently Issued:</strong> <span id="currentBooks">0</span></p>
+                    <p><strong>Overdue Books:</strong> <span id="overdueCount">0</span></p>
+                    <p><strong>Outstanding Fines:</strong> ₹<span id="outstandingFines">0</span></p>
+                </div>
+
+                <button type="button" class="btn" onclick="issueBook()">
+                    Issue Book
+                </button>
+                <button type="button" class="btn btn-success" onclick="returnBook()" style="margin-left: 10px;">
+                    Return Book
+                </button>
+            </div>
+
+            <div class="table-container">
+                <h3>Current Issues</h3>
+                <div class="search-filter">
+                    <div class="search-group">
+                        <input type="text" id="searchIssues" placeholder="Search issues..." 
+                               onkeyup="filterIssues()">
+                    </div>
+                </div>
+                <table class="table" id="issuesTable">
+                    <thead>
+                        <tr>
+                            <th>Issue ID</th>
+                            <th>Member</th>
+                            <th>Book</th>
+                            <th>Issue Date</th>
+                            <th>Return Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="issuesTableBody">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+>>>>>>> Stashed changes

@@ -53,24 +53,24 @@ function injectCSS() {
         }
 
         [data-theme="dark"] {
-            --bg-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            --card-bg: rgba(44, 62, 80, 0.95);
-            --text-primary: #ecf0f1;
-            --text-secondary: #bdc3c7;
-            --text-muted: #95a5a6;
-            --border-color: rgba(52, 73, 94, 0.5);
-            --button-bg: rgba(52, 73, 94, 0.9);
-            --button-text: #3498db;
-            --shadow: rgba(0,0,0,0.6);
-            --shadow-hover: rgba(0,0,0,0.8);
-            --input-bg: rgba(44, 62, 80, 0.8);
-            --navbar-bg: rgba(44, 62, 80, 0.95);
-            --table-bg: rgba(44, 62, 80, 0.9);
-            --table-stripe: rgba(52, 73, 94, 0.3);
-            --accent-primary: #3498db;
-            --success-color: #27ae60;
-            --warning-color: #f39c12;
-            --error-color: #e74c3c;
+            --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --card-bg: rgba(26, 26, 46, 0.95);
+            --text-primary: #f1f2f6;
+            --text-secondary: #c7c7c7;
+            --text-muted: #8395a7;
+            --border-color: rgba(74, 144, 226, 0.15);
+            --button-bg: rgba(22, 33, 62, 0.9);
+            --button-text: #4a90e2;
+            --shadow: rgba(0,0,0,0.7);
+            --shadow-hover: rgba(0,0,0,0.9);
+            --input-bg: rgba(16, 16, 30, 0.9);
+            --navbar-bg: rgba(26, 26, 46, 0.98);
+            --table-bg: rgba(22, 33, 62, 0.9);
+            --table-stripe: rgba(74, 144, 226, 0.05);
+            --accent-primary: #4a90e2;
+            --success-color: #00a085;
+            --warning-color: #e6ac00;
+            --error-color: #d63384;
         }
 
         .dark-mode-toggle {
@@ -138,6 +138,82 @@ function injectCSS() {
             color: #ffffff;
         }
 
+        /* Force the main white container to be dark */
+        [data-theme="dark"] .container,
+        [data-theme="dark"] .main-container,
+        [data-theme="dark"] .content-wrapper,
+        [data-theme="dark"] .page-content,
+        [data-theme="dark"] section,
+        [data-theme="dark"] .section {
+            background: var(--card-bg) !important;
+            color: var(--text-primary) !important;
+        }
+
+        /* Target the specific white background that contains System Overview */
+        [data-theme="dark"] div[style*="background-color: white"],
+        [data-theme="dark"] div[style*="background: white"],
+        [data-theme="dark"] div[style*="background:#fff"],
+        [data-theme="dark"] div[style*="background-color:#fff"],
+        [data-theme="dark"] div[style*="background: #fff"],
+        [data-theme="dark"] div[style*="background-color: #fff"] {
+            background: var(--card-bg) !important;
+            color: var(--text-primary) !important;
+        }
+
+        /* More aggressive targeting for white backgrounds */
+        [data-theme="dark"] * {
+            background-color: transparent;
+        }
+
+        [data-theme="dark"] body,
+        [data-theme="dark"] .main-content,
+        [data-theme="dark"] .overview-section,
+        [data-theme="dark"] .system-overview {
+            background: var(--bg-gradient) !important;
+        }
+
+        /* Ensure System Overview title is white */
+        [data-theme="dark"] h2,
+        [data-theme="dark"] .section-title {
+            color: #ffffff !important;
+        }
+
+        /* Keep stat cards as they are but ensure proper spacing and WHITE TEXT */
+        [data-theme="dark"] .stat-item,
+        [data-theme="dark"] .stat-card,
+        [data-theme="dark"] .overview-stat {
+            background: rgba(22, 33, 62, 0.8) !important;
+            color: #ffffff !important;
+            border: 1px solid var(--border-color) !important;
+            margin: 10px;
+        }
+
+        /* Force ALL text inside stat cards to be white */
+        [data-theme="dark"] .stat-item *,
+        [data-theme="dark"] .stat-card *,
+        [data-theme="dark"] .overview-stat *,
+        [data-theme="dark"] .stat-item div,
+        [data-theme="dark"] .stat-card div,
+        [data-theme="dark"] .overview-stat div,
+        [data-theme="dark"] .stat-item span,
+        [data-theme="dark"] .stat-card span,
+        [data-theme="dark"] .overview-stat span,
+        [data-theme="dark"] .stat-item p,
+        [data-theme="dark"] .stat-card p,
+        [data-theme="dark"] .overview-stat p {
+            color: #ffffff !important;
+        }
+
+        /* Target the specific stat numbers and labels */
+        [data-theme="dark"] .stat-value,
+        [data-theme="dark"] .stat-number,
+        [data-theme="dark"] .stat-label,
+        [data-theme="dark"] .overview-value,
+        [data-theme="dark"] .overview-number,
+        [data-theme="dark"] .overview-label {
+            color: #ffffff !important;
+        }
+
         /* Force white text on dashboard card content */
         [data-theme="dark"] .card h3,
         [data-theme="dark"] .dashboard-card h3,
@@ -188,6 +264,13 @@ function injectCSS() {
         [data-theme="dark"] .dashboard-card .btn,
         [data-theme="dark"] .module-card .btn {
             color: #ffffff !important;
+        }
+
+        /* Universal white background override */
+        [data-theme="dark"] .bg-white,
+        [data-theme="dark"] .background-white {
+            background: var(--card-bg) !important;
+            color: var(--text-primary) !important;
         }
 
         /* Navbar */

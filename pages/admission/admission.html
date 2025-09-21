@@ -15,8 +15,9 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #e2e8f0;
+            min-height: 100vh;
         }
 
         .container {
@@ -26,22 +27,30 @@
         }
 
         .header {
-            background: rgba(30, 41, 59, 0.5);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
             border-radius: 25px;
             padding: 30px;
             margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             text-align: center;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
         
         .header h1 {
             color: white;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .header p {
-            color: #94a3b8;
+            color: #e2e8f0;
+            font-size: 1.1em;
+            opacity: 0.9;
         }
 
         .back-btn {
@@ -49,7 +58,7 @@
             top: 20px;
             left: 20px;
             background: rgba(255, 255, 255, 0.9);
-            color: #4f46e5;
+            color: #667eea;
             padding: 12px 20px;
             border-radius: 25px;
             text-decoration: none;
@@ -61,7 +70,7 @@
         }
 
         .back-btn:hover {
-            background: #4f46e5;
+            background: #667eea;
             color: white;
             transform: translateY(-2px);
             text-decoration: none;
@@ -76,8 +85,8 @@
         }
 
         .tab-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
             padding: 12px 24px;
             border-radius: 25px;
@@ -87,19 +96,19 @@
         }
 
         .tab-btn:hover, .tab-btn.active {
-            background: #4f46e5;
+            background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
         }
 
         .tab-content {
             display: none;
-            background: rgba(30, 41, 59, 0.5);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             animation: fadeIn 0.5s ease;
         }
 
@@ -113,7 +122,7 @@
         }
 
         .department-selector, .eligibility-checker, .admission-form, .table-container {
-             background: rgba(15, 23, 42, 0.7);
+             background: rgba(255, 255, 255, 0.05);
              border-radius: 15px;
              padding: 25px;
              margin-bottom: 30px;
@@ -128,7 +137,7 @@
         }
 
         .dept-card {
-            background: rgba(30, 41, 59, 0.8);
+            background: rgba(255, 255, 255, 0.1);
             padding: 20px;
             border-radius: 12px;
             text-align: center;
@@ -146,7 +155,7 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, #818cf8, #4f46e5);
+            background: linear-gradient(90deg, #667eea, #764ba2);
             transform: translateX(-100%);
             transition: transform 0.3s ease;
         }
@@ -158,15 +167,16 @@
 
         .dept-card:hover,
         .dept-card.selected {
-            border-color: #4f46e5;
+            border-color: rgba(255, 255, 255, 0.3);
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .dept-icon {
             font-size: 32px;
             margin-bottom: 10px;
-            color: #818cf8;
+            color: #e2e8f0;
         }
 
         .dept-name {
@@ -177,7 +187,7 @@
 
         .dept-capacity {
             font-size: 12px;
-            color: #94a3b8;
+            color: rgba(226, 232, 240, 0.7);
         }
        
         .form-section {
@@ -185,6 +195,7 @@
             padding: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .section-title {
@@ -212,7 +223,7 @@
         label {
             margin-bottom: 8px;
             font-weight: 600;
-            color: #cbd5e1;
+            color: #e2e8f0;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -224,22 +235,28 @@
 
         input, select, textarea {
             padding: 12px;
-            border: 2px solid #334155;
+            border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             font-size: 14px;
             transition: all 0.3s ease;
-            background: #1e293b;
+            background: rgba(255, 255, 255, 0.1);
             color: #e2e8f0;
+            backdrop-filter: blur(5px);
+        }
+
+        input::placeholder {
+            color: rgba(226, 232, 240, 0.6);
         }
 
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
         }
         
         .btn {
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             padding: 12px 30px;
             border: none;
@@ -259,27 +276,28 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
         .btn:disabled {
-            background: #334155;
+            background: rgba(255, 255, 255, 0.2);
             cursor: not-allowed;
         }
         
-        .btn-secondary { background: linear-gradient(135deg, #38bdf8, #0ea5e9); }
-        .btn-success { background: linear-gradient(135deg, #34d399, #10b981); }
-        .btn-danger { background: linear-gradient(135deg, #fb7185, #f43f5e); }
-        .btn-warning { background: linear-gradient(135deg, #facc15, #f59e0b); }
+        .btn-secondary { background: linear-gradient(135deg, #74b9ff, #0984e3); }
+        .btn-success { background: linear-gradient(135deg, #00b894, #55efc4); }
+        .btn-danger { background: linear-gradient(135deg, #e17055, #fdcb6e); }
+        .btn-warning { background: linear-gradient(135deg, #fdcb6e, #e17055); }
         
         .document-upload {
-            border: 2px dashed #475569;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
             padding: 30px;
             text-align: center;
             border-radius: 10px;
             transition: all 0.3s ease;
             cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .document-upload:hover {
-            border-color: #4f46e5;
-            background: rgba(79, 70, 229, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.1);
         }
         
         table {
@@ -290,11 +308,11 @@
         th, td {
             padding: 15px;
             text-align: left;
-            border-bottom: 1px solid #334155;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         th {
-            background: linear-gradient(135deg, #312e81, #4c1d95);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             font-weight: 600;
             position: sticky;
@@ -302,7 +320,7 @@
         }
 
         tr:hover {
-            background-color: #1e293b;
+            background-color: rgba(255, 255, 255, 0.05);
         }
         
         td .btn {
@@ -318,9 +336,9 @@
             text-transform: uppercase;
         }
 
-        .status-Pending, .status-Under-Review { background: #475569; color: #e2e8f0; }
-        .status-Approved { background: #10b981; color: #ffffff; }
-        .status-Rejected { background: #f43f5e; color: #ffffff; }
+        .status-Pending, .status-Under-Review { background: rgba(255, 255, 255, 0.2); color: #e2e8f0; }
+        .status-Approved { background: #00b894; color: #ffffff; }
+        .status-Rejected { background: #e17055; color: #ffffff; }
         
         .search-filter-bar {
             display: flex;
@@ -341,7 +359,7 @@
             left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: #94a3b8;
+            color: rgba(226, 232, 240, 0.6);
         }
 
         .search-box input {
@@ -357,14 +375,15 @@
         }
 
         .stat-card {
-            background: rgba(15, 23, 42, 0.7);
+            background: rgba(255, 255, 255, 0.1);
             padding: 25px;
             border-radius: 15px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
         }
 
         .stat-card::before {
@@ -376,10 +395,10 @@
             height: 4px;
         }
 
-        .stat-card.total::before { background: linear-gradient(90deg, #818cf8, #4f46e5); }
-        .stat-card.pending::before { background: linear-gradient(90deg, #facc15, #f59e0b); }
-        .stat-card.approved::before { background: linear-gradient(90deg, #34d399, #10b981); }
-        .stat-card.rejected::before { background: linear-gradient(90deg, #fb7185, #f43f5e); }
+        .stat-card.total::before { background: linear-gradient(90deg, #667eea, #764ba2); }
+        .stat-card.pending::before { background: linear-gradient(90deg, #fdcb6e, #e17055); }
+        .stat-card.approved::before { background: linear-gradient(90deg, #00b894, #55efc4); }
+        .stat-card.rejected::before { background: linear-gradient(90deg, #e17055, #fdcb6e); }
 
         .stat-number {
             font-size: 2.5em;
@@ -389,7 +408,7 @@
         }
 
         .stat-label {
-            color: #94a3b8;
+            color: #e2e8f0;
             font-weight: 600;
         }
 
@@ -406,7 +425,7 @@
         }
 
         .modal-content {
-            background-color: #0f172a;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: #e2e8f0;
             margin: 5% auto;
             padding: 30px;
@@ -416,7 +435,7 @@
             max-height: 90%;
             overflow-y: auto;
             animation: modalSlideIn 0.4s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         @keyframes modalSlideIn {
@@ -425,7 +444,7 @@
         }
 
         .close {
-            color: #aaa;
+            color: rgba(226, 232, 240, 0.7);
             float: right;
             font-size: 28px;
             font-weight: bold;
@@ -452,9 +471,9 @@
             right: 20px;
         }
         
-        .notification.success { background: linear-gradient(135deg, #10b981, #34d399); }
-        .notification.error { background: linear-gradient(135deg, #f43f5e, #fb7185); }
-        .notification.warning { background: linear-gradient(135deg, #f59e0b, #facc15); }
+        .notification.success { background: linear-gradient(135deg, #00b894, #55efc4); }
+        .notification.error { background: linear-gradient(135deg, #e17055, #fdcb6e); }
+        .notification.warning { background: linear-gradient(135deg, #fdcb6e, #e17055); }
 
         .eligibility-result {
             padding: 20px;
@@ -464,24 +483,62 @@
         }
         
         .eligible {
-            background: rgba(16, 185, 129, 0.1);
-            color: #34d399;
-            border: 2px solid rgba(16, 185, 129, 0.2);
+            background: rgba(0, 184, 148, 0.2);
+            color: #55efc4;
+            border: 2px solid rgba(0, 184, 148, 0.3);
         }
 
         .not-eligible {
-            background: rgba(244, 63, 94, 0.1);
-            color: #fb7185;
-            border: 2px solid rgba(244, 63, 94, 0.2);
+            background: rgba(225, 112, 85, 0.2);
+            color: #fdcb6e;
+            border: 2px solid rgba(225, 112, 85, 0.3);
         }
         
         #bulk-operations .table-container {
             margin-top: 0;
         }
+
+        /* Dark mode compatibility styles */
+        .dark-mode body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .dark-mode .header {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .dark-mode .tab-content {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .dark-mode .department-selector, 
+        .dark-mode .eligibility-checker, 
+        .dark-mode .admission-form, 
+        .dark-mode .table-container {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .dark-mode .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .dark-mode input, 
+        .dark-mode select, 
+        .dark-mode textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dark-mode input:focus, 
+        .dark-mode select:focus, 
+        .dark-mode textarea:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
 <body>
-    <a href="/index.html" class="back-btn">
+    <a href="../../index.html" class="back-btn">
         <i class="fas fa-arrow-left"></i> Back to Main
     </a>
 
@@ -535,7 +592,7 @@
             </div>
 
             <div class="table-container">
-                <div style="padding: 20px; border-bottom: 1px solid #334155;">
+                <div style="padding: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
                     <h3><i class="fas fa-clock"></i> Recent Applications</h3>
                 </div>
                 <table>
@@ -813,8 +870,8 @@
                     datasets: [{
                         label: 'Applications',
                         data: Object.values(deptCounts),
-                        backgroundColor: 'rgba(79, 70, 229, 0.6)',
-                        borderColor: 'rgba(79, 70, 229, 1)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        borderColor: 'rgba(255, 255, 255, 0.8)',
                         borderWidth: 1,
                         borderRadius: 5
                     }]
@@ -822,10 +879,10 @@
                 options: {
                     responsive: true,
                     scales: {
-                        y: { beginAtZero: true, ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } },
-                        x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                        y: { beginAtZero: true, ticks: { color: '#e2e8f0' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        x: { ticks: { color: '#e2e8f0' }, grid: { color: 'rgba(255,255,255,0.1)' } }
                     },
-                    plugins: { legend: { labels: { color: '#94a3b8' } } }
+                    plugins: { legend: { labels: { color: '#e2e8f0' } } }
                 }
             });
         };
@@ -1153,5 +1210,7 @@
         renderDepartmentSelection();
     });
     </script>
+    <script src="../../js/dark-mode.js"></script>
+
 </body>
 </html>

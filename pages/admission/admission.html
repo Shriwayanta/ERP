@@ -15,26 +15,33 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #e2e8f0;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             padding: 20px;
         }
 
         .header {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(15px);
             border-radius: 25px;
             padding: 30px;
             margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header h1 {
+            color: white;
+        }
+        
+        .header p {
+            color: #94a3b8;
         }
 
         .back-btn {
@@ -42,7 +49,7 @@
             top: 20px;
             left: 20px;
             background: rgba(255, 255, 255, 0.9);
-            color: #667eea;
+            color: #4f46e5;
             padding: 12px 20px;
             border-radius: 25px;
             text-decoration: none;
@@ -54,7 +61,7 @@
         }
 
         .back-btn:hover {
-            background: rgba(102, 126, 234, 0.9);
+            background: #4f46e5;
             color: white;
             transform: translateY(-2px);
             text-decoration: none;
@@ -69,8 +76,8 @@
         }
 
         .tab-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
             padding: 12px 24px;
             border-radius: 25px;
@@ -80,19 +87,19 @@
         }
 
         .tab-btn:hover, .tab-btn.active {
-            background: rgba(255, 255, 255, 0.2);
+            background: #4f46e5;
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
         }
 
         .tab-content {
             display: none;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(30, 41, 59, 0.5);
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             animation: fadeIn 0.5s ease;
         }
 
@@ -105,12 +112,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .department-selector {
-            background: linear-gradient(135deg, #f8f9ff, #ffffff);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            border: 2px solid rgba(102, 126, 234, 0.1);
+        .department-selector, .eligibility-checker, .admission-form, .table-container {
+             background: rgba(15, 23, 42, 0.7);
+             border-radius: 15px;
+             padding: 25px;
+             margin-bottom: 30px;
+             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .department-grid {
@@ -121,7 +128,7 @@
         }
 
         .dept-card {
-            background: white;
+            background: rgba(30, 41, 59, 0.8);
             padding: 20px;
             border-radius: 12px;
             text-align: center;
@@ -139,7 +146,7 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: linear-gradient(90deg, #818cf8, #4f46e5);
             transform: translateX(-100%);
             transition: transform 0.3s ease;
         }
@@ -151,48 +158,39 @@
 
         .dept-card:hover,
         .dept-card.selected {
-            border-color: #667eea;
+            border-color: #4f46e5;
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.2);
         }
 
         .dept-icon {
             font-size: 32px;
             margin-bottom: 10px;
-            color: #667eea;
+            color: #818cf8;
         }
 
         .dept-name {
             font-weight: 600;
-            color: #333;
+            color: #e2e8f0;
             margin-bottom: 5px;
         }
 
         .dept-capacity {
             font-size: 12px;
-            color: #666;
+            color: #94a3b8;
         }
-
-        .admission-form {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
+       
         .form-section {
             margin-bottom: 30px;
             padding: 20px;
-            border: 1px solid #e1e1e1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            background: #f8f9ff;
         }
 
         .section-title {
             font-size: 1.2em;
             font-weight: 600;
-            color: #333;
+            color: white;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
@@ -214,33 +212,34 @@
         label {
             margin-bottom: 8px;
             font-weight: 600;
-            color: #333;
+            color: #cbd5e1;
             display: flex;
             align-items: center;
             gap: 5px;
         }
 
         .required {
-            color: #e17055;
+            color: #fb7185;
         }
 
         input, select, textarea {
             padding: 12px;
-            border: 2px solid #e1e1e1;
+            border: 2px solid #334155;
             border-radius: 8px;
             font-size: 14px;
             transition: all 0.3s ease;
-            background: white;
+            background: #1e293b;
+            color: #e2e8f0;
         }
 
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
         }
-
+        
         .btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
             color: white;
             padding: 12px 30px;
             border: none;
@@ -254,19 +253,23 @@
             align-items: center;
             gap: 8px;
         }
-
+        
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
-
-        .btn-secondary { background: linear-gradient(135deg, #74b9ff, #0984e3); }
-        .btn-success { background: linear-gradient(135deg, #55efc4, #00b894); }
-        .btn-danger { background: linear-gradient(135deg, #fd79a8, #e84393); }
-        .btn-warning { background: linear-gradient(135deg, #fdcb6e, #e17055); }
-
+        .btn:disabled {
+            background: #334155;
+            cursor: not-allowed;
+        }
+        
+        .btn-secondary { background: linear-gradient(135deg, #38bdf8, #0ea5e9); }
+        .btn-success { background: linear-gradient(135deg, #34d399, #10b981); }
+        .btn-danger { background: linear-gradient(135deg, #fb7185, #f43f5e); }
+        .btn-warning { background: linear-gradient(135deg, #facc15, #f59e0b); }
+        
         .document-upload {
-            border: 2px dashed #ddd;
+            border: 2px dashed #475569;
             padding: 30px;
             text-align: center;
             border-radius: 10px;
@@ -275,23 +278,10 @@
         }
 
         .document-upload:hover {
-            border-color: #667eea;
-            background: rgba(102, 126, 234, 0.05);
+            border-color: #4f46e5;
+            background: rgba(79, 70, 229, 0.1);
         }
-
-        .document-upload.dragover {
-            border-color: #00b894;
-            background: rgba(0, 184, 148, 0.05);
-        }
-
-        .table-container {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-
+        
         table {
             width: 100%;
             border-collapse: collapse;
@@ -300,11 +290,11 @@
         th, td {
             padding: 15px;
             text-align: left;
-            border-bottom: 1px solid #e1e1e1;
+            border-bottom: 1px solid #334155;
         }
 
         th {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #312e81, #4c1d95);
             color: white;
             font-weight: 600;
             position: sticky;
@@ -312,7 +302,12 @@
         }
 
         tr:hover {
-            background-color: #f8f9ff;
+            background-color: #1e293b;
+        }
+        
+        td .btn {
+            padding: 8px 15px;
+            font-size: 12px;
         }
 
         .status-badge {
@@ -323,11 +318,10 @@
             text-transform: uppercase;
         }
 
-        .status-pending { background: #fff3cd; color: #856404; }
-        .status-approved { background: #d4edda; color: #155724; }
-        .status-rejected { background: #f8d7da; color: #721c24; }
-        .status-under-review { background: #d1ecf1; color: #0c5460; }
-
+        .status-Pending, .status-Under-Review { background: #475569; color: #e2e8f0; }
+        .status-Approved { background: #10b981; color: #ffffff; }
+        .status-Rejected { background: #f43f5e; color: #ffffff; }
+        
         .search-filter-bar {
             display: flex;
             gap: 20px;
@@ -347,16 +341,12 @@
             left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: #999;
+            color: #94a3b8;
         }
 
         .search-box input {
             padding-left: 45px;
             width: 100%;
-        }
-
-        .filter-select {
-            min-width: 150px;
         }
 
         .stats-cards {
@@ -367,13 +357,14 @@
         }
 
         .stat-card {
-            background: white;
+            background: rgba(15, 23, 42, 0.7);
             padding: 25px;
             border-radius: 15px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .stat-card::before {
@@ -385,20 +376,20 @@
             height: 4px;
         }
 
-        .stat-card.total::before { background: linear-gradient(90deg, #667eea, #764ba2); }
-        .stat-card.pending::before { background: linear-gradient(90deg, #fdcb6e, #e17055); }
-        .stat-card.approved::before { background: linear-gradient(90deg, #00b894, #55efc4); }
-        .stat-card.rejected::before { background: linear-gradient(90deg, #e17055, #fd79a8); }
+        .stat-card.total::before { background: linear-gradient(90deg, #818cf8, #4f46e5); }
+        .stat-card.pending::before { background: linear-gradient(90deg, #facc15, #f59e0b); }
+        .stat-card.approved::before { background: linear-gradient(90deg, #34d399, #10b981); }
+        .stat-card.rejected::before { background: linear-gradient(90deg, #fb7185, #f43f5e); }
 
         .stat-number {
             font-size: 2.5em;
             font-weight: bold;
-            color: #333;
+            color: white;
             margin-bottom: 10px;
         }
 
         .stat-label {
-            color: #666;
+            color: #94a3b8;
             font-weight: 600;
         }
 
@@ -410,13 +401,14 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(5px);
         }
 
         .modal-content {
-            background-color: white;
-            margin: 2% auto;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            margin: 5% auto;
             padding: 30px;
             border-radius: 20px;
             width: 90%;
@@ -424,6 +416,7 @@
             max-height: 90%;
             overflow-y: auto;
             animation: modalSlideIn 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         @keyframes modalSlideIn {
@@ -440,103 +433,28 @@
         }
 
         .close:hover {
-            color: #000;
+            color: white;
         }
-
+        
         .notification {
             position: fixed;
             top: 20px;
-            right: 20px;
+            right: -400px; /* Start off-screen */
             padding: 15px 25px;
             border-radius: 8px;
             color: white;
             font-weight: 600;
             z-index: 2001;
-            animation: slideInRight 0.3s ease;
+            transition: right 0.5s ease-in-out;
         }
 
-        .notification.success { background: linear-gradient(135deg, #00b894, #55efc4); }
-        .notification.error { background: linear-gradient(135deg, #e17055, #fd79a8); }
-        .notification.warning { background: linear-gradient(135deg, #fdcb6e, #e17055); }
-
-        @keyframes slideInRight {
-            from { transform: translateX(100%); }
-            to { transform: translateX(0); }
+        .notification.show {
+            right: 20px;
         }
-
-        .progress-steps {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .progress-steps::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: #e1e1e1;
-            z-index: 1;
-        }
-
-        .progress-line {
-            position: absolute;
-            top: 20px;
-            left: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            transition: width 0.5s ease;
-            z-index: 2;
-        }
-
-        .step {
-            background: white;
-            border: 3px solid #e1e1e1;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            position: relative;
-            z-index: 3;
-            transition: all 0.3s ease;
-        }
-
-        .step.completed {
-            background: #00b894;
-            border-color: #00b894;
-            color: white;
-        }
-
-        .step.active {
-            background: #667eea;
-            border-color: #667eea;
-            color: white;
-        }
-
-        .step-label {
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
-            font-weight: 600;
-            color: #666;
-            white-space: nowrap;
-        }
-
-        .eligibility-checker {
-            background: linear-gradient(135deg, #f8f9ff, #ffffff);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            border: 2px solid rgba(102, 126, 234, 0.1);
-        }
+        
+        .notification.success { background: linear-gradient(135deg, #10b981, #34d399); }
+        .notification.error { background: linear-gradient(135deg, #f43f5e, #fb7185); }
+        .notification.warning { background: linear-gradient(135deg, #f59e0b, #facc15); }
 
         .eligibility-result {
             padding: 20px;
@@ -544,48 +462,30 @@
             margin-top: 15px;
             font-weight: 600;
         }
-
+        
         .eligible {
-            background: rgba(0, 184, 148, 0.1);
-            color: #00b894;
-            border: 2px solid rgba(0, 184, 148, 0.2);
+            background: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+            border: 2px solid rgba(16, 185, 129, 0.2);
         }
 
         .not-eligible {
-            background: rgba(225, 112, 85, 0.1);
-            color: #e17055;
-            border: 2px solid rgba(225, 112, 85, 0.2);
+            background: rgba(244, 63, 94, 0.1);
+            color: #fb7185;
+            border: 2px solid rgba(244, 63, 94, 0.2);
         }
-
-        @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .department-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .search-filter-bar {
-                flex-direction: column;
-            }
-            
-            .search-box {
-                width: 100%;
-            }
+        
+        #bulk-operations .table-container {
+            margin-top: 0;
         }
     </style>
-
-    <script src="../../js/dark-mode.js"></script>
-
 </head>
 <body>
-    <a href="/index.html" class="back-btn">
+    <a href="#" class="back-btn" onclick="event.preventDefault(); showTab('dashboard');">
         <i class="fas fa-arrow-left"></i> Back to Main
     </a>
 
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <h1><i class="fas fa-user-plus"></i> Student Admission Management</h1>
             <p>Comprehensive admission system for all engineering departments</p>
@@ -609,36 +509,33 @@
             </div>
         </div>
 
-        <!-- Dashboard Tab -->
         <div id="dashboard" class="tab-content active">
             <div class="stats-cards">
                 <div class="stat-card total">
-                    <div class="stat-number" id="totalApplications">1,247</div>
+                    <div class="stat-number" id="totalApplications">0</div>
                     <div class="stat-label">Total Applications</div>
                 </div>
                 <div class="stat-card pending">
-                    <div class="stat-number" id="pendingApplications">342</div>
+                    <div class="stat-number" id="pendingApplications">0</div>
                     <div class="stat-label">Pending Review</div>
                 </div>
                 <div class="stat-card approved">
-                    <div class="stat-number" id="approvedApplications">756</div>
+                    <div class="stat-number" id="approvedApplications">0</div>
                     <div class="stat-label">Approved</div>
                 </div>
                 <div class="stat-card rejected">
-                    <div class="stat-number" id="rejectedApplications">149</div>
+                    <div class="stat-number" id="rejectedApplications">0</div>
                     <div class="stat-label">Rejected</div>
                 </div>
             </div>
 
-            <!-- Department-wise Statistics -->
             <div class="admission-form">
-                <h2 style="margin-bottom: 20px;"><i class="fas fa-chart-bar"></i> Department-wise Applications</h2>
-                <canvas id="departmentChart" width="400" height="200"></canvas>
+                <h2 style="margin-bottom: 20px; color: white;"><i class="fas fa-chart-bar"></i> Department-wise Applications</h2>
+                <canvas id="departmentChart" width="400" height="150"></canvas>
             </div>
 
-            <!-- Recent Applications -->
             <div class="table-container">
-                <div style="padding: 20px; border-bottom: 1px solid #e1e1e1;">
+                <div style="padding: 20px; border-bottom: 1px solid #334155;">
                     <h3><i class="fas fa-clock"></i> Recent Applications</h3>
                 </div>
                 <table>
@@ -649,91 +546,20 @@
                             <th>Department</th>
                             <th>Date Applied</th>
                             <th>Status</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="recentApplicationsTable">
-                        <!-- Dynamic content -->
-                    </tbody>
+                    <tbody id="recentApplicationsTable"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- New Application Tab -->
         <div id="apply" class="tab-content">
-            <!-- Progress Steps -->
-            <div class="progress-steps">
-                <div class="progress-line" id="progressLine" style="width: 20%;"></div>
-                <div class="step active" id="step1">
-                    1
-                    <div class="step-label">Basic Info</div>
-                </div>
-                <div class="step" id="step2">
-                    2
-                    <div class="step-label">Academic Details</div>
-                </div>
-                <div class="step" id="step3">
-                    3
-                    <div class="step-label">Documents</div>
-                </div>
-                <div class="step" id="step4">
-                    4
-                    <div class="step-label">Review</div>
-                </div>
-                <div class="step" id="step5">
-                    5
-                    <div class="step-label">Submit</div>
-                </div>
-            </div>
-
-            <!-- Department Selection -->
             <div class="department-selector">
                 <h3><i class="fas fa-university"></i> Select Department/Field</h3>
                 <div class="department-grid">
-                    <div class="dept-card" data-dept="computer-science" onclick="selectDepartment(this)">
-                        <div class="dept-icon"><i class="fas fa-laptop-code"></i></div>
-                        <div class="dept-name">Computer Science & Engineering</div>
-                        <div class="dept-capacity">Seats: 120 | Available: 45</div>
                     </div>
-                    <div class="dept-card" data-dept="biomedical" onclick="selectDepartment(this)">
-                        <div class="dept-icon"><i class="fas fa-heartbeat"></i></div>
-                        <div class="dept-name">Biomedical Engineering</div>
-                        <div class="dept-capacity">Seats: 60 | Available: 23</div>
-                    </div>
-                    <div class="dept-card" data-dept="civil" onclick="selectDepartment(this)">
-                        <div class="dept-icon"><i class="fas fa-building"></i></div>
-                        <div class="dept-name">Civil Engineering</div>
-                        <div class="dept-capacity">Seats: 90 | Available: 34</div>
-                    </div>
-                    <div class="dept-card" data-dept="mechanical" onclick="selectDepartment(this)">
-                        <div class="dept-icon"><i class="fas fa-cogs"></i></div>
-                        <div class="dept-name">Mechanical Engineering</div>
-                        <div class="dept-capacity">Seats: 100 | Available: 12</div>
-                    </div>
-                    <div class="dept-card" data-dept="chemical" onclick="selectDepartment(this)">
-                        <div class="dept-icon"><i class="fas fa-flask"></i></div>
-                        <div class="dept-name">Chemical Engineering</div>
-                        <div class="dept-capacity">Seats: 80 | Available: 28</div>
-                    </div>
-                    <div class="dept-card" data-dept="electrical" onclick="selectDepartment(this)">
-                        <div class="dept-icon"><i class="fas fa-bolt"></i></div>
-                        <div class="dept-name">Electrical Engineering</div>
-                        <div class="dept-capacity">Seats: 85 | Available: 19</div>
-                    </div>
-                    <div class="dept-card" data-dept="electronics" onclick="selectDepartment(this)">
-                        <div class="dept-icon"><i class="fas fa-microchip"></i></div>
-                        <div class="dept-name">Electronics & Communication</div>
-                        <div class="dept-capacity">Seats: 110 | Available: 41</div>
-                    </div>
-                    <div class="dept-card" data-dept="aerospace" onclick="selectDepartment(this)">
-                        <div class="dept-icon"><i class="fas fa-plane"></i></div>
-                        <div class="dept-name">Aerospace Engineering</div>
-                        <div class="dept-capacity">Seats: 50 | Available: 15</div>
-                    </div>
-                </div>
             </div>
 
-            <!-- Eligibility Checker -->
             <div class="eligibility-checker">
                 <h3><i class="fas fa-check-circle"></i> Quick Eligibility Check</h3>
                 <div class="form-row">
@@ -742,99 +568,490 @@
                         <input type="number" id="twelfthPercentage" placeholder="Enter your 12th percentage" min="0" max="100" step="0.01">
                     </div>
                     <div class="form-group">
-                        <label>JEE Score (if applicable)</label>
+                        <label>JEE Main Score</label>
                         <input type="number" id="jeeScore" placeholder="Enter JEE score" min="0" max="300">
-                    </div>
-                    <div class="form-group">
-                        <label>State Entrance Score (if applicable)</label>
-                        <input type="number" id="stateScore" placeholder="Enter state entrance score" min="0" max="200">
                     </div>
                 </div>
                 <button class="btn btn-secondary" onclick="checkEligibility()">
                     <i class="fas fa-calculator"></i> Check Eligibility
                 </button>
-                <div id="eligibilityResult"></div>
+                <div id="eligibilityResult" class="eligibility-result" style="display:none;"></div>
             </div>
 
-            <!-- Main Application Form -->
             <form id="admissionForm" class="admission-form">
-                <!-- Step 1: Basic Information -->
-                <div class="form-section" id="basicInfo">
+                <div class="form-section">
                     <div class="section-title">
                         <i class="fas fa-user"></i> Personal Information
                     </div>
-                    
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>First Name <span class="required">*</span></label>
-                            <input type="text" name="firstName" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Middle Name</label>
-                            <input type="text" name="middleName">
-                        </div>
-                        <div class="form-group">
-                            <label>Last Name <span class="required">*</span></label>
-                            <input type="text" name="lastName" required>
-                        </div>
+                        <div class="form-group"><label>First Name <span class="required">*</span></label><input type="text" name="firstName" required></div>
+                        <div class="form-group"><label>Last Name <span class="required">*</span></label><input type="text" name="lastName" required></div>
                     </div>
-
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>Date of Birth <span class="required">*</span></label>
-                            <input type="date" name="dob" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Gender <span class="required">*</span></label>
-                            <select name="gender" required>
-                                <option value="">Select Gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Category <span class="required">*</span></label>
-                            <select name="category" required>
-                                <option value="">Select Category</option>
-                                <option value="general">General</option>
-                                <option value="obc">OBC</option>
-                                <option value="sc">SC</option>
-                                <option value="st">ST</option>
-                                <option value="ews">EWS</option>
-                            </select>
-                        </div>
+                        <div class="form-group"><label>Date of Birth <span class="required">*</span></label><input type="date" name="dob" required></div>
+                        <div class="form-group"><label>Email Address <span class="required">*</span></label><input type="email" name="email" required></div>
+                        <div class="form-group"><label>Mobile Number <span class="required">*</span></label><input type="tel" name="mobile" required></div>
                     </div>
+                </div>
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-paper-plane"></i> Submit Application
+                </button>
+            </form>
+        </div>
+        
+        <div id="applications" class="tab-content">
+             <div class="search-filter-bar">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Search by name or ID...">
+                </div>
+                <select id="statusFilter">
+                    <option value="All">All Statuses</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </div>
+            <div class="table-container">
+                 <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Applied On</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applicationsTable"></tbody>
+                </table>
+            </div>
+        </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Email Address <span class="required">*</span></label>
-                            <input type="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Mobile Number <span class="required">*</span></label>
-                            <input type="tel" name="mobile" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Alternate Mobile</label>
-                            <input type="tel" name="alternateMobile">
-                        </div>
-                    </div>
+        <div id="merit-list" class="tab-content">
+            <div class="search-filter-bar">
+                <select id="meritListDepartmentFilter">
+                    <option value="All">All Departments</option>
+                </select>
+                <button class="btn" onclick="generateAndRenderMeritList()"><i class="fas fa-sync-alt"></i> Generate/Refresh List</button>
+            </div>
+            <div class="table-container">
+                 <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Merit Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="meritListTable"></tbody>
+                </table>
+            </div>
+        </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Aadhar Number <span class="required">*</span></label>
-                            <input type="text" name="aadhar" required pattern="[0-9]{12}" maxlength="12">
-                        </div>
-                        <div class="form-group">
-                            <label>Father's Name <span class="required">*</span></label>
-                            <input type="text" name="fatherName" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Mother's Name <span class="required">*</span></label>
-                            <input type="text" name="motherName" required>
-                        </div>
-                    </div>
+        <div id="bulk-operations" class="tab-content">
+            <div class="search-filter-bar">
+                <button class="btn btn-success" onclick="handleBulkAction('Approved')"><i class="fas fa-check-circle"></i> Approve Selected</button>
+                <button class="btn btn-danger" onclick="handleBulkAction('Rejected')"><i class="fas fa-times-circle"></i> Reject Selected</button>
+                <button class="btn btn-warning" onclick="handleBulkAction('Pending')"><i class="fas fa-clock"></i> Move to Pending</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="selectAllCheckbox"></th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bulkOpsTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div id="viewModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Application Details</h2>
+            <div id="modalBody"></div>
+        </div>
+    </div>
 
-                    <div class="form-group">
-                        <label>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- CONFIG & INITIALIZATION ---
+        const DEPARTMENTS = {
+            "cs": { name: "Computer Science & Engineering", icon: "fa-laptop-code", seats: 120 },
+            "biomed": { name: "Biomedical Engineering", icon: "fa-heartbeat", seats: 60 },
+            "civil": { name: "Civil Engineering", icon: "fa-building", seats: 90 },
+            "mech": { name: "Mechanical Engineering", icon: "fa-cogs", seats: 100 },
+            "chem": { name: "Chemical Engineering", icon: "fa-flask", seats: 80 },
+            "elec": { name: "Electrical Engineering", icon: "fa-bolt", seats: 85 }
+        };
+
+        let departmentChartInstance = null;
+        let selectedDepartment = null;
+
+        // --- DATABASE (localStorage) ABSTRACTION ---
+        const DB = {
+            getApplications: () => JSON.parse(localStorage.getItem('applications') || '[]'),
+            saveApplications: (apps) => localStorage.setItem('applications', JSON.stringify(apps)),
+            addApplication: (app) => {
+                const apps = DB.getApplications();
+                apps.push(app);
+                DB.saveApplications(apps);
+            },
+            updateApplicationStatus: (id, status) => {
+                let apps = DB.getApplications();
+                apps = apps.map(app => app.id === id ? { ...app, status } : app);
+                DB.saveApplications(apps);
+            }
+        };
+
+        // --- UI RENDERING FUNCTIONS ---
+        const renderDashboard = () => {
+            const apps = DB.getApplications();
+            const total = apps.length;
+            const pending = apps.filter(a => a.status === 'Pending').length;
+            const approved = apps.filter(a => a.status === 'Approved').length;
+            const rejected = apps.filter(a => a.status === 'Rejected').length;
+
+            document.getElementById('totalApplications').textContent = total;
+            document.getElementById('pendingApplications').textContent = pending;
+            document.getElementById('approvedApplications').textContent = approved;
+            document.getElementById('rejectedApplications').textContent = rejected;
+
+            renderDepartmentChart(apps);
+            renderRecentApplications(apps);
+        };
+        
+        const renderDepartmentChart = (apps) => {
+            const ctx = document.getElementById('departmentChart').getContext('2d');
+            const deptCounts = Object.keys(DEPARTMENTS).reduce((acc, key) => {
+                acc[DEPARTMENTS[key].name] = 0;
+                return acc;
+            }, {});
+
+            apps.forEach(app => {
+                if(deptCounts.hasOwnProperty(app.department)) {
+                    deptCounts[app.department]++;
+                }
+            });
+
+            if (departmentChartInstance) {
+                departmentChartInstance.destroy();
+            }
+
+            departmentChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(deptCounts),
+                    datasets: [{
+                        label: 'Applications',
+                        data: Object.values(deptCounts),
+                        backgroundColor: 'rgba(79, 70, 229, 0.6)',
+                        borderColor: 'rgba(79, 70, 229, 1)',
+                        borderWidth: 1,
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                    },
+                    plugins: { legend: { labels: { color: '#94a3b8' } } }
+                }
+            });
+        };
+
+        const renderRecentApplications = (apps) => {
+            const tbody = document.getElementById('recentApplicationsTable');
+            tbody.innerHTML = apps
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 5)
+                .map(app => `
+                    <tr>
+                        <td>${app.id}</td>
+                        <td>${app.firstName} ${app.lastName}</td>
+                        <td>${app.department}</td>
+                        <td>${new Date(app.date).toLocaleDateString()}</td>
+                        <td><span class="status-badge status-${app.status}">${app.status}</span></td>
+                    </tr>
+                `).join('');
+        };
+
+        const renderDepartmentSelection = () => {
+            const grid = document.querySelector('.department-grid');
+            const meritFilter = document.getElementById('meritListDepartmentFilter');
+            grid.innerHTML = '';
+            meritFilter.innerHTML = '<option value="All">All Departments</option>';
+
+            for (const key in DEPARTMENTS) {
+                const dept = DEPARTMENTS[key];
+                grid.innerHTML += `
+                    <div class="dept-card" data-dept-key="${key}">
+                        <div class="dept-icon"><i class="fas ${dept.icon}"></i></div>
+                        <div class="dept-name">${dept.name}</div>
+                        <div class="dept-capacity">Seats: ${dept.seats}</div>
+                    </div>`;
+                meritFilter.innerHTML += `<option value="${dept.name}">${dept.name}</option>`;
+            }
+            // Add event listeners to newly created cards
+            document.querySelectorAll('.dept-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.dept-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    selectedDepartment = card.dataset.deptKey;
+                });
+            });
+        };
+        
+        const renderApplicationsTable = (filteredApps = null) => {
+            const apps = filteredApps || DB.getApplications();
+            const tbody = document.getElementById('applicationsTable');
+            tbody.innerHTML = apps.map(app => `
+                <tr>
+                    <td>${app.id}</td>
+                    <td>${app.firstName} ${app.lastName}</td>
+                    <td>${app.department}</td>
+                    <td>${new Date(app.date).toLocaleDateString()}</td>
+                    <td><span class="status-badge status-${app.status}">${app.status}</span></td>
+                    <td>
+                        <button class="btn" onclick="viewApplication('${app.id}')"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-success" onclick="updateStatus('${app.id}', 'Approved')"><i class="fas fa-check"></i></button>
+                        <button class="btn btn-danger" onclick="updateStatus('${app.id}', 'Rejected')"><i class="fas fa-times"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        };
+        
+        const renderBulkOpsTable = () => {
+            const apps = DB.getApplications();
+            const tbody = document.getElementById('bulkOpsTable');
+            tbody.innerHTML = apps.map(app => `
+                <tr>
+                    <td><input type="checkbox" class="bulk-checkbox" data-id="${app.id}"></td>
+                    <td>${app.id}</td>
+                    <td>${app.firstName} ${app.lastName}</td>
+                    <td>${app.department}</td>
+                    <td><span class="status-badge status-${app.status}">${app.status}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        const refreshAllViews = () => {
+            renderDashboard();
+            renderApplicationsTable();
+            renderBulkOpsTable();
+            generateAndRenderMeritList();
+        };
+
+        // --- FORM & EVENT HANDLERS ---
+        window.showTab = (tabId) => {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.tab-btn[onclick="showTab('${tabId}')"]`).classList.add('active');
+            
+            if (tabId === 'applications') renderApplicationsTable();
+            if (tabId === 'bulk-operations') renderBulkOpsTable();
+            if (tabId === 'merit-list') generateAndRenderMeritList();
+        };
+        
+        window.checkEligibility = () => {
+            const percentage = parseFloat(document.getElementById('twelfthPercentage').value) || 0;
+            const jee = parseFloat(document.getElementById('jeeScore').value) || 0;
+            const resultDiv = document.getElementById('eligibilityResult');
+            
+            let isEligible = (percentage >= 60 && jee >= 75);
+            
+            resultDiv.style.display = 'block';
+            if (isEligible) {
+                resultDiv.className = 'eligibility-result eligible';
+                resultDiv.innerHTML = `<i class="fas fa-check-circle"></i> Congratulations! You are likely eligible.`;
+            } else {
+                resultDiv.className = 'eligibility-result not-eligible';
+                resultDiv.innerHTML = `<i class="fas fa-times-circle"></i> You may not meet the minimum criteria (60% in 12th & 75 in JEE).`;
+            }
+        };
+
+        document.getElementById('admissionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!selectedDepartment) {
+                showNotification('Please select a department first.', 'error');
+                return;
+            }
+
+            const formData = new FormData(e.target);
+            const applicationData = Object.fromEntries(formData.entries());
+            
+            applicationData.id = `APP-${Date.now().toString().slice(-6)}`;
+            applicationData.date = new Date().toISOString();
+            applicationData.status = 'Pending';
+            applicationData.department = DEPARTMENTS[selectedDepartment].name;
+            // Simulate adding scores for merit list calculation
+            applicationData.twelfthPercentage = Math.floor(Math.random() * 40) + 60; // 60-99
+            applicationData.jeeScore = Math.floor(Math.random() * 150) + 75; // 75-224
+
+            DB.addApplication(applicationData);
+            
+            showNotification('Application submitted successfully!', 'success');
+            e.target.reset();
+            document.querySelectorAll('.dept-card').forEach(c => c.classList.remove('selected'));
+            selectedDepartment = null;
+            document.getElementById('eligibilityResult').style.display = 'none';
+
+            refreshAllViews();
+            showTab('dashboard');
+        });
+        
+        const filterAndSearch = () => {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            let apps = DB.getApplications();
+
+            if (statusFilter !== 'All') {
+                apps = apps.filter(app => app.status === statusFilter);
+            }
+            if (searchTerm) {
+                apps = apps.filter(app => 
+                    app.firstName.toLowerCase().includes(searchTerm) ||
+                    app.lastName.toLowerCase().includes(searchTerm) ||
+                    app.id.toLowerCase().includes(searchTerm)
+                );
+            }
+            renderApplicationsTable(apps);
+        };
+        
+        document.getElementById('searchInput').addEventListener('input', filterAndSearch);
+        document.getElementById('statusFilter').addEventListener('change', filterAndSearch);
+        
+        window.updateStatus = (id, status) => {
+            DB.updateApplicationStatus(id, status);
+            showNotification(`Application ${id} status updated to ${status}.`, 'success');
+            refreshAllViews();
+        };
+        
+        // --- MODAL LOGIC ---
+        const modal = document.getElementById('viewModal');
+        const closeModalBtn = document.querySelector('.modal .close');
+        
+        window.viewApplication = (id) => {
+            const app = DB.getApplications().find(a => a.id === id);
+            if (!app) return;
+            
+            document.getElementById('modalTitle').innerText = `Details for Application ${app.id}`;
+            document.getElementById('modalBody').innerHTML = `
+                <p><strong>Name:</strong> ${app.firstName} ${app.lastName}</p>
+                <p><strong>Department:</strong> ${app.department}</p>
+                <p><strong>Email:</strong> ${app.email}</p>
+                <p><strong>Mobile:</strong> ${app.mobile}</p>
+                <p><strong>DOB:</strong> ${new Date(app.dob).toLocaleDateString()}</p>
+                <p><strong>Status:</strong> <span class="status-badge status-${app.status}">${app.status}</span></p>
+                <p><strong>Applied on:</strong> ${new Date(app.date).toLocaleString()}</p>
+                <p><strong>Simulated 12th %:</strong> ${app.twelfthPercentage}%</p>
+                <p><strong>Simulated JEE Score:</strong> ${app.jeeScore}</p>
+            `;
+            modal.style.display = 'block';
+        };
+
+        closeModalBtn.onclick = () => modal.style.display = 'none';
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        };
+
+        // --- NOTIFICATION LOGIC ---
+        const showNotification = (message, type) => {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerText = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 10); // Trigger animation
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        };
+        
+        // --- MERIT LIST LOGIC ---
+        const calculateMeritScore = (app) => {
+            // Formula: 60% weightage to 12th marks, 40% to JEE
+            const twelfthWeight = (app.twelfthPercentage / 100) * 60;
+            const jeeWeight = (app.jeeScore / 300) * 40; // Assuming JEE is out of 300
+            return (twelfthWeight + jeeWeight).toFixed(2);
+        };
+        
+        window.generateAndRenderMeritList = () => {
+            const departmentFilter = document.getElementById('meritListDepartmentFilter').value;
+            let apps = DB.getApplications().filter(app => app.status === 'Approved');
+            
+            if (departmentFilter !== 'All') {
+                apps = apps.filter(app => app.department === departmentFilter);
+            }
+
+            apps.forEach(app => app.meritScore = calculateMeritScore(app));
+            apps.sort((a, b) => b.meritScore - a.meritScore);
+
+            const tbody = document.getElementById('meritListTable');
+            tbody.innerHTML = apps.map((app, index) => `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${app.id}</td>
+                    <td>${app.firstName} ${app.lastName}</td>
+                    <td>${app.department}</td>
+                    <td><strong>${app.meritScore}</strong></td>
+                </tr>
+            `).join('');
+        };
+        
+        document.getElementById('meritListDepartmentFilter').addEventListener('change', generateAndRenderMeritList);
+
+        // --- BULK OPERATIONS LOGIC ---
+        document.getElementById('selectAllCheckbox').addEventListener('change', (e) => {
+            document.querySelectorAll('.bulk-checkbox').forEach(checkbox => {
+                checkbox.checked = e.target.checked;
+            });
+        });
+
+        window.handleBulkAction = (action) => {
+            const selectedIds = [];
+            document.querySelectorAll('.bulk-checkbox:checked').forEach(checkbox => {
+                selectedIds.push(checkbox.dataset.id);
+            });
+            
+            if (selectedIds.length === 0) {
+                showNotification('No applications selected.', 'warning');
+                return;
+            }
+
+            let apps = DB.getApplications();
+            apps = apps.map(app => {
+                if (selectedIds.includes(app.id)) {
+                    return { ...app, status: action };
+                }
+                return app;
+            });
+            DB.saveApplications(apps);
+            showNotification(`${selectedIds.length} applications updated to ${action}.`, 'success');
+            refreshAllViews();
+        };
+
+        // --- INITIAL LOAD ---
+        renderDepartmentSelection();
+        refreshAllViews();
+    });
+    </script>
+</body>
+</html>

@@ -56,6 +56,59 @@
             opacity: 0.9;
         }
 
+        .user-info {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .user-details h4 {
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        .user-details p {
+            margin: 0;
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
         .module-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -402,6 +455,66 @@
             text-align: center;
         }
 
+        .unauthorized-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: white;
+            text-align: center;
+        }
+
+        .auth-message {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+            margin: 20px;
+        }
+
+        .auth-message h2 {
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .auth-message p {
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .login-redirect-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 15px 30px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .login-redirect-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            color: white;
+        }
+
         @media (max-width: 768px) {
             .module-grid {
                 grid-template-columns: 1fr;
@@ -423,6 +536,11 @@
             .module-card {
                 padding: 30px 20px;
             }
+
+            .user-info {
+                flex-direction: column;
+                text-align: center;
+            }
         }
 
         .pulse {
@@ -437,6 +555,22 @@
     </style>
 </head>
 <body>
+    <!-- Authentication Overlay (shown by default) -->
+    <div class="unauthorized-overlay" id="authOverlay">
+        <div class="auth-message">
+            <i class="fas fa-shield-alt" style="font-size: 4em; margin-bottom: 20px; opacity: 0.8;"></i>
+            <h2>Authentication Required</h2>
+            <p>Please login to access the ERP Management System. You will be redirected to the login page shortly.</p>
+            <a href="login.html" class="login-redirect-btn">
+                <i class="fas fa-sign-in-alt"></i>
+                Go to Login Page
+            </a>
+            <div style="margin-top: 20px; font-size: 0.9em; opacity: 0.7;">
+                Auto-redirect in <span id="countdown">5</span> seconds...
+            </div>
+        </div>
+    </div>
+
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div style="text-align: center;">
@@ -445,7 +579,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container" id="mainContent" style="display: none;">
         <!-- Header -->
         <div class="header">
             <h1><i class="fas fa-graduation-cap"></i> Campus OS </h1>
@@ -453,6 +587,20 @@
             
             <div class="weather-widget">
                 <div><i class="fas fa-sun"></i> <span id="currentTime"></span> | Sunny, 24°C | Pimpri, Maharashtra</div>
+            </div>
+
+            <!-- User Info Section -->
+            <div class="user-info" id="userInfo">
+                <div class="user-profile">
+                    <img src="" alt="User Avatar" class="user-avatar" id="userAvatar">
+                    <div class="user-details">
+                        <h4 id="userName">Loading...</h4>
+                        <p id="userRole">Authenticating...</p>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
             </div>
         </div>
 
@@ -816,6 +964,94 @@
     </div>
 
     <script>
+        // Authentication check and redirect functionality
+        function checkAuthentication() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let isAuthenticated = false;
+            let userData = null;
+
+            // Check URL parameters first
+            if (urlParams.has('name') && urlParams.has('role') && urlParams.has('username')) {
+                isAuthenticated = true;
+                userData = {
+                    name: urlParams.get('name'),
+                    role: urlParams.get('role'),
+                    username: urlParams.get('username'),
+                    avatar: urlParams.get('avatar') || `https://ui-avatars.com/api/?name=${encodeURIComponent(urlParams.get('name'))}&background=667eea&color=fff&size=50`,
+                    loginTime: urlParams.get('loginTime') || new Date().toISOString()
+                };
+            }
+
+            // Fallback to sessionStorage if available
+            if (!isAuthenticated) {
+                try {
+                    const storedUser = sessionStorage.getItem('currentUser');
+                    const storedUsername = sessionStorage.getItem('username');
+                    
+                    if (storedUser && storedUsername) {
+                        userData = JSON.parse(storedUser);
+                        userData.username = storedUsername;
+                        isAuthenticated = true;
+                    }
+                } catch (e) {
+                    console.log('Session storage not available');
+                }
+            }
+
+            if (isAuthenticated && userData) {
+                // User is authenticated, show main content
+                showMainContent(userData);
+            } else {
+                // User is not authenticated, show login redirect
+                showLoginRedirect();
+            }
+        }
+
+        function showMainContent(userData) {
+            document.getElementById('authOverlay').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            
+            // Populate user info
+            document.getElementById('userName').textContent = userData.name;
+            document.getElementById('userRole').textContent = userData.role;
+            document.getElementById('userAvatar').src = userData.avatar;
+            
+            // Initialize the rest of the application
+            updateTime();
+            setInterval(updateTime, 60000);
+            
+            console.log(`Welcome ${userData.name}! Logged in as ${userData.role}`);
+        }
+
+        function showLoginRedirect() {
+            let countdown = 5;
+            const countdownElement = document.getElementById('countdown');
+            
+            const timer = setInterval(() => {
+                countdown--;
+                countdownElement.textContent = countdown;
+                
+                if (countdown <= 0) {
+                    clearInterval(timer);
+                    window.location.href = 'login.html';
+                }
+            }, 1000);
+        }
+
+        function logout() {
+            // Clear authentication data
+            try {
+                sessionStorage.removeItem('currentUser');
+                sessionStorage.removeItem('username');
+                sessionStorage.removeItem('loginTime');
+            } catch (e) {
+                console.log('Session storage not available');
+            }
+            
+            // Redirect to login page
+            window.location.href = 'login.html';
+        }
+
         // Update current time
         function updateTime() {
             const now = new Date();
@@ -826,10 +1062,6 @@
             });
             document.getElementById('currentTime').textContent = timeString;
         }
-
-        // Update time immediately and then every minute
-        updateTime();
-        setInterval(updateTime, 60000);
 
         // Loading overlay functions
         function showLoading() {
@@ -967,10 +1199,15 @@
             totalStudents.textContent = newValue.toLocaleString();
         }, 30000);
 
+        // Initialize authentication check when page loads
+        window.addEventListener('load', checkAuthentication);
+
         console.log('🎓 Student ERP Management System Loaded Successfully!');
+        console.log('🔐 Authentication system initialized');
+        console.log('📱 Checking authentication status...');
         console.log('📁 File Structure:');
-        console.log('├── main page/');
-        console.log('│   └── index.html (current)');
+        console.log('├── index.html (current - with auth)');
+        console.log('├── login.html');
         console.log('└── pages/');
         console.log('    ├── admission/admission.html');
         console.log('    ├── dashboard/dashboard.html');
@@ -982,7 +1219,7 @@
         console.log('    └── settings/settings.html');
     </script>
 
-        <script src="js/dark-mode.js"></script>
+    <script src="js/dark-mode.js"></script>
 
 </body>
 </html>

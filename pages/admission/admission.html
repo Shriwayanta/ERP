@@ -557,7 +557,7 @@
             <div class="department-selector">
                 <h3><i class="fas fa-university"></i> Select Department/Field</h3>
                 <div class="department-grid">
-                    </div>
+                </div>
             </div>
 
             <div class="eligibility-checker">
@@ -593,6 +593,27 @@
                         <div class="form-group"><label>Mobile Number <span class="required">*</span></label><input type="tel" name="mobile" required></div>
                     </div>
                 </div>
+
+                <div class="form-section">
+                    <div class="section-title">
+                        <i class="fas fa-graduation-cap"></i> Academic Information
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>10th Percentage <span class="required">*</span></label>
+                            <input type="number" name="tenthPercentage" required min="0" max="100" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>12th Percentage <span class="required">*</span></label>
+                            <input type="number" name="twelfthPercentage" required min="0" max="100" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>JEE Main Score</label>
+                            <input type="number" name="jeeScore" min="0" max="300">
+                        </div>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-success">
                     <i class="fas fa-paper-plane"></i> Submit Application
                 </button>
@@ -697,38 +718,75 @@
 
         let departmentChartInstance = null;
         let selectedDepartment = null;
+        let applications = [];
 
-        // --- DATABASE (localStorage) ABSTRACTION ---
-        const DB = {
-            getApplications: () => JSON.parse(localStorage.getItem('applications') || '[]'),
-            saveApplications: (apps) => localStorage.setItem('applications', JSON.stringify(apps)),
-            addApplication: (app) => {
-                const apps = DB.getApplications();
-                apps.push(app);
-                DB.saveApplications(apps);
-            },
-            updateApplicationStatus: (id, status) => {
-                let apps = DB.getApplications();
-                apps = apps.map(app => app.id === id ? { ...app, status } : app);
-                DB.saveApplications(apps);
+        // Initialize with sample data
+        const initializeData = () => {
+            if (applications.length === 0) {
+                applications = [
+                    {
+                        id: 'APP001',
+                        firstName: 'John',
+                        lastName: 'Doe',
+                        email: 'john.doe@email.com',
+                        mobile: '9876543210',
+                        dob: '2005-03-15',
+                        department: 'Computer Science & Engineering',
+                        tenthPercentage: 92.5,
+                        twelfthPercentage: 89.2,
+                        jeeScore: 245,
+                        status: 'Pending',
+                        date: '2024-03-15',
+                        meritScore: 88.5
+                    },
+                    {
+                        id: 'APP002',
+                        firstName: 'Jane',
+                        lastName: 'Smith',
+                        email: 'jane.smith@email.com',
+                        mobile: '9876543211',
+                        dob: '2005-07-22',
+                        department: 'Mechanical Engineering',
+                        tenthPercentage: 95.0,
+                        twelfthPercentage: 91.8,
+                        jeeScore: 268,
+                        status: 'Approved',
+                        date: '2024-03-14',
+                        meritScore: 92.3
+                    },
+                    {
+                        id: 'APP003',
+                        firstName: 'Mike',
+                        lastName: 'Johnson',
+                        email: 'mike.johnson@email.com',
+                        mobile: '9876543212',
+                        dob: '2005-01-10',
+                        department: 'Civil Engineering',
+                        tenthPercentage: 87.5,
+                        twelfthPercentage: 85.3,
+                        jeeScore: 198,
+                        status: 'Rejected',
+                        date: '2024-03-13',
+                        meritScore: 76.8
+                    }
+                ];
             }
         };
 
         // --- UI RENDERING FUNCTIONS ---
         const renderDashboard = () => {
-            const apps = DB.getApplications();
-            const total = apps.length;
-            const pending = apps.filter(a => a.status === 'Pending').length;
-            const approved = apps.filter(a => a.status === 'Approved').length;
-            const rejected = apps.filter(a => a.status === 'Rejected').length;
+            const total = applications.length;
+            const pending = applications.filter(a => a.status === 'Pending').length;
+            const approved = applications.filter(a => a.status === 'Approved').length;
+            const rejected = applications.filter(a => a.status === 'Rejected').length;
 
             document.getElementById('totalApplications').textContent = total;
             document.getElementById('pendingApplications').textContent = pending;
             document.getElementById('approvedApplications').textContent = approved;
             document.getElementById('rejectedApplications').textContent = rejected;
 
-            renderDepartmentChart(apps);
-            renderRecentApplications(apps);
+            renderDepartmentChart(applications);
+            renderRecentApplications(applications);
         };
         
         const renderDepartmentChart = (apps) => {
@@ -804,7 +862,296 @@
                     </div>`;
                 meritFilter.innerHTML += `<option value="${dept.name}">${dept.name}</option>`;
             }
+            
             // Add event listeners to newly created cards
             document.querySelectorAll('.dept-card').forEach(card => {
                 card.addEventListener('click', () => {
-                    document.querySelectorAll('.dept-card').forEach(c => c.
+                    document.querySelectorAll('.dept-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    selectedDepartment = DEPARTMENTS[card.dataset.deptKey].name;
+                    showNotification('Department selected: ' + selectedDepartment, 'success');
+                });
+            });
+        };
+
+        const renderApplicationsTable = () => {
+            const tbody = document.getElementById('applicationsTable');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            let filteredApps = applications.filter(app => {
+                const matchesSearch = app.firstName.toLowerCase().includes(searchTerm) || 
+                                    app.lastName.toLowerCase().includes(searchTerm) || 
+                                    app.id.toLowerCase().includes(searchTerm);
+                const matchesStatus = statusFilter === 'All' || app.status === statusFilter;
+                return matchesSearch && matchesStatus;
+            });
+
+            tbody.innerHTML = filteredApps.map(app => `
+                <tr>
+                    <td>${app.id}</td>
+                    <td>${app.firstName} ${app.lastName}</td>
+                    <td>${app.department}</td>
+                    <td>${new Date(app.date).toLocaleDateString()}</td>
+                    <td><span class="status-badge status-${app.status}">${app.status}</span></td>
+                    <td>
+                        <button class="btn btn-secondary" onclick="viewApplication('${app.id}')">View</button>
+                        <button class="btn btn-success" onclick="updateStatus('${app.id}', 'Approved')">Approve</button>
+                        <button class="btn btn-danger" onclick="updateStatus('${app.id}', 'Rejected')">Reject</button>
+                    </td>
+                </tr>
+            `).join('');
+        };
+
+        const renderMeritList = () => {
+            const tbody = document.getElementById('meritListTable');
+            const deptFilter = document.getElementById('meritListDepartmentFilter').value;
+
+            let filteredApps = applications.filter(app => 
+                deptFilter === 'All' || app.department === deptFilter
+            );
+
+            // Sort by merit score (descending)
+            filteredApps.sort((a, b) => b.meritScore - a.meritScore);
+
+            tbody.innerHTML = filteredApps.map((app, index) => `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${app.id}</td>
+                    <td>${app.firstName} ${app.lastName}</td>
+                    <td>${app.department}</td>
+                    <td>${app.meritScore.toFixed(2)}</td>
+                </tr>
+            `).join('');
+        };
+
+        const renderBulkOperationsTable = () => {
+            const tbody = document.getElementById('bulkOpsTable');
+            tbody.innerHTML = applications.map(app => `
+                <tr>
+                    <td><input type="checkbox" value="${app.id}" class="bulk-checkbox"></td>
+                    <td>${app.id}</td>
+                    <td>${app.firstName} ${app.lastName}</td>
+                    <td>${app.department}</td>
+                    <td><span class="status-badge status-${app.status}">${app.status}</span></td>
+                </tr>
+            `).join('');
+        };
+
+        // --- UTILITY FUNCTIONS ---
+        const showNotification = (message, type = 'success') => {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type} show`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => document.body.removeChild(notification), 500);
+            }, 3000);
+        };
+
+        const calculateMeritScore = (tenthPct, twelfthPct, jeeScore = 0) => {
+            return (tenthPct * 0.2) + (twelfthPct * 0.5) + ((jeeScore / 300) * 100 * 0.3);
+        };
+
+        // --- EVENT HANDLERS ---
+        window.showTab = (tabName) => {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            switch(tabName) {
+                case 'dashboard':
+                    renderDashboard();
+                    break;
+                case 'apply':
+                    renderDepartmentSelection();
+                    break;
+                case 'applications':
+                    renderApplicationsTable();
+                    break;
+                case 'merit-list':
+                    renderMeritList();
+                    break;
+                case 'bulk-operations':
+                    renderBulkOperationsTable();
+                    break;
+            }
+        };
+
+        window.checkEligibility = () => {
+            const twelfthPct = parseFloat(document.getElementById('twelfthPercentage').value);
+            const jeeScore = parseFloat(document.getElementById('jeeScore').value) || 0;
+            const resultDiv = document.getElementById('eligibilityResult');
+
+            if (!twelfthPct) {
+                showNotification('Please enter 12th percentage', 'error');
+                return;
+            }
+
+            const meritScore = calculateMeritScore(85, twelfthPct, jeeScore); // Assuming 85% in 10th
+            const isEligible = twelfthPct >= 75 && (jeeScore >= 75 || jeeScore === 0);
+
+            resultDiv.style.display = 'block';
+            resultDiv.className = `eligibility-result ${isEligible ? 'eligible' : 'not-eligible'}`;
+            resultDiv.innerHTML = `
+                <h4>${isEligible ? 'Eligible' : 'Not Eligible'} for Admission</h4>
+                <p>Merit Score: ${meritScore.toFixed(2)}/100</p>
+                <p>${isEligible ? 'You can proceed with the application.' : 'Minimum 75% in 12th grade required.'}</p>
+            `;
+        };
+
+        window.updateStatus = (id, status) => {
+            const appIndex = applications.findIndex(app => app.id === id);
+            if (appIndex !== -1) {
+                applications[appIndex].status = status;
+                showNotification(`Application ${id} ${status.toLowerCase()} successfully`, 'success');
+                renderApplicationsTable();
+                renderDashboard();
+            }
+        };
+
+        window.viewApplication = (id) => {
+            const app = applications.find(a => a.id === id);
+            if (app) {
+                document.getElementById('modalTitle').textContent = `Application Details - ${app.id}`;
+                document.getElementById('modalBody').innerHTML = `
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Name:</label>
+                            <p>${app.firstName} ${app.lastName}</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Email:</label>
+                            <p>${app.email}</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile:</label>
+                            <p>${app.mobile}</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Department:</label>
+                            <p>${app.department}</p>
+                        </div>
+                        <div class="form-group">
+                            <label>10th Percentage:</label>
+                            <p>${app.tenthPercentage}%</p>
+                        </div>
+                        <div class="form-group">
+                            <label>12th Percentage:</label>
+                            <p>${app.twelfthPercentage}%</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>JEE Score:</label>
+                            <p>${app.jeeScore || 'N/A'}</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Merit Score:</label>
+                            <p>${app.meritScore.toFixed(2)}</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Status:</label>
+                            <p><span class="status-badge status-${app.status}">${app.status}</span></p>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('viewModal').style.display = 'block';
+            }
+        };
+
+        window.generateAndRenderMeritList = () => {
+            renderMeritList();
+            showNotification('Merit list generated successfully', 'success');
+        };
+
+        window.handleBulkAction = (status) => {
+            const selectedIds = Array.from(document.querySelectorAll('.bulk-checkbox:checked')).map(cb => cb.value);
+            
+            if (selectedIds.length === 0) {
+                showNotification('Please select applications to update', 'warning');
+                return;
+            }
+
+            selectedIds.forEach(id => {
+                const appIndex = applications.findIndex(app => app.id === id);
+                if (appIndex !== -1) {
+                    applications[appIndex].status = status;
+                }
+            });
+
+            showNotification(`${selectedIds.length} applications updated to ${status}`, 'success');
+            renderBulkOperationsTable();
+            renderDashboard();
+        };
+
+        // Form submission handler
+        document.getElementById('admissionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            if (!selectedDepartment) {
+                showNotification('Please select a department first', 'error');
+                return;
+            }
+
+            const formData = new FormData(e.target);
+            const newApp = {
+                id: 'APP' + String(applications.length + 1).padStart(3, '0'),
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                email: formData.get('email'),
+                mobile: formData.get('mobile'),
+                dob: formData.get('dob'),
+                department: selectedDepartment,
+                tenthPercentage: parseFloat(formData.get('tenthPercentage')),
+                twelfthPercentage: parseFloat(formData.get('twelfthPercentage')),
+                jeeScore: parseFloat(formData.get('jeeScore')) || 0,
+                status: 'Pending',
+                date: new Date().toISOString().split('T')[0],
+                meritScore: 0
+            };
+
+            newApp.meritScore = calculateMeritScore(newApp.tenthPercentage, newApp.twelfthPercentage, newApp.jeeScore);
+            applications.push(newApp);
+
+            showNotification(`Application submitted successfully! Application ID: ${newApp.id}`, 'success');
+            e.target.reset();
+            selectedDepartment = null;
+            document.querySelectorAll('.dept-card').forEach(c => c.classList.remove('selected'));
+        });
+
+        // Search and filter handlers
+        document.getElementById('searchInput').addEventListener('input', renderApplicationsTable);
+        document.getElementById('statusFilter').addEventListener('change', renderApplicationsTable);
+        document.getElementById('meritListDepartmentFilter').addEventListener('change', renderMeritList);
+
+        // Select all checkbox handler
+        document.getElementById('selectAllCheckbox').addEventListener('change', (e) => {
+            document.querySelectorAll('.bulk-checkbox').forEach(cb => cb.checked = e.target.checked);
+        });
+
+        // Modal close handlers
+        document.querySelector('.close').addEventListener('click', () => {
+            document.getElementById('viewModal').style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === document.getElementById('viewModal')) {
+                document.getElementById('viewModal').style.display = 'none';
+            }
+        });
+
+        // Initialize the application
+        initializeData();
+        renderDashboard();
+        renderDepartmentSelection();
+    });
+    </script>
+</body>
+</html>

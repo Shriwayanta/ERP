@@ -1,0 +1,15 @@
+### Health Check
+GET http://localhost:5000/api/health
+
+### Login
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### Get All Students (need token from login)
+GET http://localhost:5000/api/students
+Authorization: Bearer YOUR_TOKEN_HERE

@@ -12,7 +12,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use('/api/chatbot', require('./routes/chatbot'));
 // Add after app.use(cors(...))
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');

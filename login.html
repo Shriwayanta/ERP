@@ -408,7 +408,7 @@
                 
                 errorDiv.innerHTML = `
                     <i class="fas fa-exclamation-triangle"></i> ${error.message}<br>
-                    <small>Please check your credentials and try again.</small>
+                    <small>${error.message.includes('fetch') ? 'Cannot connect to backend server' : 'Please check your credentials and try again.'}</small>
                 `;
                 errorDiv.style.display = 'block';
             }
@@ -420,7 +420,7 @@
         });
 
         console.log('🎓 ERP Login System - Backend Connected');
-        console.log('🔗 API URL:', AIzaSyCaNASNesLI8_oYG3O2Ys-H7SLJCDkNU2Y);
+        console.log('🔗 API URL:', API_URL);
     </script>
 </body>
 </html>

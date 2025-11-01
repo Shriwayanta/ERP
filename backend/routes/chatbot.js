@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { protect } = require('../middleware/auth');
-const { sendMessage } = require('../controllers/chatbotController');
+const { sendMessage, getConversationHistory } = require('../controllers/chatbotController');
 
-router.post('/message', protect, sendMessage);
+// Public routes - no authentication required
+router.post('/message', sendMessage);
+router.get('/history', getConversationHistory);
 
 module.exports = router;

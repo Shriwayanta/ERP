@@ -38,7 +38,7 @@ app.use('/api/hostel', require('./routes/hostel'));
 app.use('/api/examination', require('./routes/examination'));
 app.use('/api/library', require('./routes/library'));
 app.use('/api/dashboard', require('./routes/dashboard'));
-
+app.use('/api/chatbot', require('./routes/chatbot'));
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ 
